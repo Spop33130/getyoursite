@@ -1,0 +1,49 @@
+{
+  "siteName": "Évasion Voyages",
+  "slogan": "Votre passerelle vers l'aventure",
+  "description": "Agence de voyage spécialisée dans les destinations exotiques et les expériences authentiques. Nous créons des voyages sur mesure pour réaliser vos rêves d'évasion.",
+  "colors": {
+    "primary": "#2E86AB",
+    "secondary": "#A23B72",
+    "accent": "rgba(46, 134, 171, 0.15)"
+  },
+  "hero": {
+    "title": "Explorez le monde avec nous",
+    "subtitle": "Des voyages sur mesure pour des souvenirs inoubliables"
+  },
+  "services": [
+    {
+      "title": "Voyages Sur Mesure",
+      "description": "Créons ensemble votre voyage idéal selon vos envies et votre budget",
+      "icon": "fas fa-map-marked-alt"
+    },
+    {
+      "title": "Circuits Organisés",
+      "description": "Découvrez nos circuits accompagnés vers les plus belles destinations du monde",
+      "icon": "fas fa-users"
+    },
+    {
+      "title": "Réservations",
+      "description": "Hôtels, vols et activités au meilleur prix garantis",
+      "icon": "fas fa-plane"
+    }
+  ],
+  "contact": {
+    "address": "45 Avenue des Champs-Élysées, 75008 Paris",
+    "phone": "01 53 75 42 18",
+    "email": "info@evasion-voyages.com",
+    "hours": "Lun-Ven: 9h-18h, Sam: 9h-17h"
+  },
+  "testimonials": [
+    {
+      "text": "Un voyage de rêve en Thaïlande ! L'équipe d'Évasion Voyages a su créer un itinéraire parfait adapté à nos envies. Service exceptionnel du début à la fin.",
+      "author": "Sophie et Laurent Moreau",
+      "role": "Voyage Thaïlande 2023"
+    },
+    {
+      "text": "Professionnalisme et écoute au rendez-vous. Notre lune de miel aux Maldives était magique grâce à leurs conseils avisés.",
+      "author": "Julie Bertrand",
+      "role": "Lune de miel 2023"
+    }
+  ]
+}
