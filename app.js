@@ -496,47 +496,64 @@ function initContactForm(c) {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  const formEmail = c.contact?.form_email;
-
-  if (formEmail) {
-    // Mode réel — FormSubmit prend en charge l'envoi
-    form.action = `https://formsubmit.co/${formEmail}`;
-    form.method = 'POST';
-    form.removeAttribute('novalidate');
-    form.insertAdjacentHTML('beforeend', `
-      <input type="hidden" name="_subject" value="Nouveau message — ${c.siteName}">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
-    `);
-    // Valider avant envoi mais laisser le form se soumettre normalement
-    form.addEventListener('submit', e => {
-      if (!validateForm(e)) e.preventDefault();
-    });
-    return;
-  }
-
-  // Mode démo — notification locale
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
-    if (!validateForm(e)) return;
-    notify('Message envoyé ! Nous vous répondrons rapidement.', 'success');
-    form.reset();
-  });
-}
 
-function validateForm(e) {
-  const name    = document.getElementById('name').value.trim();
-  const email   = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
-  if (!name || !email || !message) {
-    notify('Veuillez remplir tous les champs obligatoires.', 'error');
-    return false;
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    notify('Adresse email invalide.', 'error');
-    return false;
-  }
-  return true;
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const phone   = document.getElementById('phone').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !email || !message) {
+      notify('Veuillez remplir tous les champs obligatoires.', 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      notify('Adresse email invalide.', 'error');
+      return;
+    }
+
+    const formEmail = c.contact?.form_email;
+    if (!formEmail) {
+      // Mode démo — pas d'envoi réel
+      notify('Message envoyé ! Nous vous répondrons rapidement.', 'success');
+      form.reset();
+      return;
+    }
+
+    const btn = form.querySelector('button[type=submit]');
+    const btnOriginal = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours…';
+
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${formEmail}`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          Nom:       name,
+          Email:     email,
+          Téléphone: phone || '—',
+          Message:   message,
+          _subject:  `Nouveau message — ${c.siteName}`,
+          _replyto:  email,
+          _captcha:  'false'
+        })
+      });
+
+      if (res.ok) {
+        notify('Message envoyé ! Nous vous répondrons dans les plus brefs délais.', 'success');
+        form.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      notify('Erreur lors de l\'envoi. Appelez-nous directement.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = btnOriginal;
+    }
+  });
 }
 
 // ============================================
