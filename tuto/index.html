@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guide d'utilisation — GetYourSite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #E74C3C;
+      --dark:  #2C3E50;
+      --text:  #1a1a2e;
+      --muted: #6b7280;
+      --bg:    #f8f9fa;
+      --white: #ffffff;
+      --border:#e5e7eb;
+      --green: #059669;
+      --blue:  #2E86AB;
+      --font:  'Outfit', system-ui, sans-serif;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0,0,0,.07);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--dark);
+      color: #fff;
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      padding: .3rem 1rem;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: .75rem;
+      color: #fff;
+    }
+    .header p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.7);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── SOMMAIRE ── */
+    .toc {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin: 2.5rem auto;
+      max-width: 820px;
+    }
+    .toc h2 {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .toc ol {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      padding-left: 0;
+    }
+    .toc li { counter-increment: toc; }
+    .toc a {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      color: var(--text);
+      font-weight: 500;
+      font-size: .95rem;
+      padding: .3rem 0;
+    }
+    .toc a:hover { color: var(--brand); text-decoration: none; }
+    .toc-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px; height: 24px;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(to right, rgba(231,76,60,.04), transparent);
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .section-title h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+    .section-title p {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .section-body { padding: 1.75rem 2rem; }
+
+    /* ── CHAMPS ── */
+    .field-list { display: flex; flex-direction: column; gap: .75rem; }
+
+    .field {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: .75rem 1.25rem;
+      align-items: start;
+      padding: .85rem 1rem;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 600px) {
+      .field { grid-template-columns: 1fr; }
+    }
+
+    .field-key {
+      font-family: 'Courier New', monospace;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--brand);
+      background: rgba(231,76,60,.07);
+      padding: .2rem .5rem;
+      border-radius: 5px;
+      white-space: nowrap;
+      width: fit-content;
+      margin-top: 2px;
+    }
+    .field-desc { font-size: .9rem; color: var(--text); line-height: 1.6; }
+    .field-desc strong { font-weight: 600; }
+    .field-desc .example {
+      display: inline-block;
+      margin-top: .3rem;
+      font-family: 'Courier New', monospace;
+      font-size: .8rem;
+      color: var(--muted);
+      background: rgba(0,0,0,.04);
+      padding: .15rem .45rem;
+      border-radius: 4px;
+    }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-radius: 9px;
+      margin: 1.25rem 0;
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+    .callout i { margin-top: .15rem; flex-shrink: 0; font-size: 1rem; }
+    .callout--tip    { background: #ecfdf5; border-left: 3px solid var(--green); color: #065f46; }
+    .callout--tip i  { color: var(--green); }
+    .callout--info   { background: #eff6ff; border-left: 3px solid var(--blue); color: #1e40af; }
+    .callout--info i { color: var(--blue); }
+    .callout--warn   { background: #fffbeb; border-left: 3px solid #f59e0b; color: #92400e; }
+    .callout--warn i { color: #f59e0b; }
+
+    /* ── ÉTAPES NUMÉROTÉES ── */
+    .steps { display: flex; flex-direction: column; gap: 1rem; }
+    .step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .step-bullet {
+      width: 28px; height: 28px;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: .15rem;
+    }
+    .step p { font-size: .9rem; line-height: 1.6; }
+    .step p strong { font-weight: 600; }
+
+    /* ── IMAGE SLOTS ── */
+    .image-slots { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0; }
+    .slot {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .6rem .9rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .88rem;
+    }
+    .slot-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--brand), var(--dark));
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: .85rem;
+      flex-shrink: 0;
+    }
+    .slot-name {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      color: var(--text);
+      font-size: .85rem;
+    }
+    .slot-desc { color: var(--muted); font-size: .82rem; }
+
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #1e2433;
+      color: #e2e8f0;
+      border-radius: 9px;
+      padding: 1.25rem 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: .82rem;
+      line-height: 1.8;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    .code-block .key   { color: #93c5fd; }
+    .code-block .val   { color: #86efac; }
+    .code-block .cmt   { color: #64748b; font-style: italic; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+    .footer strong { color: var(--brand); }
+
+    /* ── DIVIDER ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">
+      <i class="fas fa-wrench"></i>
+      Guide d'utilisation
+    </div>
+    <h1>Livrer un site client<br>en 10 minutes</h1>
+    <p>Tout ce dont tu as besoin pour personnaliser et déployer un site garage.</p>
+  </div>
+
+  <!-- SOMMAIRE -->
+  <div class="toc container">
+    <h2>Au programme</h2>
+    <ol>
+      <li>
+        <a href="#config">
+          <span class="toc-num">1</span>
+          Remplir les infos du client dans <code>config.json</code>
+        </a>
+      </li>
+      <li>
+        <a href="#images">
+          <span class="toc-num">2</span>
+          Ajouter les photos du garage
+        </a>
+      </li>
+      <li>
+        <a href="#maps">
+          <span class="toc-num">3</span>
+          Intégrer Google Maps
+        </a>
+      </li>
+      <li>
+        <a href="#avis">
+          <span class="toc-num">4</span>
+          Renseigner les avis Google
+        </a>
+      </li>
+      <li>
+        <a href="#formulaire">
+          <span class="toc-num">5</span>
+          Activer le formulaire de contact
+        </a>
+      </li>
+      <li>
+        <a href="#deploy">
+          <span class="toc-num">6</span>
+          Mettre en ligne
+        </a>
+      </li>
+    </ol>
+  </div>
+
+  <div class="container">
+
+    <!-- ── ÉTAPE 1 : CONFIG ── -->
+    <div class="section" id="config">
+      <div class="section-title">
+        <div class="step-num">1</div>
+        <div>
+          <h2>Remplir les infos du client</h2>
+          <p>Ouvre le fichier <strong>config.json</strong> à la racine du projet et remplace chaque valeur.</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="callout callout--tip">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Règle d'or :</strong> ne touche à rien d'autre que <code>config.json</code> et le dossier <code>images/</code>. Tout le reste se met à jour automatiquement.
+          </div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Informations générales</h3>
+        <div class="field-list">
+          <div class="field">
+            <span class="field-key">"siteName"</span>
+            <div class="field-desc">Nom du garage — apparaît dans la barre du navigateur et le header.<br><span class="example">"Garage Dupont Auto"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"slogan"</span>
+            <div class="field-desc">Accroche courte sous le nom.<br><span class="example">"Votre expert automobile à Lyon"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"badge"</span>
+            <div class="field-desc">Petit texte affiché dans le badge du hero (haut de page).<br><span class="example">"Mécanicien certifié · 15 ans d'expérience"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"description"</span>
+            <div class="field-desc">Paragraphe de présentation du garage. Utilisé dans la section À propos et le footer.<br><span class="example">"Spécialistes en réparation et entretien automobile depuis 15 ans..."</span></div>
+          </div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Couleurs</h3>
+        <div class="field-list">
+          <div class="field">
+            <span class="field-key">"primary"</span>
+            <div class="field-desc">Couleur principale (boutons, titres colorés, accents). Format hexadécimal.<br><span class="example">"#E74C3C"</span> = rouge · <span class="example">"#1a73e8"</span> = bleu</div>
+          </div>
+          <div class="field">
+            <span class="field-key">"secondary"</span>
+            <div class="field-desc">Couleur secondaire (dégradés, hero).<br><span class="example">"#2C3E50"</span></div>
+          </div>
+        </div>
+        <div class="callout callout--info">
+          <i class="fas fa-palette"></i>
+          <div>Pour trouver un code couleur, va sur <strong>coolors.co</strong> ou tape "color picker" dans Google. Le code commence toujours par <strong>#</strong>.</div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Textes du hero (grande bannière d'accueil)</h3>
+        <div class="field-list">
+          <div class="field">
+            <span class="field-key">"title"</span>
+            <div class="field-desc">Titre principal en grand.<br><span class="example">"Réparation auto rapide et transparente"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"subtitle"</span>
+            <div class="field-desc">Phrase d'accroche sous le titre.<br><span class="example">"Devis gratuit en 24h, intervention sous 48h."</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"cta_primary"</span>
+            <div class="field-desc">Texte du bouton principal.<br><span class="example">"Prendre rendez-vous"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"cta_secondary"</span>
+            <div class="field-desc">Texte du bouton secondaire.<br><span class="example">"Nos services"</span></div>
+          </div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Stats (section À propos)</h3>
+        <div class="field-list">
+          <div class="field">
+            <span class="field-key">"stats"</span>
+            <div class="field-desc">3 chiffres clés du garage. Chaque entrée a un <strong>number</strong> (le chiffre) et un <strong>label</strong> (la description).<br>
+            <span class="example">"20+"</span> / <span class="example">"Années d'expérience"</span></div>
+          </div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Services proposés</h3>
+        <div class="field-list">
+          <div class="field">
+            <span class="field-key">"services"</span>
+            <div class="field-desc">Liste des prestations (généralement 3). Chaque service a un <strong>title</strong>, une <strong>description</strong>, et un <strong>icon</strong>.<br>
+            Pour l'icône, utilise n'importe quel code FontAwesome :<br>
+            <span class="example">"fas fa-cogs"</span> · <span class="example">"fas fa-wrench"</span> · <span class="example">"fas fa-car"</span> · <span class="example">"fas fa-oil-can"</span></div>
+          </div>
+        </div>
+        <div class="callout callout--info">
+          <i class="fas fa-icons"></i>
+          <div>Trouve une icône sur <strong>fontawesome.com/search</strong> — cherche en anglais, copie le code (ex. <code>fas fa-car-crash</code>).</div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Contact</h3>
+        <div class="field-list">
+          <div class="field">
+            <span class="field-key">"address"</span>
+            <div class="field-desc">Adresse complète.<br><span class="example">"12 Rue de la Mécanique, 69200 Vénissieux"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"phone"</span>
+            <div class="field-desc">Numéro affiché et cliquable (appel direct sur mobile).<br><span class="example">"04 72 51 83 92"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"whatsapp"</span>
+            <div class="field-desc">Numéro WhatsApp au format international <strong>sans + ni espaces</strong> (active le bouton flottant).<br><span class="example">"33472518392"</span> pour le 04 72 51 83 92</div>
+          </div>
+          <div class="field">
+            <span class="field-key">"email"</span>
+            <div class="field-desc">Email de contact, cliquable automatiquement.<br><span class="example">"contact@garage-dupont.fr"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"hours"</span>
+            <div class="field-desc">Horaires d'ouverture.<br><span class="example">"Lun–Ven : 8h–18h · Sam : 8h–12h"</span></div>
+          </div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Réseaux sociaux</h3>
+        <div class="field-list">
+          <div class="field">
+            <span class="field-key">"facebook"</span>
+            <div class="field-desc">URL complète de la page Facebook. Laisse <strong>""</strong> si pas de page.<br><span class="example">"https://facebook.com/garagedupont"</span></div>
+          </div>
+          <div class="field">
+            <span class="field-key">"instagram"</span>
+            <div class="field-desc">URL du profil Instagram.<br><span class="example">"https://instagram.com/garagedupont"</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── ÉTAPE 2 : IMAGES ── -->
+    <div class="section" id="images">
+      <div class="section-title">
+        <div class="step-num">2</div>
+        <div>
+          <h2>Ajouter les photos du garage</h2>
+          <p>Dépose les images dans le dossier <strong>images/</strong> avec les bons noms.</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="callout callout--tip">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Système de slots :</strong> chaque image a un nom réservé. Il suffit de déposer la photo avec le bon nom dans <code>images/</code> — elle apparaît automatiquement au bon endroit.
+          </div>
+        </div>
+
+        <div class="image-slots">
+          <div class="slot">
+            <div class="slot-icon"><i class="fas fa-image"></i></div>
+            <div>
+              <div class="slot-name">hero.jpg</div>
+              <div class="slot-desc">Photo de fond de la grande bannière d'accueil. Idéalement 1920×1080px. Si absent → dégradé coloré.</div>
+            </div>
+          </div>
+          <div class="slot">
+            <div class="slot-icon"><i class="fas fa-store"></i></div>
+            <div>
+              <div class="slot-name">about.jpg</div>
+              <div class="slot-desc">Photo de la section "À propos" (équipe, atelier…). Si absent → icône décorative.</div>
+            </div>
+          </div>
+          <div class="slot">
+            <div class="slot-icon"><i class="fas fa-th-large"></i></div>
+            <div>
+              <div class="slot-name">gallery-1.jpg à gallery-6.jpg</div>
+              <div class="slot-desc">Photos de la galerie (véhicules réparés, atelier, équipe…). 6 photos max. Format 800×600px conseillé.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout--warn">
+          <i class="fas fa-triangle-exclamation"></i>
+          <div>
+            Les noms sont <strong>sensibles à la casse</strong> — écris-les exactement comme indiqué (<code>gallery-1.jpg</code> et non <code>Gallery-1.JPG</code>). Les formats acceptés : <strong>.jpg</strong>, <strong>.jpeg</strong>, <strong>.png</strong>, <strong>.webp</strong>.
+          </div>
+        </div>
+
+        <p style="font-size:.9rem;color:var(--muted);margin-top:1rem;">
+          Mets ensuite les noms exacts dans le <code>config.json</code> sous la clé <code>"gallery"</code> :
+        </p>
+        <div class="code-block">
+<span class="cmt">// Dans config.json → "images"</span>
+<span class="key">"images"</span>: {
+  <span class="key">"hero"</span>:  <span class="val">"hero.jpg"</span>,
+  <span class="key">"about"</span>: <span class="val">"atelier.jpg"</span>,
+  <span class="key">"gallery"</span>: [
+    <span class="val">"gallery-1.jpg"</span>,
+    <span class="val">"gallery-2.jpg"</span>,
+    <span class="val">"gallery-3.jpg"</span>
+  ]
+}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── ÉTAPE 3 : MAPS ── -->
+    <div class="section" id="maps">
+      <div class="section-title">
+        <div class="step-num">3</div>
+        <div>
+          <h2>Intégrer Google Maps</h2>
+          <p>Une carte interactive apparaîtra dans la section Contact.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-bullet">1</div>
+            <p>Va sur <strong><a href="https://maps.google.com" target="_blank">maps.google.com</a></strong> et recherche l'adresse exacte du garage.</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">2</div>
+            <p>Clique sur <strong>Partager</strong> (icône de partage), puis sur l'onglet <strong>"Intégrer une carte"</strong>.</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">3</div>
+            <p>Clique sur <strong>"Copier le code HTML"</strong>. Tu obtiens quelque chose comme :<br>
+            <code style="font-size:.8rem;background:#f1f5f9;padding:.2rem .4rem;border-radius:4px;display:inline-block;margin-top:.4rem;">&lt;iframe src="https://www.google.com/maps/embed?pb=..."&gt;</code></p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">4</div>
+            <p>Copie <strong>uniquement l'URL</strong> qui est dans le <code>src="..."</code> et colle-la dans <code>config.json</code> :</p>
+          </div>
+        </div>
+        <div class="code-block">
+<span class="key">"maps_embed_url"</span>: <span class="val">"https://www.google.com/maps/embed?pb=!1m18..."</span>
+        </div>
+        <div class="callout callout--tip">
+          <i class="fas fa-lightbulb"></i>
+          Si tu laisses <code>"maps_embed_url": ""</code>, la carte ne s'affiche tout simplement pas — aucun problème.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ÉTAPE 4 : AVIS GOOGLE ── -->
+    <div class="section" id="avis">
+      <div class="section-title">
+        <div class="step-num">4</div>
+        <div>
+          <h2>Renseigner les avis Google</h2>
+          <p>Affiche le badge de note et les vrais avis des clients.</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:.75rem;">Badge de note globale</h3>
+        <p style="font-size:.9rem;color:var(--muted);margin-bottom:.75rem;">Renseigne la note, le nombre d'avis et le lien vers la fiche Google du garage :</p>
+        <div class="code-block">
+<span class="key">"google_reviews"</span>: {
+  <span class="key">"rating"</span>: <span class="val">4.9</span>,         <span class="cmt">// note sur 5</span>
+  <span class="key">"count"</span>:  <span class="val">87</span>,          <span class="cmt">// nombre total d'avis</span>
+  <span class="key">"url"</span>:    <span class="val">"https://g.page/r/..."</span> <span class="cmt">// lien fiche Google</span>
+}
+        </div>
+
+        <div class="callout callout--info">
+          <i class="fas fa-info-circle"></i>
+          <div>Pour trouver le lien : va sur Google Maps → fiche du garage → <strong>Partager</strong> → copie le lien court (<code>https://g.page/r/...</code>). Si la fiche n'a pas de lien court, laisse <code>""</code>.</div>
+        </div>
+
+        <hr>
+
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:.75rem;">Ajouter des témoignages</h3>
+        <p style="font-size:.9rem;color:var(--muted);margin-bottom:.75rem;">Copie les vrais avis Google dans la section <code>"testimonials"</code>. Ajoute <code>"source": "google"</code> pour afficher le logo Google à côté.</p>
+        <div class="code-block">
+{
+  <span class="key">"text"</span>:   <span class="val">"Super garage, travail rapide et prix honnête !"</span>,
+  <span class="key">"author"</span>: <span class="val">"Jean-Pierre M."</span>,
+  <span class="key">"role"</span>:   <span class="val">"Client"</span>,
+  <span class="key">"rating"</span>: <span class="val">5</span>,
+  <span class="key">"source"</span>: <span class="val">"google"</span>
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ÉTAPE 5 : FORMULAIRE ── -->
+    <div class="section" id="formulaire">
+      <div class="section-title">
+        <div class="step-num">5</div>
+        <div>
+          <h2>Activer le formulaire de contact</h2>
+          <p>Les messages du formulaire arrivent directement par email — sans aucun abonnement.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <p style="font-size:.9rem;color:var(--muted);margin-bottom:1rem;">Il suffit de renseigner l'adresse email du garage dans le champ <code>"form_email"</code> :</p>
+        <div class="code-block">
+<span class="key">"form_email"</span>: <span class="val">"contact@garage-dupont.fr"</span>
+        </div>
+        <div class="callout callout--tip">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            C'est tout. Le service <strong>FormSubmit</strong> gère l'envoi gratuitement. Le premier message reçu demandera une confirmation par email — dis au client de cliquer sur le lien de confirmation la première fois.
+          </div>
+        </div>
+        <div class="callout callout--info">
+          <i class="fas fa-info-circle"></i>
+          Si <code>"form_email"</code> est laissé vide (<code>""</code>), le formulaire reste visible mais affiche juste une notification locale (utile pour les démos).
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ÉTAPE 6 : DÉPLOIEMENT ── -->
+    <div class="section" id="deploy">
+      <div class="section-title">
+        <div class="step-num">6</div>
+        <div>
+          <h2>Mettre en ligne</h2>
+          <p>Le site se redéploie automatiquement à chaque modification poussée.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-bullet">1</div>
+            <p>Ouvre le terminal dans le dossier du projet.</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">2</div>
+            <p>Tape ces 3 commandes :</p>
+          </div>
+        </div>
+        <div class="code-block" style="margin-top:.75rem;">
+git add .
+git commit -m "Nouveau client — Garage Dupont"
+git push
+        </div>
+        <div class="steps" style="margin-top:1rem;">
+          <div class="step">
+            <div class="step-bullet">3</div>
+            <p><strong>Attends 30 secondes</strong> — Vercel redéploie automatiquement. Le site est en ligne.</p>
+          </div>
+        </div>
+        <div class="callout callout--warn">
+          <i class="fas fa-triangle-exclamation"></i>
+          <div>
+            Avant de livrer au client, <strong>teste sur mobile</strong> — la majorité des visiteurs d'un garage naviguent sur téléphone. Vérifie que le bouton WhatsApp fonctionne bien.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RÉSUMÉ RAPIDE -->
+    <div style="background:var(--dark);color:#fff;border-radius:var(--radius);padding:1.75rem 2rem;margin-bottom:2rem;">
+      <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:1rem;color:#fff;">
+        <i class="fas fa-bolt" style="color:var(--brand);margin-right:.5rem;"></i>
+        Récap ultra-rapide
+      </h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem;">
+        <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:.75rem 1rem;font-size:.85rem;">
+          <div style="font-weight:700;margin-bottom:.25rem;">1. config.json</div>
+          <div style="color:rgba(255,255,255,.6);">Infos client, couleurs, textes</div>
+        </div>
+        <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:.75rem 1rem;font-size:.85rem;">
+          <div style="font-weight:700;margin-bottom:.25rem;">2. images/</div>
+          <div style="color:rgba(255,255,255,.6);">hero.jpg, about.jpg, gallery-1…6</div>
+        </div>
+        <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:.75rem 1rem;font-size:.85rem;">
+          <div style="font-weight:700;margin-bottom:.25rem;">3. git push</div>
+          <div style="color:rgba(255,255,255,.6);">30 secondes et c'est en ligne</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Fait avec ❤️ par <strong>GetYourSite</strong> — des questions ? Contacte-nous.
+  </div>
+
+</body>
+</html>
