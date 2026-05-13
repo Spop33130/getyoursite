@@ -1,76 +1,104 @@
 {
-  "siteName": "Boulangerie Artisanale Dubois",
-  "slogan": "L'art du pain depuis 1950",
-  "badge": "Artisan Boulanger · Paris depuis 1950",
-  "description": "Une boulangerie familiale qui perpétue la tradition artisanale française avec des produits frais et de qualité. Nos boulangers passionnés travaillent chaque nuit pour vous offrir le meilleur du savoir-faire français chaque matin.",
+  "siteName": "Garage Martin Auto",
+  "slogan": "Votre expert automobile de confiance",
+  "badge": "Mécanicien certifié · 20 ans d'expérience",
+  "description": "Spécialistes en réparation et entretien automobile depuis plus de 20 ans. Notre équipe de mécaniciens qualifiés prend soin de votre véhicule avec expertise, transparence et des prix honnêtes.",
+
   "colors": {
-    "primary": "#C8945A",
-    "secondary": "#7A3B1E"
+    "primary": "#E74C3C",
+    "secondary": "#2C3E50"
   },
+
   "hero": {
-    "title": "L'authenticité du pain artisanal",
-    "subtitle": "Chaque matin, des créations gourmandes préparées avec passion et tradition",
-    "cta_primary": "Nous Contacter",
-    "cta_secondary": "Nos Créations"
+    "title": "Expertise et fiabilité automobile",
+    "subtitle": "Votre véhicule mérite le meilleur soin. Diagnostic, entretien, réparation — on s'occupe de tout.",
+    "cta_primary": "Prendre rendez-vous",
+    "cta_secondary": "Nos services"
   },
+
   "about": {
-    "title": "Notre Histoire",
-    "icon": "fas fa-bread-slice",
+    "title": "Notre Expertise",
     "stats": [
-      { "number": "70+",  "label": "Années d'expérience" },
-      { "number": "500+", "label": "Clients fidèles" },
-      { "number": "100%", "label": "Fait maison" }
+      { "number": "20+",   "label": "Années d'expérience" },
+      { "number": "1500+", "label": "Véhicules réparés" },
+      { "number": "98%",   "label": "Clients satisfaits" }
     ]
   },
+
   "services": [
     {
-      "title": "Pain Traditionnel",
-      "description": "Baguettes, pains de campagne et spécialités régionales préparés selon les méthodes ancestrales",
-      "icon": "fas fa-bread-slice"
+      "title": "Mécanique Générale",
+      "description": "Diagnostic, réparation moteur, transmission et suspensions par des experts qualifiés",
+      "icon": "fas fa-cogs"
     },
     {
-      "title": "Viennoiseries",
-      "description": "Croissants, pains au chocolat et brioches maison préparés chaque matin avec du beurre AOP",
-      "icon": "fas fa-cookie"
+      "title": "Entretien Périodique",
+      "description": "Vidanges, révisions et contrôles préventifs pour la longévité de votre véhicule",
+      "icon": "fas fa-wrench"
     },
     {
-      "title": "Pâtisseries",
-      "description": "Gâteaux, tartes et desserts sur commande pour toutes vos occasions spéciales",
-      "icon": "fas fa-birthday-cake"
+      "title": "Carrosserie & Peinture",
+      "description": "Réparation de carrosserie et peinture automobile avec garantie qualité sur toutes les interventions",
+      "icon": "fas fa-car"
     }
   ],
-  "gallery": [
-    { "src": "https://picsum.photos/seed/bread1/800/500", "alt": "Notre boulangerie" },
-    { "src": "https://picsum.photos/seed/bread2/600/400", "alt": "Pains artisanaux" },
-    { "src": "https://picsum.photos/seed/bread3/600/400", "alt": "Croissants frais" },
-    { "src": "https://picsum.photos/seed/bread4/600/400", "alt": "Pâtisseries" },
-    { "src": "https://picsum.photos/seed/bread5/600/400", "alt": "Gâteaux de fête" },
-    { "src": "https://picsum.photos/seed/bread6/600/400", "alt": "Boulangerie artisanale" }
-  ],
+
+  "images": {
+    "hero":    "",
+    "about":   "",
+    "gallery": [
+      "gallery-1.jpg",
+      "gallery-2.jpg",
+      "gallery-3.jpg",
+      "gallery-4.jpg",
+      "gallery-5.jpg",
+      "gallery-6.jpg"
+    ]
+  },
+
   "testimonials": [
     {
-      "text": "Le meilleur pain de Paris ! Une qualité exceptionnelle et un accueil chaleureux. Je recommande vivement cette boulangerie familiale.",
-      "author": "Marie Dubois",
-      "role": "Cliente fidèle depuis 2018",
-      "rating": 5
+      "text": "Travail impeccable et tarifs honnêtes. L'équipe a diagnostiqué et réparé ma voiture en temps record. Je recommande vivement !",
+      "author": "Jean-Claude Petit",
+      "role": "Client depuis 2019",
+      "rating": 5,
+      "source": "google"
     },
     {
-      "text": "Des viennoiseries délicieuses et un service impeccable. C'est un plaisir de commencer la journée avec leurs croissants !",
-      "author": "Pierre Martin",
-      "role": "Habitant du quartier",
-      "rating": 5
+      "text": "Professionnalisme et transparence. Ils m'expliquent toujours ce qui doit être fait et pourquoi. Un garage de confiance absolu !",
+      "author": "Isabelle Moreau",
+      "role": "Cliente fidèle",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Révision complète faite en une matinée, voiture rendue propre. Prix juste et équipe sympa. Je reviens sans hésiter.",
+      "author": "Thomas Bernard",
+      "role": "Client",
+      "rating": 5,
+      "source": "google"
     }
   ],
-  "contact": {
-    "address": "12 Rue de la Paix, 75001 Paris",
-    "phone": "01 42 36 58 79",
-    "whatsapp": "33142365879",
-    "email": "contact@boulangerie-dubois.fr",
-    "hours": "Lun–Sam : 6h30–19h30 · Dim : 7h–13h"
+
+  "google_reviews": {
+    "rating": 4.9,
+    "count": 87,
+    "url": ""
   },
+
+  "contact": {
+    "address":        "28 Boulevard de l'Industrie, 69200 Vénissieux",
+    "phone":          "04 72 51 83 92",
+    "whatsapp":       "33472518392",
+    "email":          "contact@garage-martin.fr",
+    "hours":          "Lun–Ven : 8h–18h · Sam : 8h–12h",
+    "form_email":     "",
+    "maps_embed_url": ""
+  },
+
   "social": {
-    "facebook": "#",
-    "instagram": "#",
-    "linkedin": ""
+    "facebook":  "",
+    "instagram": "",
+    "linkedin":  ""
   }
 }

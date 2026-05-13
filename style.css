@@ -981,35 +981,130 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 .lightbox-nav--next { right: var(--space-5); }
 
 /* ============================================
-   DEMO SELECTOR
+   GOOGLE MAPS
    ============================================ */
 
-.demo-selector {
-  position: fixed;
-  top: calc(var(--header-height) + var(--space-3));
-  right: var(--space-4);
-  z-index: 999;
-  display: flex;
+.contact-map {
+  width: 100%;
+  height: 380px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-top: var(--space-10);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   GOOGLE REVIEWS BADGE
+   ============================================ */
+
+#google-reviews-badge {
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
+.google-badge {
+  display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  padding: 0.55rem 1.1rem;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-base);
-  padding: var(--space-2) var(--space-3);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: all var(--duration) var(--ease);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+.google-badge:hover {
   box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+  border-color: #4285F4;
+  color: var(--color-text);
+}
+.google-badge-stars {
+  display: flex;
+  gap: 2px;
+  color: #f59e0b;
+  font-size: 0.8rem;
+}
+.google-badge-score { font-weight: 800; }
+.google-badge-sep   { color: var(--color-muted); }
+.google-badge-count { color: var(--color-muted); font-weight: 500; }
+.google-badge-arrow { color: var(--color-muted); font-size: 0.7rem; margin-left: var(--space-1); }
+
+/* ============================================
+   TESTIMONIAL — GOOGLE SOURCE BADGE
+   ============================================ */
+
+.testimonial-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+.testimonial-card-header .testimonial-stars { margin-bottom: 0; }
+
+.testimonial-google-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: var(--text-xs);
   font-weight: 600;
   color: var(--color-muted);
+  padding: 3px 9px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
 }
-.demo-selector select {
-  border: none;
-  background: none;
-  font-family: var(--font);
-  font-size: var(--text-xs);
-  font-weight: 600;
+
+/* ============================================
+   GALLERY — IMAGE MANQUANTE
+   ============================================ */
+
+.gallery-item--missing {
+  background: var(--color-bg-alt);
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+}
+.gallery-item--missing::after {
+  content: '\f030';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 1.6rem;
+  opacity: .25;
+}
+
+/* ============================================
+   LIENS DANS LE FOOTER
+   ============================================ */
+
+.footer-contact-info p a {
+  color: var(--gray-400);
+  text-decoration: none;
+  transition: color var(--duration) var(--ease);
+}
+.footer-contact-info p a:hover { color: var(--brand-primary); }
+
+/* ============================================
+   LIENS DANS LES INFOS DE CONTACT
+   ============================================ */
+
+.contact-details p a {
   color: var(--color-text);
-  cursor: pointer;
-  outline: none;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration) var(--ease), color var(--duration) var(--ease);
+}
+.contact-details p a:hover {
+  color: var(--brand-primary);
+  border-color: var(--brand-primary);
 }
 
 /* ============================================
@@ -1132,7 +1227,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   .float-btn span        { display: none; }
   .float-btn             { width: 54px; height: 54px; padding: 0; justify-content: center; border-radius: var(--radius-full); }
 
-  .demo-selector         { display: none; }
   .form-row              { grid-template-columns: 1fr; }
 }
 

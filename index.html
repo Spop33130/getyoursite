@@ -110,6 +110,7 @@
             <div class="section-header">
                 <span class="section-label">Avis clients</span>
                 <h2>Ce que disent nos clients</h2>
+                <div id="google-reviews-badge" style="display:none;"></div>
             </div>
             <div class="testimonials-wrapper">
                 <div class="testimonials-carousel" id="testimonials-carousel"></div>
@@ -135,7 +136,7 @@
                 <p>N'hésitez pas à nous contacter pour un devis ou une information</p>
             </div>
             <div class="contact-content">
-                <div class="contact-form-wrapper">
+                <div class="contact-form-wrapper" id="contact-form-wrapper">
                     <form id="contact-form" novalidate>
                         <div class="form-row">
                             <div class="form-group">
@@ -192,6 +193,8 @@
                     </div>
                 </div>
             </div>
+            <!-- Google Maps -->
+            <div id="contact-map" class="contact-map" style="display:none;"></div>
         </div>
     </section>
 
@@ -217,8 +220,8 @@
                 <div class="footer-contact-info">
                     <h4>Informations</h4>
                     <p id="footer-address">—</p>
-                    <p id="footer-phone">—</p>
-                    <p id="footer-email">—</p>
+                    <p id="footer-phone"></p>
+                    <p id="footer-email"></p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -247,16 +250,6 @@
         <button class="lightbox-nav lightbox-nav--next" id="lightbox-next" aria-label="Suivant">
             <i class="fas fa-chevron-right"></i>
         </button>
-    </div>
-
-    <!-- Sélecteur de démo -->
-    <div class="demo-selector">
-        <label for="config-selector">Démo :</label>
-        <select id="config-selector">
-            <option value="boulangerie">🥐 Boulangerie</option>
-            <option value="agence_voyage">✈️ Agence de Voyage</option>
-            <option value="garage">🔧 Garage Auto</option>
-        </select>
     </div>
 
     <script src="app.js"></script>
