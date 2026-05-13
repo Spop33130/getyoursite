@@ -112,18 +112,19 @@ function setHTML(id, html) {
   if (el) el.innerHTML = html;
 }
 
-function applyHeroImage(src) {
+function applyHeroImage(rawSrc) {
+  const src  = rawSrc.startsWith('http') ? rawSrc : `images/${rawSrc}`;
   const hero = document.querySelector('.hero');
   if (!hero) return;
-  hero.style.backgroundImage   = `linear-gradient(135deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.38) 100%), url('${src}')`;
-  hero.style.backgroundSize    = 'cover';
+  hero.style.backgroundImage    = `linear-gradient(135deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.38) 100%), url('${src}')`;
+  hero.style.backgroundSize     = 'cover';
   hero.style.backgroundPosition = 'center';
-  // Masquer le fond radial décoratif
   const bg = hero.querySelector('.hero-bg');
   if (bg) bg.style.display = 'none';
 }
 
-function applyAboutImage(src) {
+function applyAboutImage(rawSrc) {
+  const src     = rawSrc.startsWith('http') ? rawSrc : `images/${rawSrc}`;
   const wrapper = document.getElementById('about-image-wrapper');
   if (!wrapper) return;
   wrapper.innerHTML = `<img src="${src}" alt="Notre garage" loading="lazy" style="width:100%;height:100%;object-fit:cover;">`;
@@ -183,8 +184,8 @@ function renderGallery(filenames) {
   }
 
   galleryImages = filenames.map(f => ({
-    src: `images/${f}`,
-    alt: f.replace(/\.[^.]+$/, '').replace(/-/g, ' ')
+    src: f.startsWith('http') ? f : `images/${f}`,
+    alt: f.split('/').pop().replace(/\.[^.]+$/, '').replace(/-/g, ' ')
   }));
 
   el.innerHTML = galleryImages.map((img, i) => `
