@@ -56,12 +56,12 @@ function applyContent(c) {
 
   // About image or icon fallback
   if (c.images?.about) {
-    applyAboutImage(`images/${c.images.about}`);
+    applyAboutImage(c.images.about);
   }
 
   // Hero background image with dark overlay
   if (c.images?.hero) {
-    applyHeroImage(`images/${c.images.hero}`);
+    applyHeroImage(c.images.hero);
   }
 
   // Contact — liens cliquables
