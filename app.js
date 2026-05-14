@@ -606,9 +606,27 @@ function initNav() {
     });
   });
 
+  // Active nav section tracking
+  const sections  = document.querySelectorAll('section[id]');
+  const navLinks  = document.querySelectorAll('.nav-link[href^="#"]');
+  const threshold = () => window.innerHeight * 0.35;
+
+  function updateActiveNav() {
+    let activeId = null;
+    sections.forEach(s => {
+      if (s.getBoundingClientRect().top <= threshold()) activeId = s.id;
+    });
+    navLinks.forEach(link =>
+      link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`)
+    );
+  }
+
   window.addEventListener('scroll', () => {
     document.getElementById('header')?.classList.toggle('scrolled', window.scrollY > 80);
+    updateActiveNav();
   }, { passive: true });
+
+  updateActiveNav();
 }
 
 // ============================================

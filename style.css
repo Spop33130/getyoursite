@@ -313,7 +313,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   transition: all var(--duration) var(--ease);
   white-space: nowrap;
 }
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: var(--brand-primary);
   background: rgba(0,0,0,.04);
 }
