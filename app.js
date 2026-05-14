@@ -541,7 +541,8 @@ function initContactForm(c) {
 
       notify('Message envoyé ! Nous vous répondrons dans les plus brefs délais.', 'success');
       form.reset();
-    } catch {
+    } catch (err) {
+      console.error('EmailJS error:', err);
       notify('Erreur lors de l\'envoi. Appelez-nous directement.', 'error');
     } finally {
       btn.disabled = false;
