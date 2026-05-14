@@ -20,14 +20,18 @@ function init(c) {
   applyContent(c);
   renderStats(c.about?.stats || []);
   renderServices(c.services || []);
+  renderCommitments(c.commitments || []);
   renderGallery(c.images?.gallery || []);
   renderTestimonials(c.testimonials || [], c.google_reviews || null);
+  renderFAQ(c.faq || []);
   renderSocial(c.social || {});
   renderMaps(c.contact?.maps_embed_url || '');
   initScrollReveal();
   initNav();
   initContactForm(c);
   initLightbox();
+  renderMobileCTABar(c);
+  renderOpenStatus(c);
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 }
 
@@ -62,6 +66,24 @@ function applyContent(c) {
   // Hero background image with dark overlay
   if (c.images?.hero) {
     applyHeroImage(c.images.hero);
+  }
+
+  // Navbar phone
+  const navPhone     = document.getElementById('navbar-phone');
+  const navPhoneText = document.getElementById('navbar-phone-text');
+  const phoneNav     = c.contact?.phone || '';
+  if (navPhone && phoneNav) {
+    navPhone.href = `tel:${phoneNav.replace(/[\s.]/g, '')}`;
+    if (navPhoneText) navPhoneText.textContent = phoneNav;
+    navPhone.style.display = '';
+  }
+
+  // Hero tags
+  const heroTags = document.getElementById('hero-tags');
+  if (heroTags && c.hero?.tags?.length) {
+    heroTags.innerHTML = c.hero.tags.map(tag =>
+      `<span class="hero-tag">${tag}</span>`
+    ).join('');
   }
 
   // Contact — liens cliquables
@@ -159,6 +181,127 @@ function renderServices(services) {
       <p>${s.description}</p>
     </div>
   `).join('');
+}
+
+// ============================================
+// COMMITMENTS
+// ============================================
+
+const COMMITMENT_DEFAULTS = [
+  { icon: 'fas fa-file-invoice', title: 'Devis gratuit',       description: 'Sans engagement, réponse sous 24h' },
+  { icon: 'fas fa-clock',        title: 'Délais respectés',    description: 'Votre véhicule rendu à l\'heure convenue' },
+  { icon: 'fas fa-shield-halved',title: 'Garantie 12 mois',    description: 'Sur toutes pièces et main d\'œuvre' },
+  { icon: 'fas fa-tag',          title: 'Prix transparents',   description: 'Pas de mauvaise surprise sur la facture' }
+];
+
+function renderCommitments(commitments) {
+  const el = document.getElementById('engagements-grid');
+  if (!el) return;
+  const items = commitments.length ? commitments : COMMITMENT_DEFAULTS;
+  el.innerHTML = items.map(item => `
+    <div class="commitment-item reveal">
+      <div class="commitment-icon"><i class="${item.icon}"></i></div>
+      <div class="commitment-text">
+        <h4>${item.title}</h4>
+        <p>${item.description}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================
+// MOBILE CTA BAR
+// ============================================
+
+function renderMobileCTABar(c) {
+  const phone    = c.contact?.phone    || '';
+  const phoneRaw = phone.replace(/[\s.]/g, '');
+  const wa       = c.contact?.whatsapp || '';
+
+  const phoneBtn = document.getElementById('mobile-cta-phone');
+  const waBtn    = document.getElementById('mobile-cta-wa');
+
+  if (phoneBtn) phoneBtn.href = phone ? `tel:${phoneRaw}` : '#contact';
+  if (waBtn)    waBtn.href    = wa
+    ? `https://wa.me/${wa}?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous.`
+    : '#contact';
+}
+
+// ============================================
+// FAQ
+// ============================================
+
+function renderFAQ(faq) {
+  const el = document.getElementById('faq-list');
+  if (!el) return;
+  if (!faq.length) {
+    document.getElementById('faq')?.style.setProperty('display', 'none');
+    return;
+  }
+
+  el.innerHTML = faq.map((item, i) => `
+    <div class="faq-item reveal" data-faq="${i}">
+      <button class="faq-question" aria-expanded="false">
+        <span>${item.question}</span>
+        <i class="fas fa-plus faq-icon"></i>
+      </button>
+      <div class="faq-answer" aria-hidden="true">
+        <p>${item.answer}</p>
+      </div>
+    </div>
+  `).join('');
+
+  el.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item   = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      el.querySelectorAll('.faq-item.open').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        i.querySelector('.faq-answer').setAttribute('aria-hidden', 'true');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        item.querySelector('.faq-answer').setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+}
+
+// ============================================
+// OPEN STATUS
+// ============================================
+
+function renderOpenStatus(c) {
+  const el = document.getElementById('hero-open-status');
+  if (!el || !c.schedule?.length) return;
+
+  const now     = new Date();
+  const day     = now.getDay();
+  const timeMin = now.getHours() * 60 + now.getMinutes();
+  const toMin   = s => { const [h, m] = s.split(':').map(Number); return h * 60 + m; };
+  const fmt     = s => s.replace(':', 'h');
+  const DAY_NAMES = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+
+  const slot = c.schedule.find(s => s.days.includes(day));
+
+  if (slot && timeMin >= toMin(slot.open) && timeMin < toMin(slot.close)) {
+    el.innerHTML = `<span class="open-badge open-badge--open"><i class="fas fa-circle"></i> Ouvert · jusqu'à ${fmt(slot.close)}</span>`;
+    return;
+  }
+
+  let nextText = 'Contactez-nous';
+  if (slot && timeMin < toMin(slot.open)) {
+    nextText = `Ouvre à ${fmt(slot.open)}`;
+  } else {
+    for (let i = 1; i <= 7; i++) {
+      const d = (day + i) % 7;
+      const s = c.schedule.find(s => s.days.includes(d));
+      if (s) { nextText = `Ouvre ${DAY_NAMES[d]} à ${fmt(s.open)}`; break; }
+    }
+  }
+  el.innerHTML = `<span class="open-badge open-badge--closed"><i class="fas fa-circle"></i> Fermé · ${nextText}</span>`;
 }
 
 // ============================================

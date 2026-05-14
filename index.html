@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Template Professionnel</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,6 +29,10 @@
                         <a href="#temoignages" class="nav-link">Avis</a>
                         <a href="#contact" class="nav-link nav-link--cta">Contact</a>
                     </div>
+                    <a href="#" id="navbar-phone" class="navbar-phone" style="display:none;">
+                        <i class="fas fa-phone"></i>
+                        <span id="navbar-phone-text"></span>
+                    </a>
                     <button class="navbar-toggle" id="navbar-toggle" aria-label="Ouvrir le menu">
                         <span></span>
                         <span></span>
@@ -44,12 +49,14 @@
         <div class="container">
             <div class="hero-content">
                 <span class="hero-badge" id="hero-badge">Artisan certifié</span>
+                <div id="hero-open-status"></div>
                 <h1 class="hero-title" id="hero-title">Titre Principal</h1>
                 <p class="hero-subtitle" id="hero-subtitle">Sous-titre descriptif de l'activité</p>
                 <div class="hero-actions">
                     <a href="#contact" class="btn btn--hero-primary" id="hero-cta-primary">Nous Contacter</a>
                     <a href="#services" class="btn btn--hero-outline" id="hero-cta-secondary">Nos Services</a>
                 </div>
+                <div class="hero-tags" id="hero-tags"></div>
             </div>
         </div>
         <div class="hero-wave">
@@ -92,6 +99,13 @@
         </div>
     </section>
 
+    <!-- Engagements -->
+    <section id="engagements" class="engagements-section">
+        <div class="container">
+            <div class="engagements-grid" id="engagements-grid"></div>
+        </div>
+    </section>
+
     <!-- Galerie -->
     <section id="galerie" class="gallery-section">
         <div class="container">
@@ -124,6 +138,17 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Questions fréquentes</span>
+                <h2>Tout ce que vous voulez savoir</h2>
+            </div>
+            <div class="faq-list" id="faq-list"></div>
         </div>
     </section>
 
@@ -230,11 +255,23 @@
         </div>
     </footer>
 
-    <!-- Bouton flottant -->
+    <!-- Bouton flottant (desktop) -->
     <a href="#contact" class="float-btn" id="float-btn" aria-label="Nous contacter">
         <i class="fas fa-comment-dots"></i>
         <span>Devis gratuit</span>
     </a>
+
+    <!-- Barre CTA sticky mobile -->
+    <div class="mobile-cta-bar" id="mobile-cta-bar">
+        <a href="#" id="mobile-cta-phone" class="mobile-cta-btn mobile-cta-btn--phone">
+            <i class="fas fa-phone"></i>
+            <span>Appeler</span>
+        </a>
+        <a href="#" id="mobile-cta-wa" class="mobile-cta-btn mobile-cta-btn--wa">
+            <i class="fab fa-whatsapp"></i>
+            <span>WhatsApp</span>
+        </a>
+    </div>
 
     <!-- Lightbox -->
     <div id="lightbox-modal" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
