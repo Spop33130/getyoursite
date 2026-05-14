@@ -440,6 +440,10 @@
             <span class="field-key">"cta_secondary"</span>
             <div class="field-desc">Texte du bouton secondaire.<br><span class="example">"Nos services"</span></div>
           </div>
+          <div class="field">
+            <span class="field-key">"tags"</span>
+            <div class="field-desc">Petites étiquettes affichées sous les boutons du hero — arguments rapides (3 max).<br><span class="example">["Toutes marques", "Sans rendez-vous", "Véhicule de prêt"]</span></div>
+          </div>
         </div>
 
         <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Stats (section À propos)</h3>
@@ -485,8 +489,36 @@
           </div>
           <div class="field">
             <span class="field-key">"hours"</span>
-            <div class="field-desc">Horaires d'ouverture.<br><span class="example">"Lun–Ven : 8h–18h · Sam : 8h–12h"</span></div>
+            <div class="field-desc">Horaires affichés dans la section Contact.<br><span class="example">"Lun–Ven : 8h–18h · Sam : 8h–12h"</span></div>
           </div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Badge "Ouvert / Fermé" dans le hero</h3>
+        <p style="font-size:.9rem;color:var(--muted);margin-bottom:.75rem;">Le site calcule automatiquement si le garage est ouvert en ce moment et affiche un badge en haut de page. Renseigne les plages horaires :</p>
+        <div class="code-block">
+<span class="key">"schedule"</span>: [
+  { <span class="key">"days"</span>: [<span class="val">1,2,3,4,5</span>], <span class="key">"open"</span>: <span class="val">"08:00"</span>, <span class="key">"close"</span>: <span class="val">"18:00"</span> }, <span class="cmt">// lun–ven</span>
+  { <span class="key">"days"</span>: [<span class="val">6</span>],          <span class="key">"open"</span>: <span class="val">"08:00"</span>, <span class="key">"close"</span>: <span class="val">"12:00"</span> }  <span class="cmt">// samedi</span>
+]
+        </div>
+        <div class="callout callout--info">
+          <i class="fas fa-info-circle"></i>
+          <div>Les jours : <strong>1 = lundi, 2 = mardi … 6 = samedi, 0 = dimanche</strong>. L'heure format 24h, toujours entre guillemets. Laisse <code>"schedule": []</code> pour masquer le badge.</div>
+        </div>
+
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">FAQ (questions fréquentes)</h3>
+        <p style="font-size:.9rem;color:var(--muted);margin-bottom:.75rem;">La section FAQ apparaît automatiquement si le tableau est rempli, disparaît si vide. Ajoute autant de questions que nécessaire :</p>
+        <div class="code-block">
+<span class="key">"faq"</span>: [
+  {
+    <span class="key">"question"</span>: <span class="val">"Acceptez-vous toutes les marques ?"</span>,
+    <span class="key">"answer"</span>:   <span class="val">"Oui, toutes marques et modèles."</span>
+  },
+  {
+    <span class="key">"question"</span>: <span class="val">"Faut-il prendre rendez-vous ?"</span>,
+    <span class="key">"answer"</span>:   <span class="val">"Non, nous acceptons sans rendez-vous."</span>
+  }
+]
         </div>
 
         <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1.5rem 0 .75rem;">Réseaux sociaux</h3>
@@ -659,23 +691,50 @@
         <div class="step-num">5</div>
         <div>
           <h2>Activer le formulaire de contact</h2>
-          <p>Les messages du formulaire arrivent directement par email — sans aucun abonnement.</p>
+          <p>Les messages arrivent par email via EmailJS — zéro spam, zéro redirection.</p>
         </div>
       </div>
       <div class="section-body">
-        <p style="font-size:.9rem;color:var(--muted);margin-bottom:1rem;">Il suffit de renseigner l'adresse email du garage dans le champ <code>"form_email"</code> :</p>
-        <div class="code-block">
-<span class="key">"form_email"</span>: <span class="val">"contact@garage-dupont.fr"</span>
-        </div>
-        <div class="callout callout--tip">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            C'est tout. Le service <strong>FormSubmit</strong> gère l'envoi gratuitement. Le premier message reçu demandera une confirmation par email — dis au client de cliquer sur le lien de confirmation la première fois.
-          </div>
-        </div>
+
         <div class="callout callout--info">
           <i class="fas fa-info-circle"></i>
-          Si <code>"form_email"</code> est laissé vide (<code>""</code>), le formulaire reste visible mais affiche juste une notification locale (utile pour les démos).
+          <div>Le formulaire utilise <strong>EmailJS</strong> (gratuit jusqu'à 200 emails/mois). C'est toi le développeur qui crées le compte une fois, le client n'a rien à faire.</div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-bullet">1</div>
+            <p>Crée un compte sur <strong>emailjs.com</strong> (gratuit).</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">2</div>
+            <p>Ajoute un <strong>Email Service</strong> — connecte l'adresse email du client (Gmail, SMTP…). Note le <strong>Service ID</strong>.</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">3</div>
+            <p>Crée un <strong>Email Template</strong> avec les variables <code>{{from_name}}</code>, <code>{{from_email}}</code>, <code>{{phone}}</code>, <code>{{message}}</code>. Dans "To Email", mets l'adresse du client. Note le <strong>Template ID</strong>.</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">4</div>
+            <p>Dans <strong>Account → API Keys</strong>, copie ta <strong>Public Key</strong>.</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">5</div>
+            <p>Colle les 3 valeurs dans <code>config.json</code> :</p>
+          </div>
+        </div>
+
+        <div class="code-block">
+<span class="key">"emailjs"</span>: {
+  <span class="key">"service_id"</span>:  <span class="val">"service_xxxxxxx"</span>,
+  <span class="key">"template_id"</span>: <span class="val">"template_xxxxxxx"</span>,
+  <span class="key">"public_key"</span>:  <span class="val">"xxxxxxxxxxxx"</span>
+}
+        </div>
+
+        <div class="callout callout--tip">
+          <i class="fas fa-lightbulb"></i>
+          <div>Si la section <code>"emailjs"</code> est absente ou vide, le formulaire reste visible et affiche une notification locale — parfait pour les démos client.</div>
         </div>
       </div>
     </div>
