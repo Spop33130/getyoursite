@@ -92,8 +92,14 @@
     "whatsapp":       "33786253410",
     "email":          "contact@garage-martin.fr",
     "hours":          "Lun–Ven : 8h–18h · Sam : 8h–12h",
-    "form_email":     "theo33130@gmail.com",
+    "form_email":     "",
     "maps_embed_url": "https://maps.google.com/maps?q=50+Av.+des+Pyr%C3%A9n%C3%A9es+33140+Villenave-d%27Ornon&output=embed&hl=fr&z=16"
+  },
+
+  "emailjs": {
+    "service_id":  "service_z35lqdq",
+    "template_id": "template_4js8z7q",
+    "public_key":  "4jD-AMOCzmbAcmZV2"
   },
 
   "social": {

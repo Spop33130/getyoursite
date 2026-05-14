@@ -496,6 +496,11 @@ function initContactForm(c) {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
+  const ejs = c.emailjs;
+  if (ejs?.public_key) {
+    emailjs.init(ejs.public_key);
+  }
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
@@ -513,9 +518,8 @@ function initContactForm(c) {
       return;
     }
 
-    const formEmail = c.contact?.form_email;
-    if (!formEmail) {
-      // Mode démo — pas d'envoi réel
+    // Mode démo si pas de config EmailJS
+    if (!ejs?.service_id) {
       notify('Message envoyé ! Nous vous répondrons rapidement.', 'success');
       form.reset();
       return;
@@ -527,26 +531,16 @@ function initContactForm(c) {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours…';
 
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${formEmail}`, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          Nom:       name,
-          Email:     email,
-          Téléphone: phone || '—',
-          Message:   message,
-          _subject:  `Nouveau message — ${c.siteName}`,
-          _replyto:  email,
-          _captcha:  'false'
-        })
+      await emailjs.send(ejs.service_id, ejs.template_id, {
+        site_name:  c.siteName,
+        from_name:  name,
+        from_email: email,
+        phone:      phone || '—',
+        message:    message
       });
 
-      if (res.ok) {
-        notify('Message envoyé ! Nous vous répondrons dans les plus brefs délais.', 'success');
-        form.reset();
-      } else {
-        throw new Error();
-      }
+      notify('Message envoyé ! Nous vous répondrons dans les plus brefs délais.', 'success');
+      form.reset();
     } catch {
       notify('Erreur lors de l\'envoi. Appelez-nous directement.', 'error');
     } finally {
