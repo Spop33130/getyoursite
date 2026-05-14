@@ -498,7 +498,7 @@ function initContactForm(c) {
 
   const ejs = c.emailjs;
   if (ejs?.public_key) {
-    emailjs.init(ejs.public_key);
+    emailjs.init({ publicKey: ejs.public_key });
   }
 
   form.addEventListener('submit', async e => {
