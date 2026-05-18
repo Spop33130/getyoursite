@@ -680,6 +680,130 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
       `.trim();
     }
 
+    function buildConfig() {
+      // Schedule
+      const schedule = [];
+      if (!checked('sch_semaine_closed')) {
+        schedule.push({ days: [1,2,3,4,5], open: val('sch_semaine_open') || '08:00', close: val('sch_semaine_close') || '18:00' });
+      }
+      if (!checked('sch_sam_closed')) {
+        schedule.push({ days: [6], open: val('sch_sam_open') || '08:00', close: val('sch_sam_close') || '12:00' });
+      }
+      if (checked('sch_dim_open')) {
+        schedule.push({ days: [0], open: val('sch_dim_open_h') || '09:00', close: val('sch_dim_close_h') || '12:00' });
+      }
+
+      // Services
+      const services = [];
+      const serviceIcons = ['fas fa-cogs','fas fa-car','fas fa-car-side','fas fa-wrench'];
+      for (let i = 1; i <= 4; i++) {
+        const t = val(`s${i}_title`);
+        if (t) services.push({ title: t, description: val(`s${i}_desc`), icon: serviceIcons[i - 1] });
+      }
+
+      // Phone raw (for WhatsApp)
+      const phone    = val('phone');
+      const whatsapp = val('whatsapp') || phone.replace(/[\s.]/g, '').replace(/^0/, '33');
+
+      // Hours text fallback
+      const hoursText = val('hours_text') || schedule.map(s => {
+        const days = s.days.includes(0) ? 'Dim' : s.days.includes(6) ? 'Sam' : 'Lun–Ven';
+        return `${days} : ${s.open.replace(':','h')}–${s.close.replace(':','h')}`;
+      }).join(' · ');
+
+      return {
+        siteName:    val('site_name'),
+        slogan:      val('slogan') || val('badge'),
+        badge:       val('badge'),
+        description: val('description'),
+
+        colors: {
+          primary:   val('color_primary')   || '#E74C3C',
+          secondary: val('color_secondary') || '#2C3E50'
+        },
+
+        hero: {
+          title:         val('site_name'),
+          subtitle:      val('description').slice(0, 120),
+          cta_primary:   'Prendre rendez-vous',
+          cta_secondary: 'Nos services',
+          tags:          ['Toutes marques', 'Véhicule de prêt disponible', 'Garantie 24 mois']
+        },
+
+        about: {
+          title: 'Notre Expertise',
+          stats: [
+            { number: '20+',   label: 'Années d\'expérience' },
+            { number: '1500+', label: 'Véhicules réparés'    },
+            { number: '98%',   label: 'Clients satisfaits'   }
+          ]
+        },
+
+        services,
+
+        images: {
+          hero:    'hero.jpg',
+          about:   'about.jpg',
+          gallery: ['gallery-1.jpg','gallery-2.jpg','gallery-3.jpg','gallery-4.jpg','gallery-5.jpg','gallery-6.jpg']
+        },
+
+        testimonials: [],
+
+        google_reviews: {
+          rating: parseFloat(val('google_rating')) || null,
+          count:  parseInt(val('google_count'))    || 0,
+          url:    val('google_url')
+        },
+
+        faq: [
+          { question: 'Acceptez-vous toutes les marques ?',         answer: 'Oui, nous intervenons sur toutes les marques et tous les modèles.' },
+          { question: 'Faut-il obligatoirement prendre rendez-vous ?', answer: 'Pour les travaux importants, un rendez-vous garantit un délai optimal.' },
+          { question: 'Combien de temps dure une révision ?',        answer: 'Une révision standard prend en général une demi-journée.' },
+          { question: 'Est-il possible de fournir les pièces pour toutes réparations ?', answer: 'Non, au titre de la garantie et par soucis de qualité, nous fournissons nous-mêmes les pièces détachées. Nous ne montons donc aucune pièce fournie par le client.' }
+        ],
+
+        schedule,
+
+        contact: {
+          address:        val('address'),
+          phone,
+          whatsapp,
+          email:          val('email'),
+          hours:          hoursText,
+          form_email:     '',
+          maps_embed_url: ''
+        },
+
+        form: {
+          title:               'Votre véhicule a besoin de nous ?',
+          subtitle:            'Réparation, entretien ou dépannage — décrivez-nous votre problème, on vous répond rapidement.',
+          message_label:       'Décrivez votre problème',
+          message_placeholder: 'Ex : ma voiture ne démarre plus, bruit suspect au freinage, révision à prévoir...',
+          button_text:         'Demander un devis',
+          button_icon:         'fas fa-wrench'
+        },
+
+        emailjs: { service_id: '', template_id: '', public_key: '' },
+
+        social: {
+          facebook:  val('facebook'),
+          instagram: val('instagram'),
+          linkedin:  ''
+        }
+      };
+    }
+
+    function downloadConfig(config) {
+      const slug = val('site_name').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || 'client';
+      const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = `config-${slug}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
     async function submitForm() {
       const required = ['commercial_name','site_name','badge','description','address','phone','email','s1_title','s1_desc','s2_title','s2_desc'];
       const missing  = required.filter(id => !val(id));
@@ -705,7 +829,8 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           message:    body
         });
 
-        showNotif('Fiche envoyée avec succès ! 🎉', 'success');
+        downloadConfig(buildConfig());
+        showNotif('Fiche envoyée + config.json téléchargé !', 'success');
         btn.innerHTML = '<i class="fas fa-check"></i> Envoyée !';
         btn.style.background = '#059669';
       } catch(err) {
