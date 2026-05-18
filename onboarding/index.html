@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiche client — GetYourSite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:   #E74C3C;
+      --dark:    #2C3E50;
+      --green:   #059669;
+      --text:    #1a1a2e;
+      --muted:   #6b7280;
+      --bg:      #f8f9fa;
+      --white:   #ffffff;
+      --border:  #e5e7eb;
+      --radius:  12px;
+      --shadow:  0 4px 20px rgba(0,0,0,.07);
+      --font:    'Outfit', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    .header {
+      background: var(--dark);
+      color: #fff;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .header-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px; padding: .3rem 1rem;
+      font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; letter-spacing: -.02em; margin-bottom: .5rem; }
+    .header p  { color: rgba(255,255,255,.65); font-size: .95rem; }
+
+    .container { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* BLOCKS */
+    .block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .block-title {
+      display: flex; align-items: center; gap: .85rem;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+    }
+    .block-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; color: #fff; flex-shrink: 0;
+    }
+    .block-icon--red    { background: var(--brand); }
+    .block-icon--dark   { background: var(--dark); }
+    .block-icon--green  { background: var(--green); }
+    .block-icon--blue   { background: #2E86AB; }
+    .block-icon--purple { background: #7C3AED; }
+    .block-icon--orange { background: #D97706; }
+
+    .block-title h2 { font-size: .95rem; font-weight: 700; }
+    .block-title p  { font-size: .78rem; color: var(--muted); margin-top: 1px; }
+    .block-body { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+
+    /* FORM ELEMENTS */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: .35rem; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: .8rem; font-weight: 600; color: var(--text);
+      display: flex; align-items: center; gap: .4rem;
+    }
+    label .opt { font-weight: 400; color: var(--muted); font-size: .75rem; }
+
+    input[type=text], input[type=email], input[type=tel], input[type=url],
+    input[type=time], input[type=number], textarea, select {
+      font-family: var(--font);
+      font-size: .9rem;
+      padding: .6rem .85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s;
+      width: 100%;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--brand); }
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* SCHEDULE */
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: .75rem;
+      align-items: center;
+    }
+    .schedule-row label { font-size: .85rem; font-weight: 500; }
+    .schedule-times { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .schedule-times span { font-size: .8rem; color: var(--muted); }
+    .schedule-times input[type=time] { width: 110px; }
+    .schedule-closed { display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--muted); }
+    .schedule-closed input[type=checkbox] { width: 15px; height: 15px; cursor: pointer; accent-color: var(--brand); }
+
+    /* COLOR PICKER */
+    .color-field { display: flex; align-items: center; gap: .75rem; }
+    .color-field input[type=color] {
+      width: 44px; height: 38px;
+      padding: 2px; border-radius: 8px;
+      border: 1.5px solid var(--border);
+      cursor: pointer; background: none;
+    }
+    .color-field input[type=text] { flex: 1; font-family: monospace; }
+
+    /* SERVICE BLOCK */
+    .service-entry {
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      position: relative;
+    }
+    .service-num {
+      position: absolute; top: -10px; left: 12px;
+      background: var(--dark); color: #fff;
+      font-size: .68rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px;
+    }
+
+    /* SUBMIT */
+    .submit-area {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem;
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+    }
+    .submit-info { font-size: .82rem; color: var(--muted); line-height: 1.4; }
+    .submit-info strong { color: var(--text); }
+
+    .btn-submit {
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: .75rem 2rem;
+      font-family: var(--font);
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; gap: .6rem;
+      white-space: nowrap;
+      transition: background .15s, transform .1s;
+    }
+    .btn-submit:hover { background: #c0392b; }
+    .btn-submit:active { transform: scale(.97); }
+    .btn-submit:disabled { background: var(--muted); cursor: not-allowed; }
+
+    /* NOTIFICATION */
+    .notif {
+      position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: var(--dark); color: #fff;
+      padding: .85rem 1.5rem; border-radius: 10px;
+      font-size: .9rem; font-weight: 600;
+      display: flex; align-items: center; gap: .75rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,.2);
+      z-index: 9999;
+      transition: opacity .3s;
+      white-space: nowrap;
+    }
+    .notif--success { background: #064e3b; }
+    .notif--error   { background: #7f1d1d; }
+    .notif i { font-size: 1rem; }
+
+    /* HINT */
+    .hint { font-size: .78rem; color: var(--muted); margin-top: -.2rem; }
+
+    hr { border: none; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-badge"><i class="fas fa-clipboard-list"></i> Fiche client</div>
+    <h1>Collecte des informations</h1>
+    <p>Remplissez ce formulaire avec le client — envoi automatique au dev à la validation.</p>
+  </div>
+
+  <div class="container">
+  <form id="onboarding-form" novalidate>
+
+    <!-- COMMERCIAL -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--dark"><i class="fas fa-user-tie"></i></div>
+        <div><h2>Le commercial</h2><p>Pour identifier qui envoie la fiche</p></div>
+      </div>
+      <div class="block-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="commercial_name">Ton prénom *</label>
+            <input type="text" id="commercial_name" placeholder="Ex : Alex" required>
+          </div>
+          <div class="form-group">
+            <label for="commercial_date">Date de la visite</label>
+            <input type="text" id="commercial_date" placeholder="Ex : 18/05/2026">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IDENTITÉ -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--red"><i class="fas fa-store"></i></div>
+        <div><h2>Identité du garage</h2><p>Nom, accroche, description</p></div>
+      </div>
+      <div class="block-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="site_name">Nom du garage *</label>
+            <input type="text" id="site_name" placeholder="Ex : Garage Dupont Auto" required>
+          </div>
+          <div class="form-group">
+            <label for="slogan">Slogan <span class="opt">(optionnel)</span></label>
+            <input type="text" id="slogan" placeholder="Ex : Votre expert auto de confiance">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="badge">Badge accroche *</label>
+          <input type="text" id="badge" placeholder="Ex : Mécanicien certifié · 20 ans d'expérience" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description du garage *</label>
+          <textarea id="description" rows="3" placeholder="Quelques phrases sur le garage, l'équipe, les valeurs..." required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--blue"><i class="fas fa-map-marker-alt"></i></div>
+        <div><h2>Coordonnées</h2><p>Adresse, téléphone, email</p></div>
+      </div>
+      <div class="block-body">
+        <div class="form-group">
+          <label for="address">Adresse complète *</label>
+          <input type="text" id="address" placeholder="Ex : 12 Rue de la Mécanique, 33000 Bordeaux" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Téléphone *</label>
+            <input type="tel" id="phone" placeholder="Ex : 05 56 12 34 56" required>
+          </div>
+          <div class="form-group">
+            <label for="whatsapp">WhatsApp <span class="opt">(numéro international)</span></label>
+            <input type="tel" id="whatsapp" placeholder="Ex : 33556123456">
+            <span class="hint">Format : 33 suivi du numéro sans 0 initial</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email du garage *</label>
+            <input type="email" id="email" placeholder="Ex : contact@garage-dupont.fr" required>
+          </div>
+          <div class="form-group">
+            <label for="hours_text">Horaires (texte affiché)</label>
+            <input type="text" id="hours_text" placeholder="Ex : Lun–Ven : 8h–18h · Sam : 8h–12h">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HORAIRES -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--orange"><i class="fas fa-clock"></i></div>
+        <div><h2>Horaires d'ouverture</h2><p>Pour le badge ouvert / fermé en temps réel</p></div>
+      </div>
+      <div class="block-body">
+        <div style="display:flex;flex-direction:column;gap:.85rem;">
+
+          <div class="schedule-row">
+            <label>Lun – Ven</label>
+            <div class="schedule-times">
+              <input type="time" id="sch_semaine_open" value="08:00">
+              <span>→</span>
+              <input type="time" id="sch_semaine_close" value="18:00">
+              <label class="schedule-closed"><input type="checkbox" id="sch_semaine_closed"> Fermé</label>
+            </div>
+          </div>
+
+          <div class="schedule-row">
+            <label>Samedi</label>
+            <div class="schedule-times">
+              <input type="time" id="sch_sam_open" value="08:00">
+              <span>→</span>
+              <input type="time" id="sch_sam_close" value="12:00">
+              <label class="schedule-closed"><input type="checkbox" id="sch_sam_closed"> Fermé</label>
+            </div>
+          </div>
+
+          <div class="schedule-row">
+            <label>Dimanche</label>
+            <div class="schedule-times">
+              <label class="schedule-closed" style="font-size:.88rem;"><input type="checkbox" id="sch_dim_open"> Ouvert le dimanche</label>
+              <span id="sch_dim_fields" style="display:none;align-items:center;gap:.5rem;">
+                <input type="time" id="sch_dim_open_h" value="09:00">
+                <span>→</span>
+                <input type="time" id="sch_dim_close_h" value="12:00">
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- COULEURS -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--purple"><i class="fas fa-palette"></i></div>
+        <div><h2>Couleurs du site</h2><p>Couleur principale et secondaire</p></div>
+      </div>
+      <div class="block-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Couleur principale *</label>
+            <div class="color-field">
+              <input type="color" id="color_primary_picker" value="#E74C3C">
+              <input type="text" id="color_primary" value="#E74C3C" maxlength="7" placeholder="#E74C3C">
+            </div>
+            <span class="hint">Ex : rouge #E74C3C, bleu #2980B9, vert #27AE60</span>
+          </div>
+          <div class="form-group">
+            <label>Couleur secondaire</label>
+            <div class="color-field">
+              <input type="color" id="color_secondary_picker" value="#2C3E50">
+              <input type="text" id="color_secondary" value="#2C3E50" maxlength="7" placeholder="#2C3E50">
+            </div>
+            <span class="hint">Fond sombre par défaut : #2C3E50</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--red"><i class="fas fa-cogs"></i></div>
+        <div><h2>Services proposés</h2><p>3 à 4 services maximum</p></div>
+      </div>
+      <div class="block-body">
+
+        <div class="service-entry">
+          <div class="service-num">Service 1</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom du service *</label>
+              <input type="text" id="s1_title" placeholder="Ex : Mécanique Générale" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description courte *</label>
+            <input type="text" id="s1_desc" placeholder="Ex : Diagnostic, réparation moteur, transmission..." required>
+          </div>
+        </div>
+
+        <div class="service-entry">
+          <div class="service-num">Service 2</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom du service *</label>
+              <input type="text" id="s2_title" placeholder="Ex : Carrosserie & Peinture" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description courte *</label>
+            <input type="text" id="s2_desc" placeholder="Ex : Réparation carrosserie et peinture..." required>
+          </div>
+        </div>
+
+        <div class="service-entry">
+          <div class="service-num">Service 3</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom du service *</label>
+              <input type="text" id="s3_title" placeholder="Ex : Vente VN / VO">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description courte</label>
+            <input type="text" id="s3_desc" placeholder="Ex : Vente véhicules neufs et occasions...">
+          </div>
+        </div>
+
+        <div class="service-entry">
+          <div class="service-num">Service 4 <span style="font-weight:400;opacity:.7;">(optionnel)</span></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom du service</label>
+              <input type="text" id="s4_title" placeholder="Ex : Pneumatiques">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description courte</label>
+            <input type="text" id="s4_desc" placeholder="Ex : Montage, équilibrage, géométrie...">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RÉSEAUX SOCIAUX & GOOGLE -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--blue"><i class="fas fa-share-nodes"></i></div>
+        <div><h2>Réseaux & Google</h2><p>Liens sociaux et fiche Google</p></div>
+      </div>
+      <div class="block-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fab fa-facebook-f" style="color:#1877F2;width:14px;"></i> Facebook</label>
+            <input type="url" id="facebook" placeholder="https://www.facebook.com/...">
+          </div>
+          <div class="form-group">
+            <label><i class="fab fa-instagram" style="color:#E1306C;width:14px;"></i> Instagram</label>
+            <input type="url" id="instagram" placeholder="https://www.instagram.com/...">
+          </div>
+        </div>
+        <hr>
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fab fa-google" style="color:#EA4335;width:14px;"></i> URL fiche Google Maps</label>
+            <input type="url" id="google_url" placeholder="https://maps.google.com/?cid=...">
+            <span class="hint">Copier l'URL depuis Google Maps</span>
+          </div>
+          <div class="form-group">
+            <label>Note Google <span class="opt">(ex : 4.9)</span></label>
+            <input type="number" id="google_rating" placeholder="4.9" min="1" max="5" step="0.1">
+          </div>
+        </div>
+        <div class="form-group" style="max-width:200px;">
+          <label>Nombre d'avis</label>
+          <input type="number" id="google_count" placeholder="Ex : 87" min="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--green"><i class="fas fa-sticky-note"></i></div>
+        <div><h2>Notes & demandes spéciales</h2><p>Tout ce qui ne rentre pas dans les cases</p></div>
+      </div>
+      <div class="block-body">
+        <div class="form-group">
+          <label for="notes">Notes libres <span class="opt">(optionnel)</span></label>
+          <textarea id="notes" rows="4" placeholder="Couleur logo du client, demandes particulières, photos disponibles, nom de domaine existant..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="domain">Nom de domaine existant ? <span class="opt">(optionnel)</span></label>
+          <input type="text" id="domain" placeholder="Ex : garage-dupont.fr (ou laisser vide si à acheter)">
+        </div>
+      </div>
+    </div>
+
+  </form>
+  </div>
+
+  <!-- SUBMIT BAR -->
+  <div class="submit-area">
+    <div class="submit-info">
+      <strong>Prêt à envoyer ?</strong><br>
+      Vérifiez avec le client avant de valider.
+    </div>
+    <button type="button" class="btn-submit" id="submit-btn" onclick="submitForm()">
+      <i class="fas fa-paper-plane"></i>
+      Valider et envoyer
+    </button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init({ publicKey: '4jD-AMOCzmbAcmZV2' });
+
+    // Sync color pickers ↔ text inputs
+    function syncColor(pickerId, textId) {
+      const picker = document.getElementById(pickerId);
+      const text   = document.getElementById(textId);
+      picker.addEventListener('input', () => { text.value = picker.value; });
+      text.addEventListener('input',   () => {
+        if (/^#[0-9a-fA-F]{6}$/.test(text.value)) picker.value = text.value;
+      });
+    }
+    syncColor('color_primary_picker',   'color_primary');
+    syncColor('color_secondary_picker', 'color_secondary');
+
+    // Toggle dimanche fields
+    document.getElementById('sch_dim_open').addEventListener('change', function() {
+      document.getElementById('sch_dim_fields').style.display = this.checked ? 'flex' : 'none';
+    });
+
+    function val(id) {
+      return (document.getElementById(id)?.value || '').trim();
+    }
+    function checked(id) {
+      return document.getElementById(id)?.checked || false;
+    }
+
+    function buildEmailBody() {
+      const line  = (label, value) => value ? `${label} : ${value}\n` : '';
+      const sep   = () => '─────────────────────────────────\n';
+
+      // Horaires
+      const semOpen  = checked('sch_semaine_closed') ? 'Fermé' : `${val('sch_semaine_open')} → ${val('sch_semaine_close')}`;
+      const samOpen  = checked('sch_sam_closed')     ? 'Fermé' : `${val('sch_sam_open')} → ${val('sch_sam_close')}`;
+      const dimOpen  = checked('sch_dim_open')
+        ? `${val('sch_dim_open_h')} → ${val('sch_dim_close_h')}`
+        : 'Fermé';
+
+      // Services
+      let services = '';
+      for (let i = 1; i <= 4; i++) {
+        const t = val(`s${i}_title`);
+        const d = val(`s${i}_desc`);
+        if (t) services += `  Service ${i} : ${t}${d ? ' — ' + d : ''}\n`;
+      }
+
+      return `
+FICHE CLIENT — GETYOURSITE
+Envoyée par : ${val('commercial_name')} ${val('commercial_date') ? '(visite du ' + val('commercial_date') + ')' : ''}
+${sep()}
+IDENTITÉ
+${line('Nom du garage',  val('site_name'))}${line('Slogan',         val('slogan'))}${line('Badge',          val('badge'))}${line('Description',    val('description'))}
+${sep()}
+COORDONNÉES
+${line('Adresse',        val('address'))}${line('Téléphone',      val('phone'))}${line('WhatsApp',       val('whatsapp'))}${line('Email',          val('email'))}${line('Horaires texte', val('hours_text'))}
+${sep()}
+HORAIRES OUVERTURE
+  Lun–Ven  : ${semOpen}
+  Samedi   : ${samOpen}
+  Dimanche : ${dimOpen}
+
+${sep()}
+COULEURS
+  Principale  : ${val('color_primary')}
+  Secondaire  : ${val('color_secondary')}
+
+${sep()}
+SERVICES
+${services}
+${sep()}
+RÉSEAUX & GOOGLE
+${line('Facebook',       val('facebook'))}${line('Instagram',      val('instagram'))}${line('Google Maps URL',val('google_url'))}${line('Note Google',    val('google_rating'))}${line('Nombre d\'avis',  val('google_count'))}
+${sep()}
+DIVERS
+${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
+      `.trim();
+    }
+
+    async function submitForm() {
+      const required = ['commercial_name','site_name','badge','description','address','phone','email','s1_title','s1_desc','s2_title','s2_desc'];
+      const missing  = required.filter(id => !val(id));
+
+      if (missing.length) {
+        showNotif('Merci de remplir les champs obligatoires (marqués *).', 'error');
+        document.getElementById(missing[0])?.focus();
+        return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours…';
+
+      const body = buildEmailBody();
+
+      try {
+        await emailjs.send('service_z35lqdq', 'template_4js8z7q', {
+          site_name:  'Nouvelle fiche client — ' + val('site_name'),
+          from_name:  val('commercial_name'),
+          from_email: 'onboarding@getyoursite.fr',
+          phone:      val('phone'),
+          message:    body
+        });
+
+        showNotif('Fiche envoyée avec succès ! 🎉', 'success');
+        btn.innerHTML = '<i class="fas fa-check"></i> Envoyée !';
+        btn.style.background = '#059669';
+      } catch(err) {
+        console.error(err);
+        showNotif('Erreur d\'envoi — vérifie ta connexion.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Valider et envoyer';
+      }
+    }
+
+    function showNotif(msg, type) {
+      document.querySelectorAll('.notif').forEach(n => n.remove());
+      const el = document.createElement('div');
+      el.className = `notif notif--${type}`;
+      el.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${msg}`;
+      document.body.appendChild(el);
+      setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 4000);
+    }
+  </script>
+
+</body>
+</html>
