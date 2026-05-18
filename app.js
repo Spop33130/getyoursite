@@ -93,13 +93,15 @@ function applyContent(c) {
 
   setHTML('contact-phone', phone ? `<a href="tel:${phoneRaw}">${phone}</a>` : '—');
   setHTML('contact-email', email ? `<a href="mailto:${email}">${email}</a>` : '—');
-  setText('contact-address', c.contact?.address || '');
+  const addr = c.contact?.address || '';
+  const mapsUrl = addr ? `https://maps.google.com/?q=${encodeURIComponent(addr)}` : '';
+  setHTML('contact-address', addr ? `<a href="${mapsUrl}" target="_blank" rel="noopener">${addr}</a>` : '—');
   setText('contact-hours',   c.contact?.hours   || '');
 
   // Footer
   setText('footer-name',        c.siteName);
   setText('footer-description', (c.description || '').slice(0, 120) + '…');
-  setText('footer-address',     c.contact?.address || '');
+  setHTML('footer-address', addr ? `<a href="${mapsUrl}" target="_blank" rel="noopener" style="color:inherit;">${addr}</a>` : '');
   setHTML('footer-phone', phone ? `<a href="tel:${phoneRaw}">${phone}</a>` : '');
   setHTML('footer-email', email ? `<a href="mailto:${email}">${email}</a>` : '');
   setText('footer-copy-name',   c.siteName);
@@ -203,7 +205,7 @@ function renderServices(services) {
 const COMMITMENT_DEFAULTS = [
   { icon: 'fas fa-file-invoice', title: 'Devis gratuit',       description: 'Sans engagement, réponse sous 24h' },
   { icon: 'fas fa-clock',        title: 'Délais respectés',    description: 'Votre véhicule rendu à l\'heure convenue' },
-  { icon: 'fas fa-shield-halved',title: 'Garantie 12 mois',    description: 'Sur toutes pièces et main d\'œuvre' },
+  { icon: 'fas fa-shield-halved',title: 'Garantie 24 mois',    description: 'Sur toutes pièces et main d\'œuvre' },
   { icon: 'fas fa-tag',          title: 'Prix transparents',   description: 'Pas de mauvaise surprise sur la facture' }
 ];
 

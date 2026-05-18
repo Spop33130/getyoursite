@@ -14,7 +14,7 @@
     "subtitle": "Votre véhicule mérite le meilleur soin. Diagnostic, entretien, réparation — on s'occupe de tout.",
     "cta_primary": "Prendre rendez-vous",
     "cta_secondary": "Nos services",
-    "tags": ["Toutes marques", "Sans rendez-vous", "Véhicule de prêt disponible"]
+    "tags": ["Toutes marques", "Véhicule de prêt disponible", "Garantie 24 mois"]
   },
 
   "about": {
@@ -41,6 +41,11 @@
       "title": "Carrosserie & Peinture",
       "description": "Réparation de carrosserie et peinture automobile avec garantie qualité sur toutes les interventions",
       "icon": "fas fa-car"
+    },
+    {
+      "title": "Vente VN / VO",
+      "description": "Vente de véhicules neufs et d'occasions sélectionnés, reprise de votre ancien véhicule",
+      "icon": "fas fa-car-side"
     }
   ],
 
@@ -105,8 +110,8 @@
       "answer": "Oui, nous mettons à votre disposition un véhicule de prêt lors d'immobilisations longues, sous réserve de disponibilité. N'hésitez pas à nous le préciser lors de votre demande."
     },
     {
-      "question": "Vos réparations sont-elles garanties ?",
-      "answer": "Toutes nos interventions sont couvertes par une garantie de 12 mois sur les pièces et la main d'œuvre. Votre tranquillité d'esprit est notre priorité."
+      "question": "Est-il possible de fournir les pièces pour toutes réparations ?",
+      "answer": "Non, au titre de la garantie, et par soucis de qualité, nous fournissons nous même les pièces détachées. Nous ne montons donc aucune pièce fournie par le client."
     }
   ],
 
