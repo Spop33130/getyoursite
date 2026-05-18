@@ -55,6 +55,10 @@ function applyContent(c) {
   setText('hero-subtitle',      c.hero?.subtitle);
   setText('hero-cta-primary',   c.hero?.cta_primary   || 'Nous Contacter');
   setText('hero-cta-secondary', c.hero?.cta_secondary || 'Nos Services');
+  if (c.hero?.cta_secondary_url) {
+    const btn = document.getElementById('hero-cta-secondary');
+    if (btn) { btn.href = c.hero.cta_secondary_url; btn.target = '_blank'; btn.rel = 'noopener'; }
+  }
   setText('about-title',        c.about?.title || c.slogan);
   setText('about-description',  c.description);
 
