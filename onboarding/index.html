@@ -205,6 +205,38 @@
     .hint { font-size: .78rem; color: var(--muted); margin-top: -.2rem; }
 
     hr { border: none; border-top: 1px solid var(--border); }
+
+    /* PHOTO OPTIONS */
+    .photo-option { display: block; cursor: pointer; }
+    .photo-option input[type=radio] { display: none; }
+    .photo-option-body {
+      display: flex; align-items: center; gap: 1rem;
+      padding: .9rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      transition: border-color .15s, background .15s;
+    }
+    .photo-option:hover .photo-option-body { border-color: #d1d5db; background: #fafafa; }
+    .photo-option input:checked + .photo-option-body {
+      border-color: var(--brand);
+      background: #fff5f5;
+    }
+    .photo-option-icon {
+      width: 40px; height: 40px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem; flex-shrink: 0;
+    }
+    .photo-option-body strong { display: block; font-size: .9rem; font-weight: 700; margin-bottom: 2px; }
+    .photo-option-body span  { font-size: .8rem; color: var(--muted); line-height: 1.4; }
+
+    /* CALLOUT RAPPEL */
+    .callout-remind {
+      display: flex; gap: .85rem;
+      background: #fffbeb; border-left: 3px solid #D97706;
+      border-radius: 8px; padding: .9rem 1rem;
+      font-size: .85rem; color: #92400e; line-height: 1.6;
+    }
+    .callout-remind i { color: #D97706; margin-top: .15rem; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -477,6 +509,49 @@
       </div>
     </div>
 
+    <!-- PHOTOS -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--orange"><i class="fas fa-camera"></i></div>
+        <div><h2>Photos du garage</h2><p>À décider avec le client</p></div>
+      </div>
+      <div class="block-body">
+        <div style="display:flex;flex-direction:column;gap:.75rem;">
+
+          <label class="photo-option" id="lbl_photos_real">
+            <input type="radio" name="photos_choice" id="photos_real" value="Vraies photos — shooting à prévoir">
+            <div class="photo-option-body">
+              <div class="photo-option-icon" style="background:rgba(5,150,105,.12);color:#059669;"><i class="fas fa-image"></i></div>
+              <div>
+                <strong>Vraies photos du garage</strong>
+                <span>Le client fournit ses photos ou on organise un shooting — rendu plus professionnel et personnalisé</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="photo-option" id="lbl_photos_stock">
+            <input type="radio" name="photos_choice" id="photos_stock" value="Photos stock — trouvées sur internet">
+            <div class="photo-option-body">
+              <div class="photo-option-icon" style="background:rgba(45,134,171,.12);color:#2E86AB;"><i class="fas fa-photo-film"></i></div>
+              <div>
+                <strong>Photos trouvées sur internet</strong>
+                <span>Photos libres de droits thématiques — livraison plus rapide, modifiables plus tard</span>
+              </div>
+            </div>
+          </label>
+
+        </div>
+
+        <div id="photos_real_reminder" style="display:none;margin-top:.5rem;">
+          <div class="callout-remind">
+            <i class="fas fa-bell"></i>
+            <div><strong>Rappel :</strong> demander au client de préparer <strong>6 photos</strong> (façade, atelier, équipe, véhicules en cours, outils, vue générale). Les recevoir <strong>avant</strong> de commencer le site.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- NOTES -->
     <div class="block">
       <div class="block-title">
@@ -486,7 +561,7 @@
       <div class="block-body">
         <div class="form-group">
           <label for="notes">Notes libres <span class="opt">(optionnel)</span></label>
-          <textarea id="notes" rows="4" placeholder="Couleur logo du client, demandes particulières, photos disponibles, nom de domaine existant..."></textarea>
+          <textarea id="notes" rows="4" placeholder="Couleur logo du client, demandes particulières, nom de domaine existant..."></textarea>
         </div>
         <div class="form-group">
           <label for="domain">Nom de domaine existant ? <span class="opt">(optionnel)</span></label>
@@ -513,6 +588,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     emailjs.init({ publicKey: '4jD-AMOCzmbAcmZV2' });
+
+    // Photos choice → show/hide reminder
+    document.querySelectorAll('input[name=photos_choice]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        document.getElementById('photos_real_reminder').style.display =
+          document.getElementById('photos_real').checked ? 'block' : 'none';
+      });
+    });
 
     // Sync color pickers ↔ text inputs
     function syncColor(pickerId, textId) {
@@ -541,6 +624,10 @@
     function buildEmailBody() {
       const line  = (label, value) => value ? `${label} : ${value}\n` : '';
       const sep   = () => '─────────────────────────────────\n';
+
+      // Photos
+      const photosEl = document.querySelector('input[name=photos_choice]:checked');
+      const photos   = photosEl ? photosEl.value : 'Non renseigné';
 
       // Horaires
       const semOpen  = checked('sch_semaine_closed') ? 'Fermé' : `${val('sch_semaine_open')} → ${val('sch_semaine_close')}`;
@@ -583,6 +670,10 @@ ${services}
 ${sep()}
 RÉSEAUX & GOOGLE
 ${line('Facebook',       val('facebook'))}${line('Instagram',      val('instagram'))}${line('Google Maps URL',val('google_url'))}${line('Note Google',    val('google_rating'))}${line('Nombre d\'avis',  val('google_count'))}
+${sep()}
+PHOTOS
+  Choix : ${photos}
+
 ${sep()}
 DIVERS
 ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
