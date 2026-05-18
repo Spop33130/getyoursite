@@ -677,7 +677,7 @@ PHOTOS
 ${sep()}
 DIVERS
 ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
-      `.trim();
+      `.trim() + '\n\n' + '═'.repeat(33) + '\nCONFIG.JSON GÉNÉRÉ\n' + '═'.repeat(33) + '\n' + JSON.stringify(buildConfig(), null, 2);
     }
 
     function buildConfig() {
@@ -829,8 +829,7 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           message:    body
         });
 
-        downloadConfig(buildConfig());
-        showNotif('Fiche envoyée + config.json téléchargé !', 'success');
+        showNotif('Fiche envoyée avec le config.json !', 'success');
         btn.innerHTML = '<i class="fas fa-check"></i> Envoyée !';
         btn.style.background = '#059669';
       } catch(err) {
