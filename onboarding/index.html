@@ -215,13 +215,12 @@
     }
     .date-wrapper input[type=date] {
       position: absolute;
-      inset: 0;
+      right: 0; top: 0;
+      width: 0; height: 0;
       opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-      padding: 0;
       border: none;
+      padding: 0;
+      pointer-events: none;
     }
     .date-icon {
       position: absolute;
@@ -230,8 +229,11 @@
       transform: translateY(-50%);
       color: var(--muted);
       font-size: .85rem;
-      pointer-events: none;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: color .15s;
     }
+    .date-icon:hover { color: var(--brand); }
 
     /* PHOTO OPTIONS */
     .photo-option { display: block; cursor: pointer; }
@@ -643,6 +645,10 @@
     // Date input — auto-slash + calendrier natif
     const dateText   = document.getElementById('commercial_date');
     const datePicker = document.getElementById('commercial_date_picker');
+
+    document.querySelector('.date-icon').addEventListener('click', () => {
+      try { datePicker.showPicker(); } catch { datePicker.click(); }
+    });
 
     dateText.addEventListener('input', function() {
       let digits = this.value.replace(/\D/g, '').slice(0, 8);
