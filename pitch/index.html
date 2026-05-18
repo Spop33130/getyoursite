@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kit Commercial — GetYourSite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:  #E74C3C;
+      --dark:   #2C3E50;
+      --green:  #059669;
+      --blue:   #2E86AB;
+      --orange: #f59e0b;
+      --text:   #1a1a2e;
+      --muted:  #6b7280;
+      --bg:     #f8f9fa;
+      --white:  #ffffff;
+      --border: #e5e7eb;
+      --font:   'Outfit', system-ui, sans-serif;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0,0,0,.07);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); font-size: 1rem; color: var(--text); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* HEADER */
+    .header {
+      background: var(--dark);
+      color: #fff;
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+    }
+    .header-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px; padding: .3rem 1rem;
+      font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .header h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: -.03em; margin-bottom: .75rem; color: #fff; }
+    .header p  { font-size: 1.1rem; color: rgba(255,255,255,.7); max-width: 540px; margin: 0 auto; }
+
+    /* LAYOUT */
+    .container { max-width: 820px; margin: 0 auto; padding: 0 1.5rem; }
+    .page-body  { padding: 2.5rem 0 4rem; }
+
+    /* SECTION CARD */
+    .section {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 1.5rem;
+      overflow: hidden; box-shadow: var(--shadow);
+    }
+    .section-title {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
+    }
+    .section-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0; color: #fff;
+    }
+    .section-icon--red    { background: var(--brand); }
+    .section-icon--green  { background: var(--green); }
+    .section-icon--blue   { background: var(--blue); }
+    .section-icon--orange { background: var(--orange); }
+    .section-icon--dark   { background: var(--dark); }
+
+    .section-title h2 { font-size: 1.1rem; font-weight: 700; letter-spacing: -.01em; }
+    .section-title p  { font-size: .85rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .section-body { padding: 1.75rem 2rem; }
+
+    /* CALLOUTS */
+    .callout {
+      display: flex; gap: 1rem; padding: 1rem 1.25rem;
+      border-radius: 9px; margin: 1.25rem 0; font-size: .9rem; line-height: 1.6;
+    }
+    .callout i { margin-top: .15rem; flex-shrink: 0; font-size: 1rem; }
+    .callout--tip   { background: #ecfdf5; border-left: 3px solid var(--green); color: #065f46; }
+    .callout--tip i { color: var(--green); }
+    .callout--info   { background: #eff6ff; border-left: 3px solid var(--blue); color: #1e40af; }
+    .callout--info i { color: var(--blue); }
+    .callout--warn   { background: #fffbeb; border-left: 3px solid var(--orange); color: #92400e; }
+    .callout--warn i { color: var(--orange); }
+    .callout--brand   { background: #fef2f2; border-left: 3px solid var(--brand); color: #7f1d1d; }
+    .callout--brand i { color: var(--brand); }
+
+    /* FEATURE GRID */
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (max-width: 580px) { .feature-grid { grid-template-columns: 1fr; } }
+
+    .feature-item {
+      display: flex; align-items: flex-start; gap: .75rem;
+      padding: .9rem 1rem; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 9px; font-size: .88rem;
+    }
+    .feature-item i { color: var(--green); margin-top: .1rem; flex-shrink: 0; }
+    .feature-item strong { display: block; font-weight: 600; margin-bottom: 2px; color: var(--text); }
+    .feature-item span { color: var(--muted); }
+
+    /* OBJECTION LIST */
+    .objection-list { display: flex; flex-direction: column; gap: 1rem; }
+    .objection {
+      border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden;
+    }
+    .objection-q {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .85rem 1.1rem; background: #fef2f2;
+      font-size: .9rem; font-weight: 600; color: #991b1b;
+    }
+    .objection-q i { color: var(--brand); font-size: .85rem; flex-shrink: 0; }
+    .objection-a {
+      padding: .85rem 1.1rem; font-size: .9rem; color: var(--text);
+      line-height: 1.65; background: #f0fdf4; border-top: 1px solid var(--border);
+    }
+    .objection-a strong { color: var(--green); }
+
+    /* PRICING */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 580px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+    .pricing-card {
+      border: 2px solid var(--border); border-radius: var(--radius);
+      padding: 1.5rem; text-align: center; position: relative;
+      transition: border-color .2s;
+    }
+    .pricing-card--recommended {
+      border-color: var(--brand);
+    }
+    .pricing-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--brand); color: #fff; font-size: .7rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .08em;
+      padding: .2rem .75rem; border-radius: 999px; white-space: nowrap;
+    }
+    .pricing-name { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .5rem; }
+    .pricing-price { font-size: 2.2rem; font-weight: 800; color: var(--text); letter-spacing: -.03em; line-height: 1; margin-bottom: .25rem; }
+    .pricing-price span { font-size: 1rem; font-weight: 500; color: var(--muted); }
+    .pricing-desc { font-size: .85rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+    .pricing-includes { list-style: none; text-align: left; display: flex; flex-direction: column; gap: .4rem; }
+    .pricing-includes li { font-size: .82rem; display: flex; gap: .5rem; align-items: flex-start; }
+    .pricing-includes li i { color: var(--green); margin-top: .15rem; flex-shrink: 0; font-size: .75rem; }
+
+    /* SCRIPT */
+    .script-block {
+      background: #1e2433; color: #e2e8f0; border-radius: 9px;
+      padding: 1.25rem 1.5rem; font-size: .88rem; line-height: 1.8;
+      margin: 1rem 0;
+    }
+    .script-block .role { color: #93c5fd; font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; display: block; margin-bottom: .25rem; }
+    .script-block .line { color: #f1f5f9; }
+    .script-block .note { color: #64748b; font-style: italic; font-size: .8rem; }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: .9rem; }
+    .step  { display: flex; gap: 1rem; align-items: flex-start; }
+    .step-bullet {
+      width: 28px; height: 28px; background: var(--dark); color: #fff;
+      border-radius: 999px; display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 800; flex-shrink: 0; margin-top: .15rem;
+    }
+    .step p { font-size: .9rem; line-height: 1.6; }
+    .step p strong { font-weight: 600; }
+
+    /* STATS ROW */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr; } }
+    .stat-box { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 1rem; text-align: center; }
+    .stat-box .num  { font-size: 1.8rem; font-weight: 800; color: var(--brand); line-height: 1; letter-spacing: -.02em; }
+    .stat-box .lbl  { font-size: .78rem; color: var(--muted); margin-top: .25rem; font-weight: 500; }
+
+    /* RECAP */
+    .recap {
+      background: var(--dark); color: #fff; border-radius: var(--radius);
+      padding: 1.75rem 2rem; margin-bottom: 2rem;
+    }
+    .recap h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+    .recap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .75rem; }
+    .recap-item { background: rgba(255,255,255,.07); border-radius: 8px; padding: .75rem 1rem; font-size: .85rem; }
+    .recap-item strong { display: block; margin-bottom: .2rem; color: #fff; }
+    .recap-item span { color: rgba(255,255,255,.55); }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+    .footer { text-align: center; padding: 3rem 1.5rem; color: var(--muted); font-size: .85rem; }
+    .footer strong { color: var(--brand); }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-badge"><i class="fas fa-handshake"></i> Kit Commercial</div>
+    <h1>Vendre GetYourSite<br>à un garage</h1>
+    <p>Tout ce qu'il faut pour convaincre, répondre aux objections et closer.</p>
+  </div>
+
+  <div class="container page-body">
+
+    <!-- CONTEXTE MARCHÉ -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon section-icon--blue"><i class="fas fa-chart-bar"></i></div>
+        <div>
+          <h2>Pourquoi ça marche</h2>
+          <p>Le contexte qui rend ce produit facile à vendre</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="num">76%</div>
+            <div class="lbl">des recherches garage se font sur mobile</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">+60%</div>
+            <div class="lbl">des garages indépendants n'ont pas de site à jour</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">48h</div>
+            <div class="lbl">délai de livraison d'un site complet</div>
+          </div>
+        </div>
+
+        <p style="font-size:.9rem;color:var(--muted);line-height:1.7;">
+          Un client qui cherche "garage Bordeaux" sur son téléphone voit d'abord les fiches Google Maps — et clique sur ceux qui ont un vrai site. <strong>Un garage sans site perd des clients tous les jours sans le savoir.</strong> Notre argument : on leur donne en 48h ce que leur concurrent met 3 mois à commander.
+        </p>
+
+        <div class="callout callout--tip" style="margin-top:1rem;margin-bottom:0;">
+          <i class="fas fa-lightbulb"></i>
+          <div>Le bon angle d'attaque : <strong>ne pas parler de site web</strong>. Parler de <strong>clients perdus</strong>. "Combien de personnes ont cherché votre garage ce mois-ci et sont allés ailleurs parce qu'ils ne trouvaient pas d'infos ?"</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CE QU'ON VEND -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon section-icon--red"><i class="fas fa-box-open"></i></div>
+        <div>
+          <h2>Ce que le client reçoit</h2>
+          <p>Tout inclus, livré clé en main</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="feature-grid">
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <div><strong>Site professionnel complet</strong><span>Hero, services, galerie, avis, FAQ, contact, carte</span></div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <div><strong>100% mobile-first</strong><span>Bouton "Appeler" et WhatsApp collés en bas d'écran</span></div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <div><strong>Formulaire de contact fonctionnel</strong><span>Les demandes arrivent par email, zéro spam</span></div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <div><strong>Badge ouvert / fermé en direct</strong><span>Calculé automatiquement selon ses horaires</span></div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <div><strong>Google Maps intégré</strong><span>Carte cliquable directement sur le site</span></div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <div><strong>Hébergement inclus 1 an</strong><span>Vercel — rapide, fiable, zéro maintenance</span></div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <div><strong>Nom de domaine</strong><span>On l'aide à choisir et connecter son domaine</span></div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <div><strong>Livraison en 48h</strong><span>Après réception des infos et photos</span></div>
+          </div>
+        </div>
+
+        <div class="callout callout--info" style="margin-bottom:0;">
+          <i class="fas fa-info-circle"></i>
+          <div>On peut montrer la démo en direct sur <strong>website.getyourgigs.fr</strong> — le client voit exactement ce qu'il va recevoir avec ses couleurs et son logo.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon section-icon--green"><i class="fas fa-euro-sign"></i></div>
+        <div>
+          <h2>Grille tarifaire suggérée</h2>
+          <p>À adapter selon le client et la région</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="pricing-name">Essentiel</div>
+            <div class="pricing-price">390<span>€</span></div>
+            <div class="pricing-desc">Site livré, hébergement 1 an inclus</div>
+            <ul class="pricing-includes">
+              <li><i class="fas fa-check"></i> Site complet personnalisé</li>
+              <li><i class="fas fa-check"></i> Photos stock incluses</li>
+              <li><i class="fas fa-check"></i> Formulaire de contact</li>
+              <li><i class="fas fa-check"></i> Hébergement 1 an</li>
+              <li><i class="fas fa-check"></i> Domaine non inclus</li>
+            </ul>
+          </div>
+          <div class="pricing-card pricing-card--recommended">
+            <div class="pricing-badge">Recommandé</div>
+            <div class="pricing-name">Pro</div>
+            <div class="pricing-price">590<span>€</span></div>
+            <div class="pricing-desc">Tout l'Essentiel + domaine + photos du vrai garage</div>
+            <ul class="pricing-includes">
+              <li><i class="fas fa-check"></i> Site complet personnalisé</li>
+              <li><i class="fas fa-check"></i> Photos réelles du garage</li>
+              <li><i class="fas fa-check"></i> Formulaire de contact</li>
+              <li><i class="fas fa-check"></i> Hébergement 1 an</li>
+              <li><i class="fas fa-check"></i> Nom de domaine inclus</li>
+              <li><i class="fas fa-check"></i> Mise en ligne + tests</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr>
+
+        <p style="font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.75rem;">Options additionnelles</p>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <i class="fas fa-plus-circle" style="color:var(--brand)"></i>
+            <div><strong>Maintenance annuelle</strong><span>Mises à jour, changements de texte — 15€/mois</span></div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-plus-circle" style="color:var(--brand)"></i>
+            <div><strong>Renouvellement hébergement</strong><span>À partir de l'an 2 — 5€/mois</span></div>
+          </div>
+        </div>
+
+        <div class="callout callout--tip" style="margin-bottom:0;margin-top:1.25rem;">
+          <i class="fas fa-lightbulb"></i>
+          <div>Angle pricing : "Une révision moteur vous rapporte combien ? Ce site coûte moins que 2 révisions, et il travaille pour vous 24h/24." Pour les indécis, proposer de payer en 2 fois.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- OBJECTIONS -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon section-icon--orange"><i class="fas fa-comments"></i></div>
+        <div>
+          <h2>Objections &amp; réponses</h2>
+          <p>Les phrases qu'on entend le plus souvent — et comment y répondre</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="objection-list">
+
+          <div class="objection">
+            <div class="objection-q"><i class="fas fa-times-circle"></i> "J'ai déjà une fiche Google, ça suffit."</div>
+            <div class="objection-a"><strong>Réponse :</strong> La fiche Google c'est votre vitrine, le site c'est votre boutique. Sur la fiche, vous n'avez pas de formulaire de contact, pas de galerie, pas de FAQ, pas de bouton WhatsApp. Quelqu'un qui veut vous faire confiance avant d'appeler, il cherche un site. Sans site, il appelle le suivant.</div>
+          </div>
+
+          <div class="objection">
+            <div class="objection-q"><i class="fas fa-times-circle"></i> "J'ai pas le temps de m'en occuper."</div>
+            <div class="objection-a"><strong>Réponse :</strong> Vous n'avez rien à faire. On vous envoie un formulaire simple — nom du garage, horaires, numéro de téléphone. On s'occupe de tout le reste. Une fois en ligne, le site tourne tout seul, sans maintenance de votre part.</div>
+          </div>
+
+          <div class="objection">
+            <div class="objection-q"><i class="fas fa-times-circle"></i> "C'est trop cher pour moi."</div>
+            <div class="objection-a"><strong>Réponse :</strong> Vous facturez combien une vidange ? Ce site coûte l'équivalent de quelques interventions — et il génère des appels pendant des années. Si un seul client supplémentaire vous contacte via le site ce mois-ci, il est rentabilisé.</div>
+          </div>
+
+          <div class="objection">
+            <div class="objection-q"><i class="fas fa-times-circle"></i> "J'ai déjà un site."</div>
+            <div class="objection-a"><strong>Réponse :</strong> Est-ce qu'il est à jour ? Est-ce qu'il s'affiche bien sur mobile ? Est-ce qu'il a un bouton pour appeler directement ou écrire sur WhatsApp ? Je vous montre notre démo en 2 minutes — vous jugerez par vous-même.</div>
+          </div>
+
+          <div class="objection">
+            <div class="objection-q"><i class="fas fa-times-circle"></i> "Je vais réfléchir."</div>
+            <div class="objection-a"><strong>Réponse :</strong> Bien sûr. Je vous laisse la démo sur votre téléphone pour que vous puissiez la montrer à votre femme / associé ce soir. Vous voulez qu'on se rappelle jeudi ou vendredi pour en parler 5 minutes ?</div>
+          </div>
+
+          <div class="objection">
+            <div class="objection-q"><i class="fas fa-times-circle"></i> "Je sais pas si ça va me ramener des clients."</div>
+            <div class="objection-a"><strong>Réponse :</strong> Regardez vos concurrents directs — est-ce qu'ils ont un site ? Si oui, vous perdez déjà face à eux en ligne. Si non, vous avez une longueur d'avance. Dans les deux cas, un site professionnel mobile c'est aujourd'hui la base pour être crédible.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPT DE VENTE -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon section-icon--dark"><i class="fas fa-microphone-alt"></i></div>
+        <div>
+          <h2>Script de présentation</h2>
+          <p>Une trame en 5 minutes pour le premier contact</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="callout callout--info">
+          <i class="fas fa-info-circle"></i>
+          <div>L'objectif du premier contact n'est pas de vendre — c'est de <strong>montrer la démo</strong>. Une fois qu'il la voit sur son téléphone avec son nom dessus, le travail est à moitié fait.</div>
+        </div>
+
+        <div class="script-block">
+          <span class="role">Toi</span>
+          <span class="line">"Bonjour, je passe vous montrer quelque chose rapidement — c'est un site internet pour les garages comme le vôtre, on l'a construit pour qu'il soit opérationnel en 48h. Vous avez 2 minutes ?"</span>
+        </div>
+
+        <div class="script-block">
+          <span class="role">Toi — montrer la démo sur téléphone</span>
+          <span class="line">"Regardez, là c'est la démo — les clients voient directement si vous êtes ouvert, ils peuvent vous appeler ou vous écrire sur WhatsApp en un clic. Tout ça s'adapte à votre garage : vos couleurs, vos services, vos photos."</span>
+          <span class="note">// Faire défiler le site sur son téléphone, ne pas juste décrire</span>
+        </div>
+
+        <div class="script-block">
+          <span class="role">Toi — poser la question clé</span>
+          <span class="line">"Actuellement, quand quelqu'un cherche un garage dans le coin sur Google, est-ce qu'il peut vous trouver facilement et vous contacter depuis son téléphone ?"</span>
+          <span class="note">// Laisser répondre. S'il dit "non" ou "je sais pas" → vous tenez le problème</span>
+        </div>
+
+        <div class="script-block">
+          <span class="role">Toi — clore</span>
+          <span class="line">"On peut le faire avec votre nom, vos horaires et vos infos en 48h. L'investissement c'est 390€ tout inclus, hébergement la première année compris. Je vous laisse la démo, vous regardez ce soir et on en parle demain ?"</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROCESS LIVRAISON -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon section-icon--green"><i class="fas fa-rocket"></i></div>
+        <div>
+          <h2>Process de livraison</h2>
+          <p>Ce qui se passe une fois que le client a signé</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-bullet">1</div>
+            <p><strong>Collecter les infos</strong> — Nom, adresse, téléphone, email, horaires, 6 photos du garage (sinon on utilise des photos stock). Formulaire simple à remplir par le client, 10 min max.</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">2</div>
+            <p><strong>Envoyer au dev</strong> — Tu transmets le formulaire rempli. Le site est configuré et mis en ligne sous 48h.</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">3</div>
+            <p><strong>Valider avec le client</strong> — On envoie le lien de preview. Il valide ou demande des ajustements (couleur, texte).</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">4</div>
+            <p><strong>Mise en ligne finale</strong> — Si le client a un domaine, on le connecte. Sinon, on l'aide à en acheter un (environ 12€/an sur OVH ou Namecheap).</p>
+          </div>
+          <div class="step">
+            <div class="step-bullet">5</div>
+            <p><strong>Passation</strong> — On explique au client comment modifier ses infos dans le fichier config si besoin, et comment nous contacter pour toute évolution.</p>
+          </div>
+        </div>
+
+        <div class="callout callout--warn" style="margin-bottom:0;margin-top:1.25rem;">
+          <i class="fas fa-triangle-exclamation"></i>
+          <div>Demande toujours les photos AVANT de commencer le travail. Sans photos, le site est fait avec des photos stock — c'est correct pour la démo mais le client est toujours plus convaincu avec ses vraies photos.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RECAP -->
+    <div class="recap">
+      <h2><i class="fas fa-bolt" style="color:var(--brand);margin-right:.5rem;"></i>Les 3 arguments qui closent</h2>
+      <div class="recap-grid">
+        <div class="recap-item">
+          <strong>Clients perdus</strong>
+          <span>"Combien de gens vous cherchent et vont ailleurs parce qu'ils ne trouvent pas vos infos ?"</span>
+        </div>
+        <div class="recap-item">
+          <strong>48h chrono</strong>
+          <span>"Pas 3 mois d'attente. Vous êtes en ligne avant la fin de la semaine."</span>
+        </div>
+        <div class="recap-item">
+          <strong>Prix ancré</strong>
+          <span>"Moins cher qu'une révision moteur, ça tourne 24h/24 pendant des années."</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Usage interne — <strong>GetYourSite</strong> · Ne pas partager avec les clients
+  </div>
+
+</body>
+</html>
