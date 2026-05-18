@@ -1,0 +1,150 @@
+{
+  "siteName": "Menuiserie Dubois",
+  "slogan": "L'artisan du bois à votre service",
+  "badge": "Artisan menuisier · 25 ans d'expérience · Fait main",
+  "description": "Menuisier de métier depuis plus de 25 ans, je conçois et fabrique des meubles, escaliers, cuisines et aménagements sur-mesure. Chaque pièce est travaillée à la main avec des bois sélectionnés pour leur qualité et leur durabilité.",
+
+  "colors": {
+    "primary": "#D97706",
+    "secondary": "#1C1917"
+  },
+
+  "hero": {
+    "title": "L'artisanat du bois, sur-mesure",
+    "subtitle": "Meubles, cuisines, escaliers — chaque réalisation est unique, fabriquée avec soin selon vos envies.",
+    "cta_primary": "Demander un devis",
+    "cta_secondary": "Mes réalisations",
+    "tags": ["Sur-mesure", "Bois massif", "Pose incluse"]
+  },
+
+  "about": {
+    "title": "Mon Métier",
+    "stats": [
+      { "number": "25+", "label": "Années d'expérience" },
+      { "number": "300+", "label": "Réalisations uniques" },
+      { "number": "100%", "label": "Fait main" }
+    ]
+  },
+
+  "services": [
+    {
+      "title": "Mobilier sur-mesure",
+      "description": "Bibliothèques, dressings, tables, meubles TV — conçus et fabriqués selon vos dimensions et vos envies",
+      "icon": "fas fa-couch"
+    },
+    {
+      "title": "Cuisine & Aménagement",
+      "description": "Cuisines équipées, plans de travail et rangements intégrés, posés et finis par l'artisan",
+      "icon": "fas fa-kitchen-set"
+    },
+    {
+      "title": "Escaliers & Parquets",
+      "description": "Escaliers droits ou tournants en bois massif, pose et rénovation de parquets toutes essences",
+      "icon": "fas fa-layer-group"
+    }
+  ],
+
+  "commitments": [
+    { "icon": "fas fa-ruler-combined", "title": "100% sur-mesure",  "description": "Chaque pièce est conçue pour votre espace et vos besoins" },
+    { "icon": "fas fa-tree",           "title": "Bois sélectionnés","description": "Essences de qualité, séchées et sourcées avec soin" },
+    { "icon": "fas fa-hammer",         "title": "Fait main",        "description": "Fabrication artisanale, finitions soignées à la main" },
+    { "icon": "fas fa-file-invoice",   "title": "Devis gratuit",    "description": "Déplacement et chiffrage sans engagement sous 48h" }
+  ],
+
+  "images": {
+    "hero":  "hero.jpg",
+    "about": "about.jpg",
+    "gallery": [
+      "gallery-1.jpg",
+      "gallery-2.jpg",
+      "gallery-3.jpg",
+      "gallery-4.jpg",
+      "gallery-5.jpg",
+      "gallery-6.jpg"
+    ]
+  },
+
+  "testimonials": [
+    {
+      "text": "Bibliothèque sur-mesure réalisée en chêne massif, exactement comme je l'avais imaginée. Travail d'une précision remarquable. Délai tenu. Je recommande sans hésiter.",
+      "author": "François Dupont",
+      "role": "Client",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Ma cuisine en bois est magnifique. Tout a été fait sur-mesure, dans un bois de qualité. Pose impeccable et service après-vente réactif. Merci !",
+      "author": "Nathalie Simon",
+      "role": "Cliente",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Escalier en noyer réalisé avec un soin exceptionnel. Chaque détail est soigné. On voit que c'est un vrai artisan passionné par son métier.",
+      "author": "Alain Girard",
+      "role": "Client",
+      "rating": 5,
+      "source": "google"
+    }
+  ],
+
+  "google_reviews": {
+    "rating": 5.0,
+    "count": 41,
+    "url": ""
+  },
+
+  "faq": [
+    {
+      "question": "Comment se passe la commande ?",
+      "answer": "Je commence par un déplacement gratuit pour mesurer l'espace et comprendre votre projet. Je vous envoie ensuite un devis détaillé avec plans sous 48h. La fabrication démarre après validation et acompte."
+    },
+    {
+      "question": "Quels bois utilisez-vous ?",
+      "answer": "Je travaille principalement le chêne, le noyer, le frêne et le pin. Je propose aussi des bois exotiques sur demande. Tous mes bois sont sélectionnés pour leur qualité et proviennent de forêts gérées durablement."
+    },
+    {
+      "question": "Quels sont les délais de fabrication ?",
+      "answer": "Les délais varient selon la complexité du projet : 3 à 6 semaines pour un meuble, 6 à 10 semaines pour une cuisine complète ou un escalier. Je vous communique un délai précis dans le devis."
+    },
+    {
+      "question": "La pose est-elle incluse ?",
+      "answer": "Oui, je me déplace pour installer moi-même toutes mes réalisations. C'est une garantie de qualité — je connais chaque pièce que je fabrique et m'assure qu'elle est posée parfaitement."
+    }
+  ],
+
+  "schedule": [
+    { "days": [1,2,3,4,5], "open": "08:00", "close": "18:00" }
+  ],
+
+  "contact": {
+    "address":        "Zone Artisanale, 33270 Floirac",
+    "phone":          "06 XX XX XX XX",
+    "whatsapp":       "",
+    "email":          "contact@menuiserie-dubois.fr",
+    "hours":          "Lun–Ven : 8h–18h",
+    "form_email":     "",
+    "maps_embed_url": ""
+  },
+
+  "form": {
+    "title":               "Un projet en bois ?",
+    "subtitle":            "Décrivez-moi votre idée — je vous réponds sous 48h avec un devis gratuit et sans engagement.",
+    "message_label":       "Décrivez votre projet",
+    "message_placeholder": "Ex : bibliothèque encastrée en chêne 3m de large, salon 18m²...",
+    "button_text":         "Demander un devis gratuit",
+    "button_icon":         "fas fa-hammer"
+  },
+
+  "emailjs": {
+    "service_id":  "",
+    "template_id": "",
+    "public_key":  ""
+  },
+
+  "social": {
+    "facebook":  "https://www.facebook.com",
+    "instagram": "https://www.instagram.com",
+    "linkedin":  ""
+  }
+}

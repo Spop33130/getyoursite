@@ -106,6 +106,19 @@ function applyContent(c) {
 
   document.title = c.siteName;
 
+  // Form overrides
+  const f = c.form || {};
+  if (f.title)    setText('contact-title',    f.title);
+  if (f.subtitle) setText('contact-subtitle', f.subtitle);
+  const msgArea  = document.getElementById('message');
+  if (msgArea && f.message_placeholder) msgArea.placeholder = f.message_placeholder;
+  const msgLabel = document.getElementById('contact-message-label');
+  if (msgLabel && f.message_label) msgLabel.textContent = f.message_label + ' *';
+  const submitBtn = document.getElementById('contact-submit-btn');
+  if (submitBtn && f.button_text) {
+    submitBtn.innerHTML = `<i class="${f.button_icon || 'fas fa-paper-plane'}"></i> ${f.button_text}`;
+  }
+
   // Bouton flottant → WhatsApp ou RDV
   const btn = document.getElementById('float-btn');
   if (!btn) return;

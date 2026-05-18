@@ -1,0 +1,152 @@
+{
+  "siteName": "Le Bistrot du Marché",
+  "slogan": "Cuisine du terroir, faite maison",
+  "badge": "Restaurant · Fait maison · Produits locaux",
+  "description": "Un bistrot chaleureux au cœur du quartier, où les saveurs du terroir s'invitent à votre table chaque midi et soir. Nos plats sont préparés chaque jour avec des produits frais sélectionnés chez les producteurs locaux.",
+
+  "colors": {
+    "primary": "#C0392B",
+    "secondary": "#2C3E50"
+  },
+
+  "hero": {
+    "title": "La cuisine du marché, dans votre assiette",
+    "subtitle": "Produits frais, recettes maison, ambiance conviviale — réservez votre table dès maintenant.",
+    "cta_primary": "Réserver une table",
+    "cta_secondary": "Notre carte",
+    "tags": ["Sur place", "À emporter", "Fait maison"]
+  },
+
+  "about": {
+    "title": "Notre Cuisine",
+    "stats": [
+      { "number": "15+", "label": "Années d'expérience" },
+      { "number": "100%", "label": "Produits frais" },
+      { "number": "4.8★", "label": "Note moyenne" }
+    ]
+  },
+
+  "services": [
+    {
+      "title": "Déjeuner",
+      "description": "Menu du jour midi avec entrée, plat, dessert et café — fait maison chaque matin",
+      "icon": "fas fa-sun"
+    },
+    {
+      "title": "Dîner",
+      "description": "Carte du soir avec plats du terroir, suggestions du chef et vins sélectionnés",
+      "icon": "fas fa-moon"
+    },
+    {
+      "title": "Traiteur & Privatisation",
+      "description": "Repas d'entreprise, anniversaires et événements privés — sur réservation",
+      "icon": "fas fa-glass-cheers"
+    }
+  ],
+
+  "commitments": [
+    { "icon": "fas fa-seedling",    "title": "Produits locaux",    "description": "Approvisionnement chez les producteurs de la région" },
+    { "icon": "fas fa-fire-burner", "title": "Tout fait maison",   "description": "Zéro plat industriel, tout est cuisiné sur place" },
+    { "icon": "fas fa-leaf",        "title": "De saison",          "description": "La carte change selon les saisons et les arrivages" },
+    { "icon": "fas fa-star",        "title": "Accueil chaleureux", "description": "Une équipe attentionnée pour un moment de qualité" }
+  ],
+
+  "images": {
+    "hero":  "hero.jpg",
+    "about": "about.jpg",
+    "gallery": [
+      "gallery-1.jpg",
+      "gallery-2.jpg",
+      "gallery-3.jpg",
+      "gallery-4.jpg",
+      "gallery-5.jpg",
+      "gallery-6.jpg"
+    ]
+  },
+
+  "testimonials": [
+    {
+      "text": "Un vrai coup de cœur ! Les plats sont délicieux et faits avec soin. Le menu du midi est parfait, bon rapport qualité-prix. On reviendra sans hésiter.",
+      "author": "Sophie Marchand",
+      "role": "Cliente fidèle",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Ambiance conviviale, personnel adorable et cuisine vraiment savoureuse. Les produits sont frais et ça se sent dans l'assiette. Bravo !",
+      "author": "Pierre Fontaine",
+      "role": "Client",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Excellent restaurant de quartier. Les plats changent régulièrement selon les saisons. Le service est rapide et agréable. Je recommande vivement.",
+      "author": "Marie Leclerc",
+      "role": "Cliente depuis 2020",
+      "rating": 5,
+      "source": "google"
+    }
+  ],
+
+  "google_reviews": {
+    "rating": 4.8,
+    "count": 124,
+    "url": ""
+  },
+
+  "faq": [
+    {
+      "question": "Faut-il réserver à l'avance ?",
+      "answer": "Pour le déjeuner, vous pouvez généralement venir sans réservation. Pour le dîner et les week-ends, nous recommandons de réserver par téléphone ou via le formulaire ci-dessous."
+    },
+    {
+      "question": "Proposez-vous des menus végétariens ?",
+      "answer": "Oui, nous avons toujours au moins une option végétarienne au menu. N'hésitez pas à nous le préciser lors de votre réservation pour que nous puissions adapter notre offre."
+    },
+    {
+      "question": "Peut-on privatiser la salle ?",
+      "answer": "Oui, notre salle peut accueillir jusqu'à 40 personnes pour des événements privés (anniversaires, repas d'entreprise, etc.). Contactez-nous pour un devis personnalisé."
+    },
+    {
+      "question": "Faites-vous de la vente à emporter ?",
+      "answer": "Oui, notre carte est disponible à emporter du mardi au samedi. Commandez par téléphone 30 minutes à l'avance."
+    }
+  ],
+
+  "schedule": [
+    { "days": [2,3,4,5], "open": "12:00", "close": "14:30" },
+    { "days": [2,3,4,5], "open": "19:00", "close": "22:00" },
+    { "days": [6],       "open": "12:00", "close": "22:30" }
+  ],
+
+  "contact": {
+    "address":        "12 Rue du Marché, 33000 Bordeaux",
+    "phone":          "05 56 XX XX XX",
+    "whatsapp":       "",
+    "email":          "contact@bistrot-du-marche.fr",
+    "hours":          "Mar–Ven : 12h–14h30 & 19h–22h · Sam : 12h–22h30",
+    "form_email":     "",
+    "maps_embed_url": ""
+  },
+
+  "form": {
+    "title":               "Réserver une table ?",
+    "subtitle":            "Dîner en amoureux, repas en famille ou déjeuner d'affaires — dites-nous tout.",
+    "message_label":       "Votre demande",
+    "message_placeholder": "Ex : 2 personnes ce samedi soir vers 20h, menu sans gluten si possible...",
+    "button_text":         "Réserver maintenant",
+    "button_icon":         "fas fa-calendar-check"
+  },
+
+  "emailjs": {
+    "service_id":  "",
+    "template_id": "",
+    "public_key":  ""
+  },
+
+  "social": {
+    "facebook":  "https://www.facebook.com",
+    "instagram": "https://www.instagram.com",
+    "linkedin":  ""
+  }
+}

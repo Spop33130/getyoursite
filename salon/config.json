@@ -1,0 +1,151 @@
+{
+  "siteName": "Studio Élise",
+  "slogan": "Votre salon de coiffure & beauté",
+  "badge": "Coiffure · Colorations · Soins · Sur rendez-vous",
+  "description": "Un salon chaleureux où chaque client repart avec la coiffure qui lui ressemble. Colorations, coupes tendance, soins capillaires — notre équipe de coiffeurs passionnés prend soin de vous dans une ambiance zen et bienveillante.",
+
+  "colors": {
+    "primary": "#8B5CF6",
+    "secondary": "#1E1B2E"
+  },
+
+  "hero": {
+    "title": "Votre beauté, notre passion",
+    "subtitle": "Coupe, couleur, soin — prenez rendez-vous et laissez-nous révéler le meilleur de vous.",
+    "cta_primary": "Prendre rendez-vous",
+    "cta_secondary": "Nos prestations",
+    "tags": ["Colorations", "Soins capillaires", "Sur rendez-vous"]
+  },
+
+  "about": {
+    "title": "Notre Savoir-Faire",
+    "stats": [
+      { "number": "10+", "label": "Années d'expérience" },
+      { "number": "500+", "label": "Clientes satisfaites" },
+      { "number": "100%", "label": "Produits professionnels" }
+    ]
+  },
+
+  "services": [
+    {
+      "title": "Coupe & Coiffure",
+      "description": "Coupe femme, homme et enfant. Brushing, mise en forme et finitions soignées",
+      "icon": "fas fa-cut"
+    },
+    {
+      "title": "Coloration & Mèches",
+      "description": "Balayage, ombré hair, couleurs tendance avec produits respectueux des cheveux",
+      "icon": "fas fa-palette"
+    },
+    {
+      "title": "Soins & Traitements",
+      "description": "Lissage, kératine, soins hydratants et restructurants pour cheveux abîmés",
+      "icon": "fas fa-spa"
+    }
+  ],
+
+  "commitments": [
+    { "icon": "fas fa-leaf",        "title": "Produits naturels",    "description": "Gammes professionnelles respectueuses des cheveux et du cuir chevelu" },
+    { "icon": "fas fa-clock",       "title": "Ponctualité",          "description": "Votre rendez-vous commence à l'heure — on respecte votre temps" },
+    { "icon": "fas fa-heart",       "title": "Écoute & Conseil",     "description": "On prend le temps de comprendre vos envies avant chaque prestation" },
+    { "icon": "fas fa-star",        "title": "Résultat garanti",     "description": "Vous repartez satisfait(e) ou on refait — sans surcoût" }
+  ],
+
+  "images": {
+    "hero":  "hero.jpg",
+    "about": "about.jpg",
+    "gallery": [
+      "gallery-1.jpg",
+      "gallery-2.jpg",
+      "gallery-3.jpg",
+      "gallery-4.jpg",
+      "gallery-5.jpg",
+      "gallery-6.jpg"
+    ]
+  },
+
+  "testimonials": [
+    {
+      "text": "Élise est une vraie artiste ! Ma coloration est exactement ce que je voulais, et elle dure longtemps. Le salon est super agréable, j'y retourne les yeux fermés.",
+      "author": "Camille Roux",
+      "role": "Cliente depuis 2021",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Accueil top, coupe parfaite et bon prix. L'équipe est très pro et à l'écoute. Je ne vais plus ailleurs depuis que j'ai découvert ce salon.",
+      "author": "Aurélie Blanc",
+      "role": "Cliente fidèle",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Soin kératine réalisé impeccablement. Mes cheveux n'ont jamais été aussi beaux. Je recommande à toutes celles qui veulent un résultat professionnel.",
+      "author": "Jessica Martin",
+      "role": "Cliente",
+      "rating": 5,
+      "source": "google"
+    }
+  ],
+
+  "google_reviews": {
+    "rating": 4.9,
+    "count": 68,
+    "url": ""
+  },
+
+  "faq": [
+    {
+      "question": "Comment prendre rendez-vous ?",
+      "answer": "Vous pouvez nous appeler directement, envoyer un message via le formulaire ci-dessous ou passer au salon pendant les heures d'ouverture. Nous vous confirmons le créneau par retour."
+    },
+    {
+      "question": "Combien de temps dure une coloration ?",
+      "answer": "Une coloration complète dure entre 1h30 et 2h30 selon la technique choisie. Un balayage ou ombré hair peut prendre jusqu'à 3h. Nous vous précisons le délai lors de la prise de rendez-vous."
+    },
+    {
+      "question": "Travaillez-vous avec des produits sans ammoniaque ?",
+      "answer": "Oui, nous proposons des colorations sans ammoniaque et des gammes naturelles pour les clients sensibles ou allergiques. N'hésitez pas à nous le préciser."
+    },
+    {
+      "question": "Acceptez-vous les enfants ?",
+      "answer": "Oui, nous coiffons les enfants à partir de 4 ans. Un tarif enfant est appliqué pour les coupes simples."
+    }
+  ],
+
+  "schedule": [
+    { "days": [2,3,4,5], "open": "09:00", "close": "19:00" },
+    { "days": [6],       "open": "09:00", "close": "17:00" }
+  ],
+
+  "contact": {
+    "address":        "8 Rue de la Paix, 33000 Bordeaux",
+    "phone":          "05 57 XX XX XX",
+    "whatsapp":       "",
+    "email":          "contact@studio-elise.fr",
+    "hours":          "Mar–Ven : 9h–19h · Sam : 9h–17h",
+    "form_email":     "",
+    "maps_embed_url": ""
+  },
+
+  "form": {
+    "title":               "Prendre rendez-vous ?",
+    "subtitle":            "Coupe, couleur ou soin — dites-nous ce que vous souhaitez et on vous propose un créneau.",
+    "message_label":       "Votre demande",
+    "message_placeholder": "Ex : balayage + coupe mi-long, disponible le jeudi après-midi ou vendredi matin...",
+    "button_text":         "Réserver mon soin",
+    "button_icon":         "fas fa-calendar-check"
+  },
+
+  "emailjs": {
+    "service_id":  "",
+    "template_id": "",
+    "public_key":  ""
+  },
+
+  "social": {
+    "facebook":  "https://www.facebook.com",
+    "instagram": "https://www.instagram.com",
+    "linkedin":  ""
+  }
+}

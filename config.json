@@ -125,6 +125,15 @@
     "maps_embed_url": "https://maps.google.com/maps?q=50+Av.+des+Pyr%C3%A9n%C3%A9es+33140+Villenave-d%27Ornon&output=embed&hl=fr&z=16"
   },
 
+  "form": {
+    "title":               "Votre véhicule a besoin de nous ?",
+    "subtitle":            "Réparation, entretien ou dépannage — décrivez-nous votre problème, on vous répond rapidement.",
+    "message_label":       "Décrivez votre problème",
+    "message_placeholder": "Ex : ma voiture ne démarre plus, bruit suspect au freinage, révision à prévoir...",
+    "button_text":         "Demander un devis",
+    "button_icon":         "fas fa-wrench"
+  },
+
   "emailjs": {
     "service_id":  "service_z35lqdq",
     "template_id": "template_4js8z7q",
