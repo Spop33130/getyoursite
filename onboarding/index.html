@@ -206,6 +206,33 @@
 
     hr { border: none; border-top: 1px solid var(--border); }
 
+    /* DATE PICKER */
+    .date-wrapper {
+      position: relative;
+    }
+    .date-wrapper input[type=text] {
+      padding-right: 2.4rem;
+    }
+    .date-wrapper input[type=date] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: none;
+    }
+    .date-icon {
+      position: absolute;
+      right: .8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: .85rem;
+      pointer-events: none;
+    }
+
     /* PHOTO OPTIONS */
     .photo-option { display: block; cursor: pointer; }
     .photo-option input[type=radio] { display: none; }
@@ -264,7 +291,11 @@
           </div>
           <div class="form-group">
             <label for="commercial_date">Date de la visite</label>
-            <input type="text" id="commercial_date" placeholder="Ex : 18/05/2026">
+            <div class="date-wrapper">
+              <input type="text" id="commercial_date" placeholder="JJ/MM/AAAA" maxlength="10" autocomplete="off">
+              <input type="date" id="commercial_date_picker" tabindex="-1" aria-hidden="true">
+              <i class="fas fa-calendar-alt date-icon"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -608,6 +639,23 @@
     }
     syncColor('color_primary_picker',   'color_primary');
     syncColor('color_secondary_picker', 'color_secondary');
+
+    // Date input — auto-slash + calendrier natif
+    const dateText   = document.getElementById('commercial_date');
+    const datePicker = document.getElementById('commercial_date_picker');
+
+    dateText.addEventListener('input', function() {
+      let digits = this.value.replace(/\D/g, '').slice(0, 8);
+      if (digits.length > 4) digits = digits.slice(0,2) + '/' + digits.slice(2,4) + '/' + digits.slice(4);
+      else if (digits.length > 2) digits = digits.slice(0,2) + '/' + digits.slice(2);
+      this.value = digits;
+    });
+
+    datePicker.addEventListener('change', function() {
+      if (!this.value) return;
+      const [y, m, d] = this.value.split('-');
+      dateText.value = `${d}/${m}/${y}`;
+    });
 
     // Toggle dimanche fields
     document.getElementById('sch_dim_open').addEventListener('change', function() {
