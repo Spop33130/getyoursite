@@ -68,7 +68,7 @@
 
   --max-width:      1200px;
   --section-pad:    5rem;
-  --header-height:  72px;
+  --header-height:  88px;
 }
 
 @media (prefers-color-scheme: dark) {

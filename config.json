@@ -45,15 +45,15 @@
   ],
 
   "images": {
-    "hero":  "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80",
-    "about": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=900&q=80",
+    "hero":  "hero.jpg",
+    "about": "about.jpg",
     "gallery": [
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
-      "https://images.unsplash.com/photo-1590756254933-2873d72a83b6?w=800&q=80",
-      "https://images.unsplash.com/photo-1600861194942-f883de0dfe96?w=800&q=80",
-      "https://images.unsplash.com/photo-1517524895650-dd2f370b2226?w=800&q=80",
-      "https://images.unsplash.com/photo-1544636331-9849d5e80a28?w=800&q=80",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80"
+      "gallery-1.jpg",
+      "gallery-2.jpg",
+      "gallery-3.jpg",
+      "gallery-4.jpg",
+      "gallery-5.jpg",
+      "gallery-6.jpg"
     ]
   },
 
