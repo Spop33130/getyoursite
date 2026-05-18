@@ -185,6 +185,22 @@
     .btn-submit:active { transform: scale(.97); }
     .btn-submit:disabled { background: var(--muted); cursor: not-allowed; }
 
+    .btn-pdf {
+      background: transparent;
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      padding: .75rem 1.1rem;
+      font-family: var(--font);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; gap: .5rem;
+      white-space: nowrap;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-pdf:hover { border-color: var(--brand); color: var(--brand); }
+
     /* NOTIFICATION */
     .notif {
       position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%);
@@ -348,9 +364,9 @@
             <input type="tel" id="phone" placeholder="Ex : 05 56 12 34 56" required>
           </div>
           <div class="form-group">
-            <label for="whatsapp">WhatsApp <span class="opt">(numéro international)</span></label>
-            <input type="tel" id="whatsapp" placeholder="Ex : 33556123456">
-            <span class="hint">Format : 33 suivi du numéro sans 0 initial</span>
+            <label for="whatsapp">WhatsApp</label>
+            <input type="tel" id="whatsapp" placeholder="Ex : 07 86 25 34 10" maxlength="14">
+            <span class="hint">Numéro français — conversion internationale automatique</span>
           </div>
         </div>
         <div class="form-row">
@@ -612,13 +628,19 @@
       <strong>Prêt à envoyer ?</strong><br>
       Vérifiez avec le client avant de valider.
     </div>
-    <button type="button" class="btn-submit" id="submit-btn" onclick="submitForm()">
-      <i class="fas fa-paper-plane"></i>
-      Valider et envoyer
-    </button>
+    <div style="display:flex;gap:.6rem;flex-shrink:0;">
+      <button type="button" class="btn-pdf" onclick="downloadPDF()">
+        <i class="fas fa-file-pdf"></i> PDF
+      </button>
+      <button type="button" class="btn-submit" id="submit-btn" onclick="submitForm()">
+        <i class="fas fa-paper-plane"></i>
+        Valider et envoyer
+      </button>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     emailjs.init({ publicKey: '4jD-AMOCzmbAcmZV2' });
 
@@ -629,6 +651,16 @@
           document.getElementById('photos_real').checked ? 'block' : 'none';
       });
     });
+
+    // Auto-espace numéros français (07 86 25 34 10)
+    function applyPhoneFormat(id) {
+      document.getElementById(id)?.addEventListener('input', function() {
+        const digits = this.value.replace(/\D/g, '').slice(0, 10);
+        this.value = digits.replace(/(\d{2})(?=\d)/g, '$1 ').trim();
+      });
+    }
+    applyPhoneFormat('phone');
+    applyPhoneFormat('whatsapp');
 
     // Sync color pickers ↔ text inputs
     function syncColor(pickerId, textId) {
@@ -734,6 +766,129 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
       `.trim() + '\n\n' + '═'.repeat(33) + '\nCONFIG.JSON GÉNÉRÉ\n' + '═'.repeat(33) + '\n' + JSON.stringify(buildConfig(), null, 2);
     }
 
+    function buildPDFContent() {
+      const R = (label, value) => value ? `
+        <div style="display:flex;gap:12px;padding:7px 0;border-bottom:1px solid #f1f5f9;align-items:flex-start;">
+          <span style="font-size:11.5px;color:#6b7280;min-width:150px;flex-shrink:0;padding-top:1px;">${label}</span>
+          <span style="font-size:11.5px;color:#1a1a2e;font-weight:500;flex:1;">${value}</span>
+        </div>` : '';
+
+      const S = (color, emoji, title, body) => `
+        <div style="background:white;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:14px;overflow:hidden;page-break-inside:avoid;">
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fafafa;border-bottom:1px solid #e5e7eb;">
+            <div style="width:30px;height:30px;background:${color};border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">${emoji}</div>
+            <span style="font-size:13px;font-weight:700;color:#1a1a2e;">${title}</span>
+          </div>
+          <div style="padding:12px 16px;">${body}</div>
+        </div>`;
+
+      const semStr = checked('sch_semaine_closed') ? 'Fermé' : `${val('sch_semaine_open')} – ${val('sch_semaine_close')}`;
+      const samStr = checked('sch_sam_closed')     ? 'Fermé' : `${val('sch_sam_open')} – ${val('sch_sam_close')}`;
+      const dimStr = checked('sch_dim_open') ? `${val('sch_dim_open_h')} – ${val('sch_dim_close_h')}` : 'Fermé';
+
+      let servicesBody = '';
+      for (let i = 1; i <= 4; i++) {
+        const t = val(`s${i}_title`);
+        if (t) servicesBody += R(`Service ${i}`, t + (val(`s${i}_desc`) ? ' — ' + val(`s${i}_desc`) : ''));
+      }
+
+      const photosEl = document.querySelector('input[name=photos_choice]:checked');
+      const colorPrimary   = val('color_primary')   || '#E74C3C';
+      const colorSecondary = val('color_secondary') || '#2C3E50';
+
+      return `
+        <div style="font-family:'Outfit',Arial,sans-serif;color:#1a1a2e;max-width:680px;margin:0 auto;padding:0;">
+
+          <div style="background:${colorSecondary};color:white;padding:28px 24px;border-radius:10px;margin-bottom:20px;text-align:center;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.6;margin-bottom:10px;">FICHE CLIENT — GETYOURSITE</div>
+            <div style="font-size:22px;font-weight:800;margin-bottom:6px;">${val('site_name') || '—'}</div>
+            <div style="font-size:12px;opacity:.65;">${val('commercial_date') ? 'Visite du ' + val('commercial_date') : ''} ${val('commercial_name') ? '· Commercial : ' + val('commercial_name') : ''}</div>
+          </div>
+
+          ${S('#E74C3C','🏪','Identité',
+            R('Nom du garage', val('site_name')) +
+            R('Slogan',        val('slogan'))    +
+            R('Badge',         val('badge'))     +
+            R('Description',   val('description'))
+          )}
+
+          ${S('#2E86AB','📍','Coordonnées',
+            R('Adresse',        val('address'))    +
+            R('Téléphone',      val('phone'))      +
+            R('WhatsApp',       val('whatsapp'))   +
+            R('Email',          val('email'))      +
+            R('Horaires texte', val('hours_text'))
+          )}
+
+          ${S('#D97706','🕐','Horaires d\'ouverture',
+            R('Lun – Ven',  semStr) +
+            R('Samedi',     samStr) +
+            R('Dimanche',   dimStr)
+          )}
+
+          <div style="background:white;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:14px;overflow:hidden;page-break-inside:avoid;">
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fafafa;border-bottom:1px solid #e5e7eb;">
+              <div style="width:30px;height:30px;background:#7C3AED;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">🎨</div>
+              <span style="font-size:13px;font-weight:700;color:#1a1a2e;">Couleurs</span>
+            </div>
+            <div style="padding:12px 16px;">
+              <div style="display:flex;gap:12px;padding:7px 0;border-bottom:1px solid #f1f5f9;align-items:center;">
+                <span style="font-size:11.5px;color:#6b7280;min-width:150px;">Couleur principale</span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:18px;height:18px;border-radius:4px;background:${colorPrimary};border:1px solid #e5e7eb;"></div>
+                  <span style="font-size:11.5px;font-weight:600;font-family:monospace;">${colorPrimary}</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;padding:7px 0;align-items:center;">
+                <span style="font-size:11.5px;color:#6b7280;min-width:150px;">Couleur secondaire</span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:18px;height:18px;border-radius:4px;background:${colorSecondary};border:1px solid #e5e7eb;"></div>
+                  <span style="font-size:11.5px;font-weight:600;font-family:monospace;">${colorSecondary}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          ${S('#E74C3C','⚙️','Services', servicesBody || R('—','Non renseigné'))}
+
+          ${S('#2E86AB','📱','Réseaux & Google',
+            R('Facebook',       val('facebook'))     +
+            R('Instagram',      val('instagram'))    +
+            R('Google Maps',    val('google_url'))   +
+            R('Note Google',    val('google_rating') ? val('google_rating') + ' / 5' : '') +
+            R('Nombre d\'avis', val('google_count'))
+          )}
+
+          ${S('#D97706','📷','Photos',
+            R('Choix', photosEl ? photosEl.value : 'Non renseigné')
+          )}
+
+          ${(val('domain') || val('notes')) ? S('#059669','📝','Notes & divers',
+            R('Nom de domaine', val('domain')) +
+            R('Notes',         val('notes'))
+          ) : ''}
+
+          <div style="text-align:center;margin-top:20px;font-size:10px;color:#9ca3af;">
+            Usage interne — GetYourSite · Ne pas partager avec les clients
+          </div>
+        </div>`;
+    }
+
+    function downloadPDF() {
+      const slug = val('site_name').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'') || 'client';
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:fixed;left:-9999px;top:0;width:680px;padding:20px;background:white;';
+      wrap.innerHTML = buildPDFContent();
+      document.body.appendChild(wrap);
+
+      html2pdf().set({
+        margin:     [10, 10, 10, 10],
+        filename:   `fiche-${slug}.pdf`,
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF:      { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(wrap).save().then(() => document.body.removeChild(wrap));
+    }
+
     function buildConfig() {
       // Schedule
       const schedule = [];
@@ -757,7 +912,8 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
 
       // Phone raw (for WhatsApp)
       const phone    = val('phone');
-      const whatsapp = val('whatsapp') || phone.replace(/[\s.]/g, '').replace(/^0/, '33');
+      const waRaw    = (val('whatsapp') || phone).replace(/[\s.]/g, '').replace(/^0/, '33');
+      const whatsapp = waRaw;
 
       // Hours text fallback
       const hoursText = val('hours_text') || schedule.map(s => {
