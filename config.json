@@ -29,13 +29,8 @@
   "services": [
     {
       "title": "Mécanique Générale",
-      "description": "Diagnostic, réparation moteur, transmission et suspensions par des experts qualifiés",
+      "description": "Diagnostic, réparation moteur, transmission et suspensions — entretien et révision par des experts qualifiés",
       "icon": "fas fa-cogs"
-    },
-    {
-      "title": "Entretien Périodique",
-      "description": "Vidanges, révisions et contrôles préventifs pour la longévité de votre véhicule",
-      "icon": "fas fa-wrench"
     },
     {
       "title": "Carrosserie & Peinture",
