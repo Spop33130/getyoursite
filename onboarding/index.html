@@ -697,6 +697,7 @@
   </div>
 
   <script src="/vendor/emailjs/email.min.js"></script>
+  <script src="/vendor/html2pdf/html2pdf.bundle.min.js"></script>
   <script>
     emailjs.init({ publicKey: '4jD-AMOCzmbAcmZV2' });
 
@@ -1097,46 +1098,29 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
 
     function downloadPDF() {
       if (!validateForm()) return;
-      const siteName = val('site_name') || 'client';
-      const content  = buildPDFContent();
 
-      const win = window.open('', '_blank');
-      if (!win) { showNotif('Autorisez les popups pour télécharger le PDF.', 'error'); return; }
+      const slug = val('site_name').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'') || 'client';
+      const btn  = document.querySelector('.btn-pdf');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération…';
 
-      win.document.write(`<!DOCTYPE html>
-<html lang="fr"><head>
-  <meta charset="UTF-8">
-  <title>Fiche — ${siteName}</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: Arial, Helvetica, sans-serif; background: #f8f9fa; color: #111827; }
-    @media print {
-      body { background: white; }
-      .no-print { display: none !important; }
-      @page { margin: 10mm; size: A4; }
-    }
-    .print-btn {
-      position: fixed; top: 16px; right: 16px;
-      background: #2C3E50; color: white; border: none;
-      padding: 10px 20px; border-radius: 8px; font-size: 14px;
-      font-family: Arial, sans-serif; cursor: pointer; z-index: 999;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .print-btn:hover { background: #1a252f; }
-  </style>
-</head><body>
-  <button class="print-btn no-print" onclick="window.print()">🖨️ Enregistrer en PDF</button>
-  <div style="max-width:700px;margin:0 auto;padding:20px;">
-    ${content}
-  </div>
-  <script>
-    // Force les couleurs d'arrière-plan à l'impression
-    document.head.insertAdjacentHTML('beforeend',
-      '<style>* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }</style>'
-    );
-  <\/script>
-</body></html>`);
-      win.document.close();
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:fixed;top:0;left:0;width:720px;background:white;padding:20px;z-index:99999;opacity:0.01;pointer-events:none;';
+      wrap.innerHTML = buildPDFContent();
+      document.body.appendChild(wrap);
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        html2pdf().set({
+          margin:      [10, 10, 10, 10],
+          filename:    `fiche-${slug}.pdf`,
+          html2canvas: { scale: 2, useCORS: true, logging: false, allowTaint: true },
+          jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(wrap).save().then(() => {
+          wrap.remove();
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-file-pdf"></i> PDF';
+        });
+      }));
     }
 
     function buildConfig() {
