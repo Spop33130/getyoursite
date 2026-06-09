@@ -700,6 +700,9 @@
   <script>
     emailjs.init({ publicKey: '4jD-AMOCzmbAcmZV2' });
 
+    const SUPABASE_URL = 'https://uyptfyrnxbdbxeqzmpts.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5cHRmeXJueGJkYnhlcXptcHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMzczOTEsImV4cCI6MjA5NjYxMzM5MX0.QznlTsV1ap6rUiLINu6IJgIPplKcUsXr8LEvqQ-NUG0';
+
     // Photos choice → show/hide reminder
     document.querySelectorAll('input[name=photos_choice]').forEach(radio => {
       radio.addEventListener('change', () => {
@@ -1365,6 +1368,71 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
       return false;
     }
 
+    async function saveToSupabase() {
+      const config = buildConfig();
+      const payload = {
+        nom_garage:  val('site_name'),
+        date_visite: val('commercial_date'),
+        commercial:  val('commercial_name'),
+        slug:        `${val('site_name')}${val('commercial_date') ? ' — ' + val('commercial_date') : ''}`,
+        data: {
+          commercial_name:   val('commercial_name'),
+          commercial_date:   val('commercial_date'),
+          site_name:         val('site_name'),
+          slogan:            val('slogan'),
+          badge:             val('badge'),
+          description:       val('description'),
+          address:           val('address'),
+          phone:             val('phone'),
+          whatsapp:          val('whatsapp'),
+          email:             val('email'),
+          hours_text:        val('hours_text'),
+          color_primary:     val('color_primary')   || '#E74C3C',
+          color_secondary:   val('color_secondary') || '#2C3E50',
+          s1_title: val('s1_title'), s1_desc: val('s1_desc'),
+          s2_title: val('s2_title'), s2_desc: val('s2_desc'),
+          s3_title: val('s3_title'), s3_desc: val('s3_desc'),
+          s4_title: val('s4_title'), s4_desc: val('s4_desc'),
+          facebook:          val('facebook'),
+          instagram:         val('instagram'),
+          google_url:        val('google_url'),
+          google_rating:     val('google_rating'),
+          google_count:      val('google_count'),
+          photos_choice:     document.querySelector('input[name=photos_choice]:checked')?.value || '',
+          legal_responsable: val('legal_responsable'),
+          legal_siret:       val('legal_siret'),
+          legal_forme:       val('legal_forme'),
+          domain:            val('domain'),
+          notes:             val('notes'),
+          schedule: {
+            semaine_open:   val('sch_semaine_open'),
+            semaine_close:  val('sch_semaine_close'),
+            semaine_closed: checked('sch_semaine_closed'),
+            sam_open:       val('sch_sam_open'),
+            sam_close:      val('sch_sam_close'),
+            sam_closed:     checked('sch_sam_closed'),
+            dim_open:       checked('sch_dim_open'),
+            dim_open_h:     val('sch_dim_open_h'),
+            dim_close_h:    val('sch_dim_close_h'),
+          },
+          config
+        }
+      };
+
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/fiches_clients`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error(`Supabase ${res.status}`);
+    }
+
     async function submitForm() {
       if (!validateForm()) return;
 
@@ -1383,7 +1451,9 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           message:    body
         });
 
-        showNotif('Fiche envoyée avec le config.json !', 'success');
+        try { await saveToSupabase(); } catch(e) { console.warn('Supabase:', e); }
+
+        showNotif('Fiche envoyée et sauvegardée !', 'success');
         btn.innerHTML = '<i class="fas fa-check"></i> Envoyée !';
         btn.style.background = '#059669';
       } catch(err) {

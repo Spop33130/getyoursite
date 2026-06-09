@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiches clients — GetYourSite</title>
+  <link rel="stylesheet" href="/vendor/fonts/outfit.css">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0F1117;
+      --surface: #1A1D27;
+      --surface2:#22263a;
+      --border:  rgba(255,255,255,.08);
+      --text:    #F1F5F9;
+      --muted:   #8B92A5;
+      --accent:  #6366F1;
+      --radius:  14px;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 24px 80px;
+    }
+
+    .wrapper { max-width: 960px; margin: 0 auto; }
+
+    /* Header */
+    .hub-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+    .hub-logo { display: flex; align-items: center; gap: 10px; color: var(--accent); font-weight: 700; font-size: 1rem; letter-spacing: -.01em; text-decoration: none; }
+    .hub-logo i { font-size: 1.2rem; }
+    .hub-title { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; letter-spacing: -.03em; }
+    .hub-title span { color: var(--muted); font-weight: 400; font-size: .75em; margin-left: .5rem; }
+
+    .btn-new {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--accent); color: #fff;
+      padding: .55rem 1.2rem; border-radius: 9px;
+      font-family: inherit; font-size: .85rem; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity .15s;
+      white-space: nowrap;
+    }
+    .btn-new:hover { opacity: .85; }
+
+    /* Search */
+    .search-bar {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 28px;
+    }
+    .search-wrap {
+      flex: 1; position: relative;
+    }
+    .search-wrap i {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--muted); font-size: .85rem; pointer-events: none;
+    }
+    .search-input {
+      width: 100%; padding: .65rem 1rem .65rem 2.6rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text);
+      font-family: inherit; font-size: .9rem; outline: none;
+      transition: border-color .15s;
+    }
+    .search-input:focus { border-color: rgba(99,102,241,.5); }
+    .search-input::placeholder { color: var(--muted); }
+    .count-badge {
+      font-size: .78rem; font-weight: 600; color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* Grid */
+    .fiches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .fiche-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      cursor: pointer;
+      transition: border-color .2s, transform .15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--card-color, var(--accent));
+    }
+    .fiche-card:hover { border-color: rgba(99,102,241,.4); transform: translateY(-2px); }
+
+    .fiche-card-top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .fiche-garage { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .fiche-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 4px;
+      background: var(--card-color, var(--accent));
+    }
+    .fiche-meta { font-size: .78rem; color: var(--muted); display: flex; flex-direction: column; gap: 3px; }
+    .fiche-meta span { display: flex; align-items: center; gap: 5px; }
+    .fiche-meta i { width: 12px; }
+
+    .fiche-actions {
+      display: flex; gap: 6px; margin-top: 14px;
+    }
+    .fiche-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px;
+      padding: .45rem .6rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--muted); font-family: inherit; font-size: .75rem; font-weight: 600;
+      cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
+    }
+    .fiche-btn:hover { background: rgba(255,255,255,.1); color: var(--text); }
+    .fiche-btn--accent { border-color: rgba(99,102,241,.4); color: #818CF8; }
+    .fiche-btn--accent:hover { background: rgba(99,102,241,.15); }
+
+    /* Empty state */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center; padding: 60px 20px;
+      color: var(--muted);
+    }
+    .empty i { font-size: 2.5rem; margin-bottom: 16px; opacity: .3; display: block; }
+    .empty p { font-size: .95rem; }
+
+    /* Loading */
+    .loading {
+      text-align: center; padding: 60px 20px;
+      color: var(--muted); font-size: .9rem;
+    }
+    .loading i { margin-right: 8px; }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.75);
+      z-index: 1000;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 24px 16px;
+      overflow-y: auto;
+      opacity: 0; transition: opacity .2s;
+    }
+    .modal-backdrop.open { opacity: 1; }
+
+    .modal {
+      background: #1A1D27;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 18px;
+      width: 100%; max-width: 680px;
+      position: relative;
+      transform: translateY(12px);
+      transition: transform .2s;
+    }
+    .modal-backdrop.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .modal-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      margin-top: 5px; flex-shrink: 0;
+    }
+    .modal-header h2 { font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; }
+    .modal-header p  { font-size: .82rem; color: var(--muted); margin-top: 3px; }
+    .modal-close {
+      margin-left: auto; background: rgba(255,255,255,.07); border: none;
+      width: 32px; height: 32px; border-radius: 8px;
+      color: var(--muted); font-size: .85rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background .15s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,.14); color: var(--text); }
+
+    .modal-body { padding: 20px 28px 28px; }
+
+    .modal-block {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px;
+      margin-bottom: 12px; overflow: hidden;
+    }
+    .modal-block-title {
+      display: flex; align-items: center; gap: 9px;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: .8rem; font-weight: 700; color: var(--muted);
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .modal-block-title i { font-size: .8rem; width: 14px; }
+    .modal-block-body { padding: 10px 14px; }
+
+    .modal-row {
+      display: flex; gap: 10px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: .85rem;
+    }
+    .modal-row:last-child { border-bottom: none; }
+    .modal-label { width: 155px; flex-shrink: 0; color: var(--muted); }
+    .modal-value { color: var(--text); flex: 1; word-break: break-word; }
+
+    .color-swatch {
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .color-swatch span {
+      width: 14px; height: 14px; border-radius: 3px;
+      border: 1px solid rgba(255,255,255,.15); display: inline-block; flex-shrink: 0;
+    }
+
+    .modal-footer {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 0 28px 24px;
+    }
+    .modal-footer-btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: .65rem 1.2rem;
+      border-radius: 9px; font-family: inherit; font-size: .85rem; font-weight: 700;
+      cursor: pointer; transition: opacity .15s; border: none;
+    }
+    .modal-footer-btn--primary { background: var(--accent); color: #fff; }
+    .modal-footer-btn--outline {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.15);
+      color: var(--muted);
+    }
+    .modal-footer-btn:hover { opacity: .8; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .82rem; text-decoration: none;
+      transition: color .15s;
+    }
+    .back-link:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="hub-header">
+    <div>
+      <a href="../hub" class="hub-logo" style="margin-bottom:8px;display:inline-flex;"><i class="fas fa-bolt"></i> GetYourSite</a>
+      <h1 class="hub-title">Fiches clients <span id="count-label"></span></h1>
+    </div>
+    <a href="../onboarding" class="btn-new"><i class="fas fa-plus"></i> Nouvelle fiche</a>
+  </div>
+
+  <div class="search-bar">
+    <div class="search-wrap">
+      <i class="fas fa-search"></i>
+      <input type="text" id="search-input" class="search-input" placeholder="Rechercher un garage, un commercial…" oninput="filterFiches()">
+    </div>
+    <span class="count-badge" id="count-visible"></span>
+  </div>
+
+  <div id="grid-container">
+    <div class="loading"><i class="fas fa-spinner fa-spin"></i> Chargement…</div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header" id="modal-header"></div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://uyptfyrnxbdbxeqzmpts.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5cHRmeXJueGJkYnhlcXptcHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMzczOTEsImV4cCI6MjA5NjYxMzM5MX0.QznlTsV1ap6rUiLINu6IJgIPplKcUsXr8LEvqQ-NUG0';
+
+  let allFiches = [];
+
+  async function loadFiches() {
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/fiches_clients?order=created_at.desc&select=*`,
+        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+      );
+      if (!res.ok) throw new Error(res.status);
+      allFiches = await res.json();
+      renderGrid(allFiches);
+      updateCount(allFiches.length, allFiches.length);
+    } catch(e) {
+      document.getElementById('grid-container').innerHTML =
+        '<div class="loading" style="color:#ef4444;"><i class="fas fa-exclamation-circle"></i> Erreur de chargement — vérifiez votre connexion.</div>';
+    }
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
+  function renderGrid(fiches) {
+    const container = document.getElementById('grid-container');
+    if (!fiches.length) {
+      container.innerHTML = `
+        <div class="empty">
+          <i class="fas fa-folder-open"></i>
+          <p>Aucune fiche client pour l'instant.<br>Remplissez votre première fiche via le formulaire.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = `<div class="fiches-grid">${fiches.map(f => cardHTML(f)).join('')}</div>`;
+  }
+
+  function cardHTML(f) {
+    const d    = f.data || {};
+    const color = d.color_primary || '#6366F1';
+    const created = formatDate(f.created_at);
+    return `
+      <div class="fiche-card" style="--card-color:${color}" onclick="openModal('${f.id}')">
+        <div class="fiche-card-top">
+          <div class="fiche-garage">${f.nom_garage || '—'}</div>
+          <div class="fiche-dot"></div>
+        </div>
+        <div class="fiche-meta">
+          ${f.commercial  ? `<span><i class="fas fa-user-tie"></i>${f.commercial}</span>` : ''}
+          ${f.date_visite ? `<span><i class="fas fa-calendar"></i>Visite : ${f.date_visite}</span>` : ''}
+          <span><i class="fas fa-clock"></i>Ajouté le ${created}</span>
+        </div>
+        <div class="fiche-actions" onclick="event.stopPropagation()">
+          <button class="fiche-btn fiche-btn--accent" onclick="openModal('${f.id}')"><i class="fas fa-eye"></i> Voir</button>
+          <button class="fiche-btn" onclick="downloadConfigJSON('${f.id}')"><i class="fas fa-download"></i> Config</button>
+          <button class="fiche-btn" onclick="openPDF('${f.id}')"><i class="fas fa-file-pdf"></i> PDF</button>
+        </div>
+      </div>`;
+  }
+
+  function filterFiches() {
+    const q = document.getElementById('search-input').value.toLowerCase().trim();
+    const filtered = q
+      ? allFiches.filter(f =>
+          (f.nom_garage  || '').toLowerCase().includes(q) ||
+          (f.commercial  || '').toLowerCase().includes(q) ||
+          (f.date_visite || '').includes(q)
+        )
+      : allFiches;
+    renderGrid(filtered);
+    updateCount(filtered.length, allFiches.length);
+  }
+
+  function updateCount(visible, total) {
+    document.getElementById('count-label').textContent  = `(${total})`;
+    document.getElementById('count-visible').textContent =
+      visible < total ? `${visible} sur ${total}` : `${total} fiche${total > 1 ? 's' : ''}`;
+  }
+
+  function getFiche(id) { return allFiches.find(f => f.id === id); }
+
+  function openModal(id) {
+    const f = getFiche(id);
+    if (!f) return;
+    const d = f.data || {};
+    const color = d.color_primary || '#6366F1';
+
+    // Header
+    document.getElementById('modal-header').innerHTML = `
+      <div class="modal-dot" style="background:${color}"></div>
+      <div>
+        <h2>${f.nom_garage || '—'}</h2>
+        <p>
+          ${f.commercial  ? `<i class="fas fa-user-tie" style="margin-right:4px;"></i>${f.commercial}` : ''}
+          ${f.date_visite ? ` &nbsp;·&nbsp; <i class="fas fa-calendar" style="margin-right:4px;"></i>Visite : ${f.date_visite}` : ''}
+          &nbsp;·&nbsp; <i class="fas fa-clock" style="margin-right:4px;"></i>Ajouté le ${formatDate(f.created_at)}
+        </p>
+      </div>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>`;
+
+    // Body
+    const R = (label, value) => value
+      ? `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>` : '';
+
+    const B = (icon, title, rows) => `
+      <div class="modal-block">
+        <div class="modal-block-title"><i class="${icon}"></i>${title}</div>
+        <div class="modal-block-body">${rows}</div>
+      </div>`;
+
+    const sch = d.schedule || {};
+    const semStr = sch.semaine_closed ? 'Fermé' : `${sch.semaine_open || '—'} → ${sch.semaine_close || '—'}`;
+    const samStr = sch.sam_closed     ? 'Fermé' : `${sch.sam_open    || '—'} → ${sch.sam_close    || '—'}`;
+    const dimStr = sch.dim_open       ? `${sch.dim_open_h  || '—'} → ${sch.dim_close_h || '—'}` : 'Fermé';
+
+    let services = '';
+    for (let i = 1; i <= 4; i++) {
+      const t = d[`s${i}_title`];
+      if (t) services += R(`Service ${i}`, t + (d[`s${i}_desc`] ? ` — ${d[`s${i}_desc`]}` : ''));
+    }
+
+    const colorRow = `
+      <div class="modal-row">
+        <span class="modal-label">Principale</span>
+        <span class="modal-value"><span class="color-swatch"><span style="background:${d.color_primary}"></span>${d.color_primary}</span></span>
+      </div>
+      <div class="modal-row">
+        <span class="modal-label">Secondaire</span>
+        <span class="modal-value"><span class="color-swatch"><span style="background:${d.color_secondary}"></span>${d.color_secondary}</span></span>
+      </div>`;
+
+    document.getElementById('modal-body').innerHTML =
+      B('fas fa-store',           'Identité',
+        R('Nom',         d.site_name)   +
+        R('Slogan',      d.slogan)      +
+        R('Badge',       d.badge)       +
+        R('Description', d.description)
+      ) +
+      B('fas fa-map-marker-alt',  'Coordonnées',
+        R('Adresse',     d.address)    +
+        R('Téléphone',   d.phone)      +
+        R('WhatsApp',    d.whatsapp)   +
+        R('Email',       d.email)      +
+        R('Horaires',    d.hours_text)
+      ) +
+      B('fas fa-clock',           'Horaires d\'ouverture',
+        R('Lun – Ven',   semStr) +
+        R('Samedi',      samStr) +
+        R('Dimanche',    dimStr)
+      ) +
+      `<div class="modal-block">
+        <div class="modal-block-title"><i class="fas fa-palette"></i>Couleurs</div>
+        <div class="modal-block-body">${colorRow}</div>
+      </div>` +
+      B('fas fa-cogs',            'Services', services || '<span style="color:var(--muted);font-size:.85rem;">Non renseigné</span>') +
+      B('fas fa-share-nodes',     'Réseaux & Google',
+        R('Facebook',    d.facebook)      +
+        R('Instagram',   d.instagram)     +
+        R('Google Maps', d.google_url)    +
+        R('Note Google', d.google_rating ? d.google_rating + ' / 5 (' + (d.google_count || '?') + ' avis)' : '')
+      ) +
+      B('fas fa-camera',          'Photos', R('Choix', d.photos_choice)) +
+      B('fas fa-file-contract',   'Mentions légales',
+        R('Responsable', d.legal_responsable) +
+        R('SIRET',       d.legal_siret)       +
+        R('Forme',       d.legal_forme)
+      ) +
+      ((d.domain || d.notes) ? B('fas fa-sticky-note', 'Notes',
+        R('Domaine', d.domain) +
+        R('Notes',   d.notes)
+      ) : '');
+
+    // Footer
+    document.getElementById('modal-footer').innerHTML = `
+      <button class="modal-footer-btn modal-footer-btn--primary" onclick="downloadConfigJSON('${f.id}')">
+        <i class="fas fa-download"></i> config.json
+      </button>
+      <button class="modal-footer-btn modal-footer-btn--outline" onclick="openPDF('${f.id}')">
+        <i class="fas fa-file-pdf"></i> Générer PDF
+      </button>
+      <button class="modal-footer-btn modal-footer-btn--outline" onclick="closeModal()">
+        Fermer
+      </button>`;
+
+    const backdrop = document.getElementById('modal-backdrop');
+    backdrop.style.display = 'flex';
+    requestAnimationFrame(() => backdrop.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(e) {
+    if (e && e.target !== document.getElementById('modal-backdrop')) return;
+    const backdrop = document.getElementById('modal-backdrop');
+    backdrop.classList.remove('open');
+    setTimeout(() => { backdrop.style.display = 'none'; document.body.style.overflow = ''; }, 200);
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function downloadConfigJSON(id) {
+    const f = getFiche(id);
+    if (!f || !f.data?.config) return;
+    const slug = (f.nom_garage || 'client').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+    const blob = new Blob([JSON.stringify(f.data.config, null, 2)], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = `config-${slug}.json`; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function openPDF(id) {
+    const f = getFiche(id);
+    if (!f) return;
+    const d = f.data || {};
+    const colorPrimary   = d.color_primary   || '#E74C3C';
+    const colorSecondary = d.color_secondary || '#2C3E50';
+
+    const R = (label, value) => value
+      ? `<div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f3f4f6;align-items:flex-start;">
+           <span style="font-size:11px;color:#6b7280;min-width:145px;flex-shrink:0;">${label}</span>
+           <span style="font-size:11px;color:#111827;font-weight:500;flex:1;word-break:break-word;">${value}</span>
+         </div>` : '';
+
+    const B = (color, emoji, title, body) =>
+      `<div style="background:#fff;border:1px solid #e5e7eb;border-left:3px solid ${color};border-radius:8px;margin-bottom:12px;overflow:hidden;page-break-inside:avoid;">
+         <div style="display:flex;align-items:center;gap:9px;padding:10px 14px;background:#fafafa;border-bottom:1px solid #e5e7eb;">
+           <div style="width:26px;height:26px;background:${color};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">${emoji}</div>
+           <span style="font-size:12px;font-weight:700;color:#111827;">${title}</span>
+         </div>
+         <div style="padding:10px 14px;">${body}</div>
+       </div>`;
+
+    const sch = d.schedule || {};
+    const semStr = sch.semaine_closed ? 'Fermé' : `${sch.semaine_open||'—'} → ${sch.semaine_close||'—'}`;
+    const samStr = sch.sam_closed     ? 'Fermé' : `${sch.sam_open||'—'} → ${sch.sam_close||'—'}`;
+    const dimStr = sch.dim_open       ? `${sch.dim_open_h||'—'} → ${sch.dim_close_h||'—'}` : 'Fermé';
+
+    let services = '';
+    for (let i = 1; i <= 4; i++) {
+      const t = d[`s${i}_title`];
+      if (t) services += `<div style="padding:7px 0;border-bottom:1px solid #f3f4f6;">
+        <div style="font-size:11px;font-weight:700;color:#111827;">Service ${i} — ${t}</div>
+        ${d[`s${i}_desc`] ? `<div style="font-size:10.5px;color:#6b7280;">${d[`s${i}_desc`]}</div>` : ''}
+      </div>`;
+    }
+
+    const colorBlock =
+      `<div style="background:#fff;border:1px solid #e5e7eb;border-left:3px solid #7C3AED;border-radius:8px;margin-bottom:12px;overflow:hidden;page-break-inside:avoid;">
+         <div style="display:flex;align-items:center;gap:9px;padding:10px 14px;background:#fafafa;border-bottom:1px solid #e5e7eb;">
+           <div style="width:26px;height:26px;background:#7C3AED;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;">🎨</div>
+           <span style="font-size:12px;font-weight:700;color:#111827;">Couleurs du site</span>
+         </div>
+         <div style="padding:10px 14px;">
+           <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f3f4f6;align-items:center;">
+             <span style="font-size:11px;color:#6b7280;min-width:145px;">Couleur principale</span>
+             <div style="display:flex;align-items:center;gap:7px;">
+               <div style="width:16px;height:16px;border-radius:3px;background:${colorPrimary};border:1px solid #d1d5db;"></div>
+               <span style="font-size:11px;font-weight:600;font-family:monospace;">${colorPrimary}</span>
+             </div>
+           </div>
+           <div style="display:flex;gap:10px;padding:6px 0;align-items:center;">
+             <span style="font-size:11px;color:#6b7280;min-width:145px;">Couleur secondaire</span>
+             <div style="display:flex;align-items:center;gap:7px;">
+               <div style="width:16px;height:16px;border-radius:3px;background:${colorSecondary};border:1px solid #d1d5db;"></div>
+               <span style="font-size:11px;font-weight:600;font-family:monospace;">${colorSecondary}</span>
+             </div>
+           </div>
+         </div>
+       </div>`;
+
+    const content = `
+      <div style="font-family:Arial,Helvetica,sans-serif;color:#111827;width:660px;padding:0;background:#f8f9fa;">
+        <div style="background:${colorSecondary};color:white;padding:24px 24px 20px;border-radius:10px 10px 0 0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:4px 12px;">
+              <span style="font-size:13px;">⚡</span>
+              <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">GetYourSite</span>
+            </div>
+            <span style="font-size:10px;opacity:.5;letter-spacing:.06em;text-transform:uppercase;">Usage interne</span>
+          </div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.55;margin-bottom:6px;">📋 Fiche client</div>
+          <div style="font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;">${f.nom_garage || '—'}</div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;">
+            ${f.commercial  ? `<span style="font-size:11px;opacity:.75;">👤 Commercial : <strong>${f.commercial}</strong></span>` : ''}
+            ${f.date_visite ? `<span style="font-size:11px;opacity:.75;">📅 Visite du <strong>${f.date_visite}</strong></span>` : ''}
+          </div>
+        </div>
+        <div style="height:4px;background:${colorPrimary};margin-bottom:16px;border-radius:0 0 2px 2px;"></div>
+        <div style="padding:0 4px;">
+          ${B('#E74C3C','🏪','Identité du garage',
+            R('Nom',         d.site_name)   +
+            R('Slogan',      d.slogan)      +
+            R('Badge',       d.badge)       +
+            R('Description', d.description)
+          )}
+          ${B('#2E86AB','📍','Coordonnées',
+            R('Adresse',        d.address)    +
+            R('Téléphone',      d.phone)      +
+            R('WhatsApp',       d.whatsapp)   +
+            R('Email',          d.email)      +
+            R('Horaires texte', d.hours_text)
+          )}
+          ${B('#D97706','🕐','Horaires d\'ouverture',
+            R('Lun – Ven', semStr) +
+            R('Samedi',    samStr) +
+            R('Dimanche',  dimStr)
+          )}
+          ${colorBlock}
+          ${B('#E74C3C','⚙️','Services', services || '<span style="font-size:11px;color:#9ca3af;">Non renseigné</span>')}
+          ${B('#2E86AB','📱','Réseaux & Google',
+            R('Facebook',        d.facebook)     +
+            R('Instagram',       d.instagram)    +
+            R('URL Google Maps', d.google_url)   +
+            R('Note Google',     d.google_rating ? d.google_rating + ' / 5' : '') +
+            R('Nombre d\'avis',  d.google_count)
+          )}
+          ${B('#D97706','📷','Photos', R('Choix', d.photos_choice))}
+          ${B('#2C3E50','📄','Mentions légales',
+            R('Responsable', d.legal_responsable) +
+            R('SIRET',       d.legal_siret)       +
+            R('Forme',       d.legal_forme)
+          )}
+          ${(d.domain || d.notes) ? B('#059669','📝','Notes',
+            R('Nom de domaine', d.domain) +
+            R('Notes',          d.notes)
+          ) : ''}
+        </div>
+        <div style="text-align:center;padding:14px;margin-top:8px;border-top:1px solid #e5e7eb;">
+          <span style="font-size:9.5px;color:#9ca3af;letter-spacing:.04em;">⚡ GetYourSite · Fiche client confidentielle · Ne pas partager</span>
+        </div>
+      </div>`;
+
+    const win = window.open('', '_blank');
+    if (!win) { alert('Autorisez les popups pour générer le PDF.'); return; }
+    win.document.write(`<!DOCTYPE html><html lang="fr"><head>
+      <meta charset="UTF-8"><title>Fiche — ${f.nom_garage || 'client'}</title>
+      <style>
+        * { box-sizing:border-box; margin:0; padding:0; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+        body { font-family: Arial, Helvetica, sans-serif; background:#f8f9fa; }
+        @media print { body { background:white; } .hint-bar { display:none !important; } @page { margin:10mm; size:A4 portrait; } }
+        .hint-bar { position:fixed; top:0; left:0; right:0; background:#2C3E50; color:white; padding:12px 20px;
+          display:flex; align-items:center; justify-content:space-between; font-family:Arial,sans-serif; font-size:13px; z-index:999; }
+        .save-btn { background:#E74C3C; color:white; border:none; padding:8px 18px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; }
+        .save-btn:hover { background:#c0392b; }
+        .content { max-width:700px; margin:0 auto; padding:64px 20px 20px; }
+      </style>
+    </head><body>
+      <div class="hint-bar">
+        <div><strong>⚡ Fiche prête</strong> <span style="margin-left:12px;opacity:.75;">Destination : <strong>Enregistrer en PDF</strong> → Enregistrer</span></div>
+        <button class="save-btn" onclick="window.print()">🖨️ Enregistrer en PDF</button>
+      </div>
+      <div class="content">${content}</div>
+      <script>setTimeout(() => window.print(), 300);<\/script>
+    </body></html>`);
+    win.document.close();
+  }
+
+  loadFiches();
+</script>
+
+</body>
+</html>
