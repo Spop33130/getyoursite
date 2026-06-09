@@ -1183,6 +1183,11 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
         return `${days} : ${s.open.replace(':','h')}–${s.close.replace(':','h')}`;
       }).join(' · ');
 
+      // Parse address → SEO fields (format attendu : "12 Rue XX, 33000 Ville")
+      let seoStreet = '', seoZip = '', seoCity = '';
+      const addrMatch = val('address').match(/^(.+),\s*(\d{5})\s+(.+)$/);
+      if (addrMatch) { seoStreet = addrMatch[1].trim(); seoZip = addrMatch[2]; seoCity = addrMatch[3].trim(); }
+
       return {
         siteName:    val('site_name'),
         slogan:      val('slogan') || val('badge'),
@@ -1265,7 +1270,7 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           whatsapp,
           email:          val('email'),
           hours:          hoursText,
-          form_email:     '',
+          form_email:     val('email'),
           maps_embed_url: ''
         },
 
@@ -1279,9 +1284,9 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
         },
 
         emailjs: {
-          service_id:  'service_z35lqdq',
-          template_id: 'template_4js8z7q',
-          public_key:  '4jD-AMOCzmbAcmZV2'
+          service_id:  '',
+          template_id: '',
+          public_key:  ''
         },
 
         social: {
@@ -1292,9 +1297,9 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
 
         seo: {
           schema_type: 'AutoRepair',
-          street:      '',
-          zip:         '',
-          city:        '',
+          street:      seoStreet,
+          zip:         seoZip,
+          city:        seoCity,
           geo_lat:     null,
           geo_lng:     null
         },
