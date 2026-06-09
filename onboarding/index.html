@@ -1039,14 +1039,19 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
     function downloadPDF() {
       if (!validateForm()) return;
       const slug = val('site_name').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'') || 'client';
-      const html = `<div style="font-family:Arial,sans-serif;width:680px;padding:20px;background:white;">${buildPDFContent()}</div>`;
+
+      // Injecter dans le DOM à la position de scroll actuelle — html2canvas requiert un élément visible
+      const wrap = document.createElement('div');
+      wrap.style.cssText = `position:absolute;top:${window.scrollY}px;left:0;width:700px;z-index:-1;background:white;padding:20px;`;
+      wrap.innerHTML = buildPDFContent();
+      document.body.appendChild(wrap);
 
       html2pdf().set({
         margin:      [10, 10, 10, 10],
         filename:    `fiche-${slug}.pdf`,
-        html2canvas: { scale: 2, useCORS: true, logging: false },
+        html2canvas: { scale: 2, useCORS: true, logging: false, scrollX: 0, scrollY: 0 },
         jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).from(html, 'string').save();
+      }).from(wrap).save().then(() => wrap.remove());
     }
 
     function buildConfig() {
