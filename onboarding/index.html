@@ -967,6 +967,7 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
     }
 
     function downloadPDF() {
+      if (!validateForm()) return;
       const slug = val('site_name').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'') || 'client';
       const html = `<div style="font-family:Arial,sans-serif;width:680px;padding:20px;background:white;">${buildPDFContent()}</div>`;
 
