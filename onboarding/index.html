@@ -720,9 +720,12 @@
     function syncColor(pickerId, textId) {
       const picker = document.getElementById(pickerId);
       const text   = document.getElementById(textId);
-      picker.addEventListener('input', () => { text.value = picker.value; });
-      text.addEventListener('input',   () => {
-        if (/^#[0-9a-fA-F]{6}$/.test(text.value)) picker.value = text.value;
+      const onPick = () => { text.value = picker.value; clearFieldError(textId); };
+      picker.addEventListener('input',  onPick);
+      picker.addEventListener('change', onPick);
+      text.addEventListener('input', () => {
+        const v = text.value.trim();
+        if (/^#[0-9a-fA-F]{6}$/.test(v)) { picker.value = v; clearFieldError(textId); }
       });
     }
     syncColor('color_primary_picker',   'color_primary');
@@ -784,11 +787,12 @@
         setFieldError('google_rating', 'Note invalide — entre 1 et 5');
     });
 
-    // Validation hex couleurs
+    // Validation hex couleurs (seulement si saisie complète à 7 chars)
     ['color_primary', 'color_secondary'].forEach(id => {
       document.getElementById(id)?.addEventListener('blur', function() {
-        if (!this.value.trim()) return;
-        if (!/^#[0-9A-Fa-f]{6}$/.test(this.value.trim()))
+        const v = this.value.trim();
+        if (!v || v.length < 7) return;
+        if (!/^#[0-9A-Fa-f]{6}$/.test(v))
           setFieldError(id, 'Format invalide — ex : #E74C3C');
       });
     });
