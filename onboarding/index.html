@@ -112,6 +112,27 @@
     input:focus, textarea:focus, select:focus { border-color: var(--brand); }
     textarea { resize: vertical; min-height: 80px; }
 
+    /* VALIDATION */
+    .form-group.has-error input,
+    .form-group.has-error textarea,
+    .form-group.has-error select {
+      border-color: #ef4444;
+      background: #fff5f5;
+    }
+    .form-group.has-error input:focus,
+    .form-group.has-error textarea:focus,
+    .form-group.has-error select:focus {
+      border-color: #ef4444;
+    }
+    .field-error-msg {
+      font-size: .75rem;
+      color: #dc2626;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      margin-top: -.1rem;
+    }
+
     /* SCHEDULE */
     .schedule-row {
       display: grid;
@@ -1090,15 +1111,65 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
       URL.revokeObjectURL(url);
     }
 
-    async function submitForm() {
-      const required = ['commercial_name','site_name','badge','description','address','phone','email','s1_title','s1_desc','s2_title','s2_desc'];
-      const missing  = required.filter(id => !val(id));
+    const REQUIRED_FIELDS = {
+      commercial_name: 'Ton prénom',
+      site_name:       'Nom du garage',
+      badge:           'Badge accroche',
+      description:     'Description du garage',
+      address:         'Adresse complète',
+      phone:           'Téléphone',
+      email:           'Email du garage',
+      s1_title:        'Service 1 — Nom',
+      s1_desc:         'Service 1 — Description',
+      s2_title:        'Service 2 — Nom',
+      s2_desc:         'Service 2 — Description',
+    };
 
-      if (missing.length) {
-        showNotif('Merci de remplir les champs obligatoires (marqués *).', 'error');
-        document.getElementById(missing[0])?.focus();
-        return;
+    function clearFieldError(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const group = el.closest('.form-group');
+      if (!group) return;
+      group.classList.remove('has-error');
+      group.querySelector('.field-error-msg')?.remove();
+    }
+
+    function setFieldError(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const group = el.closest('.form-group');
+      if (!group) return;
+      group.classList.add('has-error');
+      if (!group.querySelector('.field-error-msg')) {
+        const msg = document.createElement('span');
+        msg.className = 'field-error-msg';
+        msg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Champ obligatoire';
+        el.after(msg);
       }
+      el.addEventListener('input', () => clearFieldError(id), { once: true });
+    }
+
+    function validateForm() {
+      // Clear previous errors
+      Object.keys(REQUIRED_FIELDS).forEach(clearFieldError);
+
+      const missing = Object.keys(REQUIRED_FIELDS).filter(id => !val(id));
+      if (!missing.length) return true;
+
+      missing.forEach(setFieldError);
+
+      const count = missing.length;
+      showNotif(`${count} champ${count > 1 ? 's' : ''} obligatoire${count > 1 ? 's' : ''} manquant${count > 1 ? 's' : ''}.`, 'error');
+
+      // Scroll to first error
+      const firstEl = document.getElementById(missing[0]);
+      firstEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => firstEl?.focus(), 400);
+      return false;
+    }
+
+    async function submitForm() {
+      if (!validateForm()) return;
 
       const btn = document.getElementById('submit-btn');
       btn.disabled = true;
