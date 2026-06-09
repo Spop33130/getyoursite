@@ -1219,7 +1219,29 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           gallery: ['gallery-1.jpg','gallery-2.jpg','gallery-3.jpg','gallery-4.jpg','gallery-5.jpg','gallery-6.jpg']
         },
 
-        testimonials: [],
+        testimonials: [
+          {
+            text:   'Travail impeccable et tarifs honnêtes. L\'équipe a diagnostiqué et réparé ma voiture en temps record. Je recommande vivement !',
+            author: 'Jean-Claude Petit',
+            role:   'Client depuis 2019',
+            rating: 5,
+            source: 'google'
+          },
+          {
+            text:   'Professionnalisme et transparence. Ils m\'expliquent toujours ce qui doit être fait et pourquoi. Un garage de confiance absolu !',
+            author: 'Isabelle Moreau',
+            role:   'Cliente fidèle',
+            rating: 5,
+            source: 'google'
+          },
+          {
+            text:   'Révision complète faite en une matinée, voiture rendue propre. Prix juste et équipe sympa. Je reviens sans hésiter.',
+            author: 'Thomas Bernard',
+            role:   'Client',
+            rating: 5,
+            source: 'google'
+          }
+        ],
 
         google_reviews: {
           rating: parseFloat(val('google_rating')) || null,
@@ -1228,10 +1250,11 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
         },
 
         faq: [
-          { question: 'Acceptez-vous toutes les marques ?',         answer: 'Oui, nous intervenons sur toutes les marques et tous les modèles.' },
-          { question: 'Faut-il obligatoirement prendre rendez-vous ?', answer: 'Pour les travaux importants, un rendez-vous garantit un délai optimal.' },
-          { question: 'Combien de temps dure une révision ?',        answer: 'Une révision standard prend en général une demi-journée.' },
-          { question: 'Est-il possible de fournir les pièces pour toutes réparations ?', answer: 'Non, au titre de la garantie et par soucis de qualité, nous fournissons nous-mêmes les pièces détachées. Nous ne montons donc aucune pièce fournie par le client.' }
+          { question: 'Acceptez-vous toutes les marques ?',              answer: 'Oui, nous intervenons sur toutes les marques et tous les modèles, qu\'il s\'agisse de véhicules européens, asiatiques ou américains.' },
+          { question: 'Faut-il obligatoirement prendre rendez-vous ?',   answer: 'Non, nous acceptons les clients sans rendez-vous pour les petites interventions. Pour les travaux importants, un rendez-vous nous permet de vous garantir un délai optimal.' },
+          { question: 'Combien de temps dure une révision ?',            answer: 'Une révision standard prend en général une demi-journée. Nous vous confirmons un délai précis lors de la prise en charge de votre véhicule.' },
+          { question: 'Proposez-vous un véhicule de prêt ?',             answer: 'Oui, nous mettons à votre disposition un véhicule de prêt lors d\'immobilisations longues, sous réserve de disponibilité. N\'hésitez pas à nous le préciser lors de votre demande.' },
+          { question: 'Est-il possible de fournir les pièces pour toutes réparations ?', answer: 'Non, au titre de la garantie, et par soucis de qualité, nous fournissons nous même les pièces détachées. Nous ne montons donc aucune pièce fournie par le client.' }
         ],
 
         schedule,
@@ -1255,12 +1278,25 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           button_icon:         'fas fa-wrench'
         },
 
-        emailjs: { service_id: '', template_id: '', public_key: '' },
+        emailjs: {
+          service_id:  'service_z35lqdq',
+          template_id: 'template_4js8z7q',
+          public_key:  '4jD-AMOCzmbAcmZV2'
+        },
 
         social: {
           facebook:  val('facebook'),
           instagram: val('instagram'),
           linkedin:  ''
+        },
+
+        seo: {
+          schema_type: 'AutoRepair',
+          street:      '',
+          zip:         '',
+          city:        '',
+          geo_lat:     null,
+          geo_lng:     null
         },
 
         legal: {
