@@ -619,6 +619,39 @@
       </div>
     </div>
 
+    <!-- MENTIONS LÉGALES -->
+    <div class="block">
+      <div class="block-title">
+        <div class="block-icon block-icon--dark"><i class="fas fa-file-contract"></i></div>
+        <div><h2>Mentions légales</h2><p>Obligatoires pour la page mentions légales du site</p></div>
+      </div>
+      <div class="block-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="legal_responsable">Responsable de publication</label>
+            <input type="text" id="legal_responsable" placeholder="Ex : Jean Martin">
+          </div>
+          <div class="form-group">
+            <label for="legal_siret">SIRET</label>
+            <input type="text" id="legal_siret" placeholder="Ex : 123 456 789 00012">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="legal_forme">Forme juridique</label>
+          <select id="legal_forme">
+            <option value="">— Sélectionner —</option>
+            <option value="Auto-entrepreneur">Auto-entrepreneur / Micro-entreprise</option>
+            <option value="SARL">SARL</option>
+            <option value="SAS">SAS</option>
+            <option value="SASU">SASU</option>
+            <option value="EURL">EURL</option>
+            <option value="SA">SA</option>
+            <option value="EI">Entreprise individuelle (EI)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
   </form>
   </div>
 
@@ -761,6 +794,9 @@ PHOTOS
   Choix : ${photos}
 
 ${sep()}
+MENTIONS LÉGALES
+${line('Responsable',     val('legal_responsable'))}${line('SIRET',            val('legal_siret'))}${line('Forme juridique', val('legal_forme'))}
+${sep()}
 DIVERS
 ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
       `.trim() + '\n\n' + '═'.repeat(33) + '\nCONFIG.JSON GÉNÉRÉ\n' + '═'.repeat(33) + '\n' + JSON.stringify(buildConfig(), null, 2);
@@ -862,6 +898,12 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           ${S('#D97706','📷','Photos',
             R('Choix', photosEl ? photosEl.value : 'Non renseigné')
           )}
+
+          ${(val('legal_responsable') || val('legal_siret') || val('legal_forme')) ? S('#4B5563','📄','Mentions légales',
+            R('Responsable',     val('legal_responsable')) +
+            R('SIRET',           val('legal_siret')) +
+            R('Forme juridique', val('legal_forme'))
+          ) : ''}
 
           ${(val('domain') || val('notes')) ? S('#059669','📝','Notes & divers',
             R('Nom de domaine', val('domain')) +
@@ -999,6 +1041,14 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           facebook:  val('facebook'),
           instagram: val('instagram'),
           linkedin:  ''
+        },
+
+        legal: {
+          responsable:       val('legal_responsable') || 'Prénom Nom',
+          siret:             val('legal_siret')       || 'XXX XXX XXX 00000',
+          forme:             val('legal_forme')       || 'Auto-entrepreneur',
+          hebergeur_name:    'Vercel Inc.',
+          hebergeur_address: '340 Pine Street Suite 701, San Francisco, CA 94104, USA'
         }
       };
     }

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales</title>
+  <link rel="stylesheet" href="/vendor/fonts/outfit.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --brand:  #E74C3C;
+      --dark:   #2C3E50;
+      --text:   #1a1a2e;
+      --muted:  #6b7280;
+      --bg:     #f8f9fa;
+      --white:  #ffffff;
+      --border: #e5e7eb;
+      --radius: 12px;
+    }
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .header {
+      background: var(--dark);
+      color: #fff;
+      padding: 2rem 1.5rem;
+    }
+    .header-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      color: rgba(255,255,255,.65);
+      font-size: .85rem;
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .back-btn:hover { color: #fff; }
+    .header h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .header p { color: rgba(255,255,255,.55); font-size: .85rem; margin-top: .2rem; }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .block h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      padding-bottom: .6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .row {
+      display: flex;
+      gap: .75rem;
+      padding: .4rem 0;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: .9rem;
+    }
+    .row:last-child { border-bottom: none; }
+    .row-label {
+      width: 180px;
+      flex-shrink: 0;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .row-value { color: var(--text); }
+    p.prose {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    p.prose + p.prose { margin-top: .75rem; }
+
+    .footer-note {
+      text-align: center;
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: 2rem;
+    }
+    .footer-note a { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="../" class="back-btn">← Retour au site</a>
+  </div>
+  <div class="header-inner" style="margin-top:.75rem;">
+    <div>
+      <h1>Mentions légales</h1>
+      <p id="site-subtitle">—</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="block">
+    <h2>Éditeur du site</h2>
+    <div class="row"><span class="row-label">Raison sociale</span><span class="row-value" id="ml-name">—</span></div>
+    <div class="row"><span class="row-label">Forme juridique</span><span class="row-value" id="ml-forme">—</span></div>
+    <div class="row"><span class="row-label">SIRET</span><span class="row-value" id="ml-siret">—</span></div>
+    <div class="row"><span class="row-label">Responsable publication</span><span class="row-value" id="ml-responsable">—</span></div>
+    <div class="row"><span class="row-label">Adresse</span><span class="row-value" id="ml-address">—</span></div>
+    <div class="row"><span class="row-label">Téléphone</span><span class="row-value" id="ml-phone">—</span></div>
+    <div class="row"><span class="row-label">Email</span><span class="row-value" id="ml-email">—</span></div>
+  </div>
+
+  <div class="block">
+    <h2>Hébergeur</h2>
+    <div class="row"><span class="row-label">Société</span><span class="row-value" id="ml-host-name">—</span></div>
+    <div class="row"><span class="row-label">Adresse</span><span class="row-value" id="ml-host-address">—</span></div>
+  </div>
+
+  <div class="block">
+    <h2>Propriété intellectuelle</h2>
+    <p class="prose">L'ensemble du contenu de ce site (textes, images, graphismes, logo, icônes) est la propriété exclusive de <span id="ml-name-2">l'éditeur</span>, sauf mentions contraires. Toute reproduction, distribution, modification ou utilisation à des fins commerciales sans autorisation écrite préalable est strictement interdite.</p>
+  </div>
+
+  <div class="block">
+    <h2>Données personnelles (RGPD)</h2>
+    <p class="prose">Les informations collectées via le formulaire de contact sont utilisées uniquement pour répondre à vos demandes. Elles ne sont ni vendues, ni transmises à des tiers.</p>
+    <p class="prose" style="margin-top:.75rem;">Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ce droit, contactez-nous à l'adresse email indiquée ci-dessus.</p>
+  </div>
+
+  <div class="block">
+    <h2>Cookies</h2>
+    <p class="prose">Ce site n'utilise pas de cookies de traçage ou de ciblage publicitaire. Aucun cookie tiers n'est déposé sur votre terminal lors de votre navigation.</p>
+  </div>
+
+  <p class="footer-note">© <span id="ml-year"></span> <span id="ml-name-3">—</span> · <a href="../">Retour au site</a></p>
+
+</div>
+
+<script>
+  document.getElementById('ml-year').textContent = new Date().getFullYear();
+
+  fetch('../config.json')
+    .then(r => r.json())
+    .then(c => {
+      const l = c.legal || {};
+      const ct = c.contact || {};
+      const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || '—'; };
+
+      document.title = 'Mentions légales — ' + (c.siteName || '');
+      set('site-subtitle',   c.siteName);
+      set('ml-name',         c.siteName);
+      set('ml-name-2',       c.siteName);
+      set('ml-name-3',       c.siteName);
+      set('ml-forme',        l.forme);
+      set('ml-siret',        l.siret);
+      set('ml-responsable',  l.responsable);
+      set('ml-address',      ct.address);
+      set('ml-phone',        ct.phone);
+      set('ml-email',        ct.email);
+      set('ml-host-name',    l.hebergeur_name    || 'Vercel Inc.');
+      set('ml-host-address', l.hebergeur_address || '340 Pine Street Suite 701, San Francisco, CA 94104, USA');
+
+      // Apply brand color from config
+      if (c.colors?.secondary) {
+        document.querySelector('.header').style.background = c.colors.secondary;
+      }
+    });
+</script>
+</body>
+</html>

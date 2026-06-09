@@ -3,29 +3,38 @@
   "slogan": "Le goût des bonnes choses",
   "badge": "Épicerie fine · Produits d'exception · Livraison locale",
   "description": "Une épicerie fine au cœur du quartier, sélectionnant pour vous les meilleurs produits de terroir, vins, fromages et spécialités artisanales. Chaque référence est choisie avec passion pour vous faire découvrir des saveurs authentiques.",
-
   "colors": {
     "primary": "#1E3A5F",
     "secondary": "#1C1917"
   },
-
   "hero": {
     "title": "L'excellence du terroir à portée de main",
     "subtitle": "Vins, fromages, charcuteries et épicerie fine — un voyage gustatif au cœur du quartier.",
     "cta_primary": "Nous contacter",
     "cta_secondary": "Nos produits",
-    "tags": ["Produits artisanaux", "Circuit court", "Livraison locale"]
+    "tags": [
+      "Produits artisanaux",
+      "Circuit court",
+      "Livraison locale"
+    ]
   },
-
   "about": {
     "title": "Notre Sélection",
     "stats": [
-      { "number": "200+", "label": "Références en rayon" },
-      { "number": "40+",  "label": "Producteurs partenaires" },
-      { "number": "15+",  "label": "Années de passion" }
+      {
+        "number": "200+",
+        "label": "Références en rayon"
+      },
+      {
+        "number": "40+",
+        "label": "Producteurs partenaires"
+      },
+      {
+        "number": "15+",
+        "label": "Années de passion"
+      }
     ]
   },
-
   "services": [
     {
       "title": "Vins & Spiritueux",
@@ -43,16 +52,30 @@
       "icon": "fas fa-gift"
     }
   ],
-
   "commitments": [
-    { "icon": "fas fa-handshake",  "title": "Producteurs locaux",    "description": "40+ artisans et agriculteurs de la région en partenariat direct" },
-    { "icon": "fas fa-certificate","title": "Qualité sélectionnée",  "description": "Chaque produit est goûté et approuvé avant d'entrer en rayon" },
-    { "icon": "fas fa-truck",      "title": "Livraison locale",      "description": "Livraison à domicile sur le quartier pour vos commandes" },
-    { "icon": "fas fa-comments",   "title": "Conseil personnalisé",  "description": "On vous aide à choisir selon vos goûts et l'occasion" }
+    {
+      "icon": "fas fa-handshake",
+      "title": "Producteurs locaux",
+      "description": "40+ artisans et agriculteurs de la région en partenariat direct"
+    },
+    {
+      "icon": "fas fa-certificate",
+      "title": "Qualité sélectionnée",
+      "description": "Chaque produit est goûté et approuvé avant d'entrer en rayon"
+    },
+    {
+      "icon": "fas fa-truck",
+      "title": "Livraison locale",
+      "description": "Livraison à domicile sur le quartier pour vos commandes"
+    },
+    {
+      "icon": "fas fa-comments",
+      "title": "Conseil personnalisé",
+      "description": "On vous aide à choisir selon vos goûts et l'occasion"
+    }
   ],
-
   "images": {
-    "hero":  "hero.jpg",
+    "hero": "hero.jpg",
     "about": "about.jpg",
     "gallery": [
       "gallery-1.jpg",
@@ -63,7 +86,6 @@
       "gallery-6.jpg"
     ]
   },
-
   "testimonials": [
     {
       "text": "Une épicerie comme on n'en trouve plus. Les produits sont d'une qualité exceptionnelle et le patron connaît chaque producteur sur le bout des doigts. J'y achète mes vins depuis 5 ans.",
@@ -87,13 +109,11 @@
       "source": "google"
     }
   ],
-
   "google_reviews": {
     "rating": 4.9,
     "count": 93,
     "url": ""
   },
-
   "faq": [
     {
       "question": "Faites-vous de la livraison à domicile ?",
@@ -112,42 +132,82 @@
       "answer": "Oui, c'est l'une de nos spécialités. Dites-nous ce que vous cuisinez et votre budget — nous vous recommandons les vins les mieux adaptés à votre repas."
     }
   ],
-
   "schedule": [
-    { "days": [2,3,4,5], "open": "09:30", "close": "13:00" },
-    { "days": [2,3,4,5], "open": "15:30", "close": "19:30" },
-    { "days": [6],       "open": "09:00", "close": "19:30" },
-    { "days": [0],       "open": "09:00", "close": "13:00" }
+    {
+      "days": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "open": "09:30",
+      "close": "13:00"
+    },
+    {
+      "days": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "open": "15:30",
+      "close": "19:30"
+    },
+    {
+      "days": [
+        6
+      ],
+      "open": "09:00",
+      "close": "19:30"
+    },
+    {
+      "days": [
+        0
+      ],
+      "open": "09:00",
+      "close": "13:00"
+    }
   ],
-
   "contact": {
-    "address":        "24 Rue des Artisans, 33130 Bègles",
-    "phone":          "07 86 25 34 10",
-    "whatsapp":       "33786253410",
-    "email":          "contact@epicerie-marchand.fr",
-    "hours":          "Mar–Ven : 9h30–13h & 15h30–19h30 · Sam : 9h–19h30 · Dim : 9h–13h",
-    "form_email":     "",
+    "address": "24 Rue des Artisans, 33130 Bègles",
+    "phone": "07 86 25 34 10",
+    "whatsapp": "33786253410",
+    "email": "contact@epicerie-marchand.fr",
+    "hours": "Mar–Ven : 9h30–13h & 15h30–19h30 · Sam : 9h–19h30 · Dim : 9h–13h",
+    "form_email": "",
     "maps_embed_url": ""
   },
-
   "form": {
-    "title":               "On peut vous aider ?",
-    "subtitle":            "Commande, question sur un produit ou panier cadeau — on vous répond rapidement.",
-    "message_label":       "Votre message",
+    "title": "On peut vous aider ?",
+    "subtitle": "Commande, question sur un produit ou panier cadeau — on vous répond rapidement.",
+    "message_label": "Votre message",
     "message_placeholder": "Ex : je cherche un vin rouge pour un accord avec du gibier, budget 20-25€...",
-    "button_text":         "Nous contacter",
-    "button_icon":         "fas fa-paper-plane"
+    "button_text": "Nous contacter",
+    "button_icon": "fas fa-paper-plane"
   },
-
   "emailjs": {
-    "service_id":  "",
+    "service_id": "",
     "template_id": "",
-    "public_key":  ""
+    "public_key": ""
   },
-
   "social": {
-    "facebook":  "https://www.facebook.com",
+    "facebook": "https://www.facebook.com",
     "instagram": "https://www.instagram.com",
-    "linkedin":  ""
+    "linkedin": ""
+  },
+  "seo": {
+    "schema_type": "Store",
+    "street": "5 Place du Commerce",
+    "zip": "33000",
+    "city": "Bordeaux",
+    "geo_lat": 44.8378,
+    "geo_lng": -0.5792
+  },
+  "legal": {
+    "responsable": "Prénom Nom",
+    "siret": "XXX XXX XXX 00000",
+    "forme": "Auto-entrepreneur",
+    "hebergeur_name": "Vercel Inc.",
+    "hebergeur_address": "340 Pine Street Suite 701, San Francisco, CA 94104, USA"
   }
 }

@@ -144,5 +144,22 @@
     "facebook":  "https://www.facebook.com",
     "instagram": "https://www.instagram.com",
     "linkedin":  ""
+  },
+
+  "seo": {
+    "schema_type": "AutoRepair",
+    "street":      "50 Avenue des Pyrénées",
+    "zip":         "33140",
+    "city":        "Villenave-d'Ornon",
+    "geo_lat":     44.7897,
+    "geo_lng":     -0.5636
+  },
+
+  "legal": {
+    "responsable":        "Prénom Nom",
+    "siret":              "XXX XXX XXX 00000",
+    "forme":              "Auto-entrepreneur",
+    "hebergeur_name":     "Vercel Inc.",
+    "hebergeur_address":  "340 Pine Street Suite 701, San Francisco, CA 94104, USA"
   }
 }

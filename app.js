@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function init(c) {
   applyColors(c.colors || {});
   applyContent(c);
+  applySEO(c);
   renderStats(c.about?.stats || []);
   renderServices(c.services || []);
   renderCommitments(c.commitments || []);
@@ -114,7 +115,7 @@ function applyContent(c) {
   setHTML('footer-email', email ? `<a href="mailto:${email}">${email}</a>` : '');
   setText('footer-copy-name',   c.siteName);
 
-  document.title = c.siteName;
+  // title set in applySEO()
 
   // Form overrides
   const f = c.form || {};
@@ -738,6 +739,93 @@ function initContactForm(c) {
 // ============================================
 // NOTIFICATIONS
 // ============================================
+
+// ============================================
+// SEO — meta, Open Graph, JSON-LD LocalBusiness
+// ============================================
+
+function applySEO(c) {
+  const contact = c.contact || {};
+  const seo     = c.seo || {};
+
+  // Parse address → street / zip / city
+  const parts    = (contact.address || '').split(',');
+  const street   = seo.street || (parts[0] || '').trim();
+  const cityZip  = (parts[1] || '').trim();
+  const zipMatch = cityZip.match(/(\d{5})\s+(.*)/);
+  const zip      = seo.zip  || (zipMatch ? zipMatch[1] : '');
+  const city     = seo.city || (zipMatch ? zipMatch[2] : cityZip);
+
+  // Title
+  document.title = c.siteName + (c.slogan ? ' — ' + c.slogan : '');
+
+  // Meta description
+  setMeta('name', 'description', c.description || c.slogan || '');
+
+  // Open Graph
+  setMeta('property', 'og:type',        'website');
+  setMeta('property', 'og:locale',      'fr_FR');
+  setMeta('property', 'og:title',       c.siteName + (c.slogan ? ' — ' + c.slogan : ''));
+  setMeta('property', 'og:description', c.description || c.slogan || '');
+
+  // JSON-LD LocalBusiness
+  const phone = (contact.phone || '').replace(/[\s.]/g, '').replace(/^0/, '+33');
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type':    seo.schema_type || 'LocalBusiness',
+    name:        c.siteName,
+    description: c.description || c.slogan || '',
+    telephone:   phone,
+    address: {
+      '@type':          'PostalAddress',
+      streetAddress:    street,
+      addressLocality:  city,
+      postalCode:       zip,
+      addressCountry:   'FR'
+    }
+  };
+
+  if (contact.email)   schema.email = contact.email;
+  if (contact.hours)   schema.openingHours = contact.hours;
+  if (seo.geo_lat && seo.geo_lng) {
+    schema.geo = { '@type': 'GeoCoordinates', latitude: seo.geo_lat, longitude: seo.geo_lng };
+  }
+  if (c.schedule?.length) {
+    schema.openingHoursSpecification = c.schedule.map(s => ({
+      '@type':      'OpeningHoursSpecification',
+      dayOfWeek:    s.days.map(d => dayNames[d]),
+      opens:        s.open,
+      closes:       s.close
+    }));
+  }
+  if (c.services?.length) {
+    schema.hasOfferCatalog = {
+      '@type': 'OfferCatalog',
+      name: 'Services',
+      itemListElement: c.services.map(s => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: s.title }
+      }))
+    };
+  }
+
+  const ldScript = document.createElement('script');
+  ldScript.type = 'application/ld+json';
+  ldScript.textContent = JSON.stringify(schema);
+  document.head.appendChild(ldScript);
+
+  // Footer mentions légales link
+  const mentionsEl = document.getElementById('footer-mentions');
+  if (mentionsEl) mentionsEl.href = 'mentions/';
+}
+
+function setMeta(attr, key, content) {
+  let el = document.querySelector(`meta[${attr}="${key}"]`);
+  if (!el) { el = document.createElement('meta'); el.setAttribute(attr, key); document.head.appendChild(el); }
+  el.content = content;
+}
 
 function notify(message, type = 'info') {
   document.querySelectorAll('.notification').forEach(n => n.remove());

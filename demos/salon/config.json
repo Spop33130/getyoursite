@@ -3,30 +3,39 @@
   "slogan": "Votre salon de coiffure & beauté",
   "badge": "Coiffure · Colorations · Soins · Sur rendez-vous",
   "description": "Un salon chaleureux où chaque client repart avec la coiffure qui lui ressemble. Colorations, coupes tendance, soins capillaires — notre équipe de coiffeurs passionnés prend soin de vous dans une ambiance zen et bienveillante.",
-
   "colors": {
     "primary": "#8B5CF6",
     "secondary": "#1E1B2E"
   },
-
   "hero": {
     "title": "Votre beauté, notre passion",
     "subtitle": "Coupe, couleur, soin — prenez rendez-vous et laissez-nous révéler le meilleur de vous.",
     "cta_primary": "Prendre rendez-vous",
     "cta_primary_url": "https://www.planity.com/diamanthair-coiffure-33130-begles",
     "cta_secondary": "Nos prestations",
-    "tags": ["Colorations", "Soins capillaires", "Sur rendez-vous"]
+    "tags": [
+      "Colorations",
+      "Soins capillaires",
+      "Sur rendez-vous"
+    ]
   },
-
   "about": {
     "title": "Notre Savoir-Faire",
     "stats": [
-      { "number": "10+", "label": "Années d'expérience" },
-      { "number": "500+", "label": "Clientes satisfaites" },
-      { "number": "100%", "label": "Produits professionnels" }
+      {
+        "number": "10+",
+        "label": "Années d'expérience"
+      },
+      {
+        "number": "500+",
+        "label": "Clientes satisfaites"
+      },
+      {
+        "number": "100%",
+        "label": "Produits professionnels"
+      }
     ]
   },
-
   "services": [
     {
       "title": "Coupe & Coiffure",
@@ -44,16 +53,30 @@
       "icon": "fas fa-spa"
     }
   ],
-
   "commitments": [
-    { "icon": "fas fa-leaf",        "title": "Produits naturels",    "description": "Gammes professionnelles respectueuses des cheveux et du cuir chevelu" },
-    { "icon": "fas fa-clock",       "title": "Ponctualité",          "description": "Votre rendez-vous commence à l'heure — on respecte votre temps" },
-    { "icon": "fas fa-heart",       "title": "Écoute & Conseil",     "description": "On prend le temps de comprendre vos envies avant chaque prestation" },
-    { "icon": "fas fa-star",        "title": "Résultat garanti",     "description": "Vous repartez satisfait(e) ou on refait — sans surcoût" }
+    {
+      "icon": "fas fa-leaf",
+      "title": "Produits naturels",
+      "description": "Gammes professionnelles respectueuses des cheveux et du cuir chevelu"
+    },
+    {
+      "icon": "fas fa-clock",
+      "title": "Ponctualité",
+      "description": "Votre rendez-vous commence à l'heure — on respecte votre temps"
+    },
+    {
+      "icon": "fas fa-heart",
+      "title": "Écoute & Conseil",
+      "description": "On prend le temps de comprendre vos envies avant chaque prestation"
+    },
+    {
+      "icon": "fas fa-star",
+      "title": "Résultat garanti",
+      "description": "Vous repartez satisfait(e) ou on refait — sans surcoût"
+    }
   ],
-
   "images": {
-    "hero":  "hero.jpg",
+    "hero": "hero.jpg",
     "about": "about.jpg",
     "gallery": [
       "gallery-1.jpg",
@@ -64,7 +87,6 @@
       "gallery-6.jpg"
     ]
   },
-
   "testimonials": [
     {
       "text": "Élise est une vraie artiste ! Ma coloration est exactement ce que je voulais, et elle dure longtemps. Le salon est super agréable, j'y retourne les yeux fermés.",
@@ -88,13 +110,11 @@
       "source": "google"
     }
   ],
-
   "google_reviews": {
     "rating": 4.9,
     "count": 68,
     "url": ""
   },
-
   "faq": [
     {
       "question": "Comment prendre rendez-vous ?",
@@ -113,40 +133,65 @@
       "answer": "Oui, nous coiffons les enfants à partir de 4 ans. Un tarif enfant est appliqué pour les coupes simples."
     }
   ],
-
   "schedule": [
-    { "days": [2,3,4,5], "open": "09:00", "close": "19:00" },
-    { "days": [6],       "open": "09:00", "close": "17:00" }
+    {
+      "days": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "open": "09:00",
+      "close": "19:00"
+    },
+    {
+      "days": [
+        6
+      ],
+      "open": "09:00",
+      "close": "17:00"
+    }
   ],
-
   "contact": {
-    "address":        "8 Rue de la Paix, 33000 Bordeaux",
-    "phone":          "07 86 25 34 10",
-    "whatsapp":       "33786253410",
-    "email":          "contact@studio-elise.fr",
-    "hours":          "Mar–Ven : 9h–19h · Sam : 9h–17h",
-    "form_email":     "",
+    "address": "8 Rue de la Paix, 33000 Bordeaux",
+    "phone": "07 86 25 34 10",
+    "whatsapp": "33786253410",
+    "email": "contact@studio-elise.fr",
+    "hours": "Mar–Ven : 9h–19h · Sam : 9h–17h",
+    "form_email": "",
     "maps_embed_url": ""
   },
-
   "form": {
-    "title":               "Prendre rendez-vous ?",
-    "subtitle":            "Coupe, couleur ou soin — dites-nous ce que vous souhaitez et on vous propose un créneau.",
-    "message_label":       "Votre demande",
+    "title": "Prendre rendez-vous ?",
+    "subtitle": "Coupe, couleur ou soin — dites-nous ce que vous souhaitez et on vous propose un créneau.",
+    "message_label": "Votre demande",
     "message_placeholder": "Ex : balayage + coupe mi-long, disponible le jeudi après-midi ou vendredi matin...",
-    "button_text":         "Réserver mon soin",
-    "button_icon":         "fas fa-calendar-check"
+    "button_text": "Réserver mon soin",
+    "button_icon": "fas fa-calendar-check"
   },
-
   "emailjs": {
-    "service_id":  "",
+    "service_id": "",
     "template_id": "",
-    "public_key":  ""
+    "public_key": ""
   },
-
   "social": {
-    "facebook":  "https://www.facebook.com",
+    "facebook": "https://www.facebook.com",
     "instagram": "https://www.instagram.com",
-    "linkedin":  ""
+    "linkedin": ""
+  },
+  "seo": {
+    "schema_type": "HairSalon",
+    "street": "8 Rue de la Paix",
+    "zip": "33000",
+    "city": "Bordeaux",
+    "geo_lat": 44.8378,
+    "geo_lng": -0.5792
+  },
+  "legal": {
+    "responsable": "Prénom Nom",
+    "siret": "XXX XXX XXX 00000",
+    "forme": "Auto-entrepreneur",
+    "hebergeur_name": "Vercel Inc.",
+    "hebergeur_address": "340 Pine Street Suite 701, San Francisco, CA 94104, USA"
   }
 }

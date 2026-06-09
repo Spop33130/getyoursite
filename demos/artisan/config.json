@@ -3,29 +3,38 @@
   "slogan": "L'artisan du bois à votre service",
   "badge": "Artisan menuisier · 25 ans d'expérience · Fait main",
   "description": "Menuisier de métier depuis plus de 25 ans, je conçois et fabrique des meubles, escaliers, cuisines et aménagements sur-mesure. Chaque pièce est travaillée à la main avec des bois sélectionnés pour leur qualité et leur durabilité.",
-
   "colors": {
     "primary": "#D97706",
     "secondary": "#1C1917"
   },
-
   "hero": {
     "title": "L'artisanat du bois, sur-mesure",
     "subtitle": "Meubles, cuisines, escaliers — chaque réalisation est unique, fabriquée avec soin selon vos envies.",
     "cta_primary": "Demander un devis",
     "cta_secondary": "Mes réalisations",
-    "tags": ["Sur-mesure", "Bois massif", "Pose incluse"]
+    "tags": [
+      "Sur-mesure",
+      "Bois massif",
+      "Pose incluse"
+    ]
   },
-
   "about": {
     "title": "Mon Métier",
     "stats": [
-      { "number": "25+", "label": "Années d'expérience" },
-      { "number": "300+", "label": "Réalisations uniques" },
-      { "number": "100%", "label": "Fait main" }
+      {
+        "number": "25+",
+        "label": "Années d'expérience"
+      },
+      {
+        "number": "300+",
+        "label": "Réalisations uniques"
+      },
+      {
+        "number": "100%",
+        "label": "Fait main"
+      }
     ]
   },
-
   "services": [
     {
       "title": "Mobilier sur-mesure",
@@ -43,16 +52,30 @@
       "icon": "fas fa-layer-group"
     }
   ],
-
   "commitments": [
-    { "icon": "fas fa-ruler-combined", "title": "100% sur-mesure",  "description": "Chaque pièce est conçue pour votre espace et vos besoins" },
-    { "icon": "fas fa-tree",           "title": "Bois sélectionnés","description": "Essences de qualité, séchées et sourcées avec soin" },
-    { "icon": "fas fa-hammer",         "title": "Fait main",        "description": "Fabrication artisanale, finitions soignées à la main" },
-    { "icon": "fas fa-file-invoice",   "title": "Devis gratuit",    "description": "Déplacement et chiffrage sans engagement sous 48h" }
+    {
+      "icon": "fas fa-ruler-combined",
+      "title": "100% sur-mesure",
+      "description": "Chaque pièce est conçue pour votre espace et vos besoins"
+    },
+    {
+      "icon": "fas fa-tree",
+      "title": "Bois sélectionnés",
+      "description": "Essences de qualité, séchées et sourcées avec soin"
+    },
+    {
+      "icon": "fas fa-hammer",
+      "title": "Fait main",
+      "description": "Fabrication artisanale, finitions soignées à la main"
+    },
+    {
+      "icon": "fas fa-file-invoice",
+      "title": "Devis gratuit",
+      "description": "Déplacement et chiffrage sans engagement sous 48h"
+    }
   ],
-
   "images": {
-    "hero":  "hero.jpg",
+    "hero": "hero.jpg",
     "about": "about.jpg",
     "gallery": [
       "gallery-1.jpg",
@@ -63,7 +86,6 @@
       "gallery-6.jpg"
     ]
   },
-
   "testimonials": [
     {
       "text": "Bibliothèque sur-mesure réalisée en chêne massif, exactement comme je l'avais imaginée. Travail d'une précision remarquable. Délai tenu. Je recommande sans hésiter.",
@@ -87,13 +109,11 @@
       "source": "google"
     }
   ],
-
   "google_reviews": {
     "rating": 5.0,
     "count": 41,
     "url": ""
   },
-
   "faq": [
     {
       "question": "Comment se passe la commande ?",
@@ -112,39 +132,59 @@
       "answer": "Oui, je me déplace pour installer moi-même toutes mes réalisations. C'est une garantie de qualité — je connais chaque pièce que je fabrique et m'assure qu'elle est posée parfaitement."
     }
   ],
-
   "schedule": [
-    { "days": [1,2,3,4,5], "open": "08:00", "close": "18:00" }
+    {
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "open": "08:00",
+      "close": "18:00"
+    }
   ],
-
   "contact": {
-    "address":        "Zone Artisanale, 33270 Floirac",
-    "phone":          "07 86 25 34 10",
-    "whatsapp":       "33786253410",
-    "email":          "contact@menuiserie-dubois.fr",
-    "hours":          "Lun–Ven : 8h–18h",
-    "form_email":     "",
+    "address": "Zone Artisanale, 33270 Floirac",
+    "phone": "07 86 25 34 10",
+    "whatsapp": "33786253410",
+    "email": "contact@menuiserie-dubois.fr",
+    "hours": "Lun–Ven : 8h–18h",
+    "form_email": "",
     "maps_embed_url": ""
   },
-
   "form": {
-    "title":               "Un projet en bois ?",
-    "subtitle":            "Décrivez-moi votre idée — je vous réponds sous 48h avec un devis gratuit et sans engagement.",
-    "message_label":       "Décrivez votre projet",
+    "title": "Un projet en bois ?",
+    "subtitle": "Décrivez-moi votre idée — je vous réponds sous 48h avec un devis gratuit et sans engagement.",
+    "message_label": "Décrivez votre projet",
     "message_placeholder": "Ex : bibliothèque encastrée en chêne 3m de large, salon 18m²...",
-    "button_text":         "Demander un devis gratuit",
-    "button_icon":         "fas fa-hammer"
+    "button_text": "Demander un devis gratuit",
+    "button_icon": "fas fa-hammer"
   },
-
   "emailjs": {
-    "service_id":  "",
+    "service_id": "",
     "template_id": "",
-    "public_key":  ""
+    "public_key": ""
   },
-
   "social": {
-    "facebook":  "https://www.facebook.com",
+    "facebook": "https://www.facebook.com",
     "instagram": "https://www.instagram.com",
-    "linkedin":  ""
+    "linkedin": ""
+  },
+  "seo": {
+    "schema_type": "HomeAndConstructionBusiness",
+    "street": "24 Rue des Artisans",
+    "zip": "33000",
+    "city": "Bordeaux",
+    "geo_lat": 44.8378,
+    "geo_lng": -0.5792
+  },
+  "legal": {
+    "responsable": "Prénom Nom",
+    "siret": "XXX XXX XXX 00000",
+    "forme": "Auto-entrepreneur",
+    "hebergeur_name": "Vercel Inc.",
+    "hebergeur_address": "340 Pine Street Suite 701, San Francisco, CA 94104, USA"
   }
 }
