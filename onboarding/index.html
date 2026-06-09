@@ -803,52 +803,99 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
     }
 
     function buildPDFContent() {
-      const R = (label, value) => value ? `
-        <div style="display:flex;gap:12px;padding:7px 0;border-bottom:1px solid #f1f5f9;align-items:flex-start;">
-          <span style="font-size:11.5px;color:#6b7280;min-width:150px;flex-shrink:0;padding-top:1px;">${label}</span>
-          <span style="font-size:11.5px;color:#1a1a2e;font-weight:500;flex:1;">${value}</span>
-        </div>` : '';
+      const colorPrimary   = val('color_primary')   || '#E74C3C';
+      const colorSecondary = val('color_secondary') || '#2C3E50';
+      const photosEl = document.querySelector('input[name=photos_choice]:checked');
 
-      const S = (color, emoji, title, body) => `
-        <div style="background:white;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:14px;overflow:hidden;page-break-inside:avoid;">
-          <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fafafa;border-bottom:1px solid #e5e7eb;">
-            <div style="width:30px;height:30px;background:${color};border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">${emoji}</div>
-            <span style="font-size:13px;font-weight:700;color:#1a1a2e;">${title}</span>
-          </div>
-          <div style="padding:12px 16px;">${body}</div>
-        </div>`;
+      // Row: label + value
+      const R = (label, value) => value
+        ? `<div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f3f4f6;align-items:flex-start;">
+             <span style="font-size:11px;color:#6b7280;min-width:145px;flex-shrink:0;line-height:1.5;">${label}</span>
+             <span style="font-size:11px;color:#111827;font-weight:500;flex:1;line-height:1.5;word-break:break-word;">${value}</span>
+           </div>` : '';
 
-      const semStr = checked('sch_semaine_closed') ? 'Fermé' : `${val('sch_semaine_open')} – ${val('sch_semaine_close')}`;
-      const samStr = checked('sch_sam_closed')     ? 'Fermé' : `${val('sch_sam_open')} – ${val('sch_sam_close')}`;
-      const dimStr = checked('sch_dim_open') ? `${val('sch_dim_open_h')} – ${val('sch_dim_close_h')}` : 'Fermé';
+      // Block: colored icon + title + rows
+      const B = (color, emoji, title, body) =>
+        `<div style="background:#fff;border:1px solid #e5e7eb;border-left:3px solid ${color};border-radius:8px;margin-bottom:12px;overflow:hidden;page-break-inside:avoid;">
+           <div style="display:flex;align-items:center;gap:9px;padding:10px 14px;background:#fafafa;border-bottom:1px solid #e5e7eb;">
+             <div style="width:26px;height:26px;background:${color};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">${emoji}</div>
+             <span style="font-size:12px;font-weight:700;color:#111827;letter-spacing:-.01em;">${title}</span>
+           </div>
+           <div style="padding:10px 14px;">${body}</div>
+         </div>`;
+
+      const semStr = checked('sch_semaine_closed') ? 'Fermé' : `${val('sch_semaine_open') || '—'} → ${val('sch_semaine_close') || '—'}`;
+      const samStr = checked('sch_sam_closed')     ? 'Fermé' : `${val('sch_sam_open') || '—'} → ${val('sch_sam_close') || '—'}`;
+      const dimStr = checked('sch_dim_open')       ? `${val('sch_dim_open_h') || '—'} → ${val('sch_dim_close_h') || '—'}` : 'Fermé';
 
       let servicesBody = '';
       for (let i = 1; i <= 4; i++) {
         const t = val(`s${i}_title`);
-        if (t) servicesBody += R(`Service ${i}`, t + (val(`s${i}_desc`) ? ' — ' + val(`s${i}_desc`) : ''));
+        if (t) servicesBody +=
+          `<div style="padding:7px 0;border-bottom:1px solid #f3f4f6;">
+             <div style="font-size:11px;font-weight:700;color:#111827;margin-bottom:2px;">Service ${i} — ${t}</div>
+             ${val(`s${i}_desc`) ? `<div style="font-size:10.5px;color:#6b7280;">${val(`s${i}_desc`)}</div>` : ''}
+           </div>`;
       }
 
-      const photosEl = document.querySelector('input[name=photos_choice]:checked');
-      const colorPrimary   = val('color_primary')   || '#E74C3C';
-      const colorSecondary = val('color_secondary') || '#2C3E50';
+      const colorBlock =
+        `<div style="background:#fff;border:1px solid #e5e7eb;border-left:3px solid #7C3AED;border-radius:8px;margin-bottom:12px;overflow:hidden;page-break-inside:avoid;">
+           <div style="display:flex;align-items:center;gap:9px;padding:10px 14px;background:#fafafa;border-bottom:1px solid #e5e7eb;">
+             <div style="width:26px;height:26px;background:#7C3AED;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;">🎨</div>
+             <span style="font-size:12px;font-weight:700;color:#111827;">Couleurs du site</span>
+           </div>
+           <div style="padding:10px 14px;">
+             <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f3f4f6;align-items:center;">
+               <span style="font-size:11px;color:#6b7280;min-width:145px;">Couleur principale</span>
+               <div style="display:flex;align-items:center;gap:7px;">
+                 <div style="width:16px;height:16px;border-radius:3px;background:${colorPrimary};border:1px solid #d1d5db;"></div>
+                 <span style="font-size:11px;font-weight:600;font-family:monospace;color:#111827;">${colorPrimary}</span>
+               </div>
+             </div>
+             <div style="display:flex;gap:10px;padding:6px 0;align-items:center;">
+               <span style="font-size:11px;color:#6b7280;min-width:145px;">Couleur secondaire</span>
+               <div style="display:flex;align-items:center;gap:7px;">
+                 <div style="width:16px;height:16px;border-radius:3px;background:${colorSecondary};border:1px solid #d1d5db;"></div>
+                 <span style="font-size:11px;font-weight:600;font-family:monospace;color:#111827;">${colorSecondary}</span>
+               </div>
+             </div>
+           </div>
+         </div>`;
 
       return `
-        <div style="font-family:'Outfit',Arial,sans-serif;color:#1a1a2e;max-width:680px;margin:0 auto;padding:0;">
+        <div style="font-family:Arial,Helvetica,sans-serif;color:#111827;width:660px;padding:0;background:#f8f9fa;">
 
-          <div style="background:${colorSecondary};color:white;padding:28px 24px;border-radius:10px;margin-bottom:20px;text-align:center;">
-            <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.6;margin-bottom:10px;">FICHE CLIENT — GETYOURSITE</div>
-            <div style="font-size:22px;font-weight:800;margin-bottom:6px;">${val('site_name') || '—'}</div>
-            <div style="font-size:12px;opacity:.65;">${val('commercial_date') ? 'Visite du ' + val('commercial_date') : ''} ${val('commercial_name') ? '· Commercial : ' + val('commercial_name') : ''}</div>
+          <!-- ENTÊTE GETYOURSITE -->
+          <div style="background:${colorSecondary};color:white;padding:24px 24px 20px;border-radius:10px 10px 0 0;margin-bottom:0;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:4px 12px;">
+                <span style="font-size:13px;">⚡</span>
+                <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">GetYourSite</span>
+              </div>
+              <span style="font-size:10px;opacity:.5;letter-spacing:.06em;text-transform:uppercase;">Usage interne</span>
+            </div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.55;margin-bottom:6px;">📋 Fiche client</div>
+            <div style="font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;">${val('site_name') || '—'}</div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;">
+              ${val('commercial_name') ? `<span style="font-size:11px;opacity:.75;">👤 Commercial : <strong>${val('commercial_name')}</strong></span>` : ''}
+              ${val('commercial_date') ? `<span style="font-size:11px;opacity:.75;">📅 Visite du <strong>${val('commercial_date')}</strong></span>` : ''}
+            </div>
           </div>
 
-          ${S('#E74C3C','🏪','Identité',
-            R('Nom du garage', val('site_name')) +
-            R('Slogan',        val('slogan'))    +
-            R('Badge',         val('badge'))     +
-            R('Description',   val('description'))
+          <!-- BANDE COULEUR PRIMAIRE -->
+          <div style="height:4px;background:${colorPrimary};margin-bottom:16px;border-radius:0 0 2px 2px;"></div>
+
+          <!-- CONTENU -->
+          <div style="padding:0 4px;">
+
+          ${B('#E74C3C','🏪','Identité du garage',
+            R('Nom',         val('site_name'))   +
+            R('Slogan',      val('slogan'))       +
+            R('Badge',       val('badge'))        +
+            R('Description', val('description'))
           )}
 
-          ${S('#2E86AB','📍','Coordonnées',
+          ${B('#2E86AB','📍','Coordonnées',
             R('Adresse',        val('address'))    +
             R('Téléphone',      val('phone'))      +
             R('WhatsApp',       val('whatsapp'))   +
@@ -856,62 +903,44 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
             R('Horaires texte', val('hours_text'))
           )}
 
-          ${S('#D97706','🕐','Horaires d\'ouverture',
-            R('Lun – Ven',  semStr) +
-            R('Samedi',     samStr) +
-            R('Dimanche',   dimStr)
+          ${B('#D97706','🕐','Horaires d\'ouverture',
+            R('Lun – Ven', semStr) +
+            R('Samedi',    samStr) +
+            R('Dimanche',  dimStr)
           )}
 
-          <div style="background:white;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:14px;overflow:hidden;page-break-inside:avoid;">
-            <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fafafa;border-bottom:1px solid #e5e7eb;">
-              <div style="width:30px;height:30px;background:#7C3AED;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">🎨</div>
-              <span style="font-size:13px;font-weight:700;color:#1a1a2e;">Couleurs</span>
-            </div>
-            <div style="padding:12px 16px;">
-              <div style="display:flex;gap:12px;padding:7px 0;border-bottom:1px solid #f1f5f9;align-items:center;">
-                <span style="font-size:11.5px;color:#6b7280;min-width:150px;">Couleur principale</span>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:18px;height:18px;border-radius:4px;background:${colorPrimary};border:1px solid #e5e7eb;"></div>
-                  <span style="font-size:11.5px;font-weight:600;font-family:monospace;">${colorPrimary}</span>
-                </div>
-              </div>
-              <div style="display:flex;gap:12px;padding:7px 0;align-items:center;">
-                <span style="font-size:11.5px;color:#6b7280;min-width:150px;">Couleur secondaire</span>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:18px;height:18px;border-radius:4px;background:${colorSecondary};border:1px solid #e5e7eb;"></div>
-                  <span style="font-size:11.5px;font-weight:600;font-family:monospace;">${colorSecondary}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          ${colorBlock}
 
-          ${S('#E74C3C','⚙️','Services', servicesBody || R('—','Non renseigné'))}
+          ${B('#E74C3C','⚙️','Services proposés', servicesBody || '<span style="font-size:11px;color:#9ca3af;">Non renseigné</span>')}
 
-          ${S('#2E86AB','📱','Réseaux & Google',
-            R('Facebook',       val('facebook'))     +
-            R('Instagram',      val('instagram'))    +
-            R('Google Maps',    val('google_url'))   +
+          ${B('#2E86AB','📱','Réseaux & Google',
+            R('Facebook',       val('facebook'))   +
+            R('Instagram',      val('instagram'))  +
+            R('URL Google Maps', val('google_url')) +
             R('Note Google',    val('google_rating') ? val('google_rating') + ' / 5' : '') +
             R('Nombre d\'avis', val('google_count'))
           )}
 
-          ${S('#D97706','📷','Photos',
+          ${B('#D97706','📷','Photos du garage',
             R('Choix', photosEl ? photosEl.value : 'Non renseigné')
           )}
 
-          ${(val('legal_responsable') || val('legal_siret') || val('legal_forme')) ? S('#4B5563','📄','Mentions légales',
-            R('Responsable',     val('legal_responsable')) +
-            R('SIRET',           val('legal_siret')) +
-            R('Forme juridique', val('legal_forme'))
-          ) : ''}
+          ${B('#2C3E50','📄','Mentions légales',
+            R('Responsable de publication', val('legal_responsable')) +
+            R('SIRET',                      val('legal_siret'))       +
+            R('Forme juridique',            val('legal_forme') || document.getElementById('legal_forme')?.selectedOptions[0]?.text)
+          )}
 
-          ${(val('domain') || val('notes')) ? S('#059669','📝','Notes & divers',
+          ${(val('domain') || val('notes')) ? B('#059669','📝','Notes & divers',
             R('Nom de domaine', val('domain')) +
-            R('Notes',         val('notes'))
+            R('Notes',          val('notes'))
           ) : ''}
 
-          <div style="text-align:center;margin-top:20px;font-size:10px;color:#9ca3af;">
-            Usage interne — GetYourSite · Ne pas partager avec les clients
+          </div>
+
+          <!-- PIED DE PAGE -->
+          <div style="text-align:center;padding:14px;margin-top:8px;border-top:1px solid #e5e7eb;">
+            <span style="font-size:9.5px;color:#9ca3af;letter-spacing:.04em;">⚡ GetYourSite · Fiche client confidentielle · Ne pas partager</span>
           </div>
         </div>`;
     }
