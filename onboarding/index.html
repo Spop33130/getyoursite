@@ -682,6 +682,9 @@
       <strong>Prêt à envoyer ?</strong><br>
       Vérifiez avec le client avant de valider.
     </div>
+    <button type="button" onclick="fillTestData()" style="background:transparent;border:1.5px dashed #d1d5db;border-radius:9px;padding:.6rem 1rem;font-family:var(--font);font-size:.78rem;font-weight:600;color:#9ca3af;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s;" onmouseover="this.style.borderColor='#D97706';this.style.color='#D97706'" onmouseout="this.style.borderColor='#d1d5db';this.style.color='#9ca3af'">
+      🧪 Données test
+    </button>
     <div style="display:flex;gap:.6rem;flex-shrink:0;">
       <button type="button" class="btn-pdf" onclick="downloadPDF()">
         <i class="fas fa-file-pdf"></i> PDF
@@ -830,6 +833,63 @@
       return document.getElementById(id)?.checked || false;
     }
 
+    function fillTestData() {
+      const set = (id, v) => { const el = document.getElementById(id); if (el) { el.value = v; clearFieldError(id); } };
+
+      // Date = avant-hier
+      const d = new Date(); d.setDate(d.getDate() - 2);
+      const dd = String(d.getDate()).padStart(2,'0'), mm = String(d.getMonth()+1).padStart(2,'0'), yyyy = d.getFullYear();
+
+      set('commercial_name', 'Alex');
+      set('commercial_date', `${dd}/${mm}/${yyyy}`);
+
+      set('site_name',   'Garage Dupont Auto');
+      set('slogan',      'Votre expert auto de confiance');
+      set('badge',       'Mécanicien certifié · 15 ans d\'expérience');
+      set('description', 'Spécialistes en réparation et entretien automobile depuis 15 ans. Notre équipe intervient sur toutes les marques avec expertise et transparence.');
+
+      set('address',    '45 Rue de la Mécanique, 33000 Bordeaux');
+      set('phone',      '05 56 12 34 56');
+      set('whatsapp',   '06 12 34 56 78');
+      set('email',      'contact@garage-dupont.fr');
+      set('hours_text', 'Lun–Ven : 8h–18h · Sam : 8h–12h');
+
+      set('sch_semaine_open',  '08:00');
+      set('sch_semaine_close', '18:00');
+      set('sch_sam_open',      '08:00');
+      set('sch_sam_close',     '12:00');
+
+      set('color_primary',         '#E74C3C');
+      set('color_secondary',       '#2C3E50');
+      set('color_primary_picker',  '#E74C3C');
+      set('color_secondary_picker','#2C3E50');
+
+      set('s1_title', 'Mécanique Générale');
+      set('s1_desc',  'Diagnostic, réparation moteur, entretien et révision toutes marques');
+      set('s2_title', 'Carrosserie & Peinture');
+      set('s2_desc',  'Réparation carrosserie et peinture avec garantie qualité');
+      set('s3_title', 'Vente VN / VO');
+      set('s3_desc',  'Vente de véhicules neufs et d\'occasion, reprise de l\'ancien');
+
+      set('facebook',      'https://www.facebook.com/garagedupont');
+      set('instagram',     'https://www.instagram.com/garagedupont');
+      set('google_url',    'https://maps.google.com/?cid=123456');
+      set('google_rating', '4.8');
+      set('google_count',  '52');
+
+      document.getElementById('photos_stock')?.click();
+
+      set('legal_responsable', 'Jean Dupont');
+      set('legal_siret',       '123 456 789 00012');
+      const formeEl = document.getElementById('legal_forme');
+      if (formeEl) formeEl.value = 'Auto-entrepreneur';
+
+      set('domain', 'garage-dupont.fr');
+      set('notes',  'Logo rouge et blanc. Client enthousiaste, souhaite être en ligne avant fin de semaine.');
+
+      showNotif('Données de test remplies ✓', 'success');
+    }
+
     function buildEmailBody() {
       const line  = (label, value) => value ? `${label} : ${value}\n` : '';
       const sep   = () => '─────────────────────────────────\n';
@@ -889,7 +949,7 @@ ${line('Responsable',     val('legal_responsable'))}${line('SIRET',            v
 ${sep()}
 DIVERS
 ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
-      `.trim() + '\n\n' + '═'.repeat(33) + '\nCONFIG.JSON GÉNÉRÉ\n' + '═'.repeat(33) + '\n' + JSON.stringify(buildConfig(), null, 2);
+      `.trim();
     }
 
     function buildPDFContent() {
