@@ -728,26 +728,92 @@
     syncColor('color_primary_picker',   'color_primary');
     syncColor('color_secondary_picker', 'color_secondary');
 
-    // Date input — auto-slash + calendrier natif
+    // Date input — auto-slash + calendrier natif + max = aujourd'hui
     const dateText   = document.getElementById('commercial_date');
     const datePicker = document.getElementById('commercial_date_picker');
+
+    // Limiter le calendrier à aujourd'hui
+    datePicker.max = new Date().toISOString().split('T')[0];
 
     document.querySelector('.date-icon').addEventListener('click', () => {
       try { datePicker.showPicker(); } catch { datePicker.click(); }
     });
 
     dateText.addEventListener('input', function() {
+      clearFieldError('commercial_date');
       let digits = this.value.replace(/\D/g, '').slice(0, 8);
       if (digits.length > 4) digits = digits.slice(0,2) + '/' + digits.slice(2,4) + '/' + digits.slice(4);
       else if (digits.length > 2) digits = digits.slice(0,2) + '/' + digits.slice(2);
       this.value = digits;
     });
 
+    dateText.addEventListener('blur', function() {
+      const v = this.value.trim();
+      if (!v) return;
+      validateDate('commercial_date');
+    });
+
     datePicker.addEventListener('change', function() {
       if (!this.value) return;
       const [y, m, d] = this.value.split('-');
       dateText.value = `${d}/${m}/${y}`;
+      clearFieldError('commercial_date');
     });
+
+    // Validation email on blur
+    document.getElementById('email')?.addEventListener('blur', function() {
+      const v = this.value.trim();
+      if (!v) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))
+        setFieldError('email', 'Format email invalide (ex : contact@garage.fr)');
+    });
+
+    // Validation téléphone on blur (10 chiffres)
+    document.getElementById('phone')?.addEventListener('blur', function() {
+      const digits = this.value.replace(/\D/g, '');
+      if (!this.value.trim()) return;
+      if (digits.length !== 10)
+        setFieldError('phone', 'Numéro invalide — 10 chiffres attendus');
+    });
+
+    // Validation note Google (1–5)
+    document.getElementById('google_rating')?.addEventListener('blur', function() {
+      const v = parseFloat(this.value);
+      if (this.value === '') return;
+      if (isNaN(v) || v < 1 || v > 5)
+        setFieldError('google_rating', 'Note invalide — entre 1 et 5');
+    });
+
+    // Validation hex couleurs
+    ['color_primary', 'color_secondary'].forEach(id => {
+      document.getElementById(id)?.addEventListener('blur', function() {
+        if (!this.value.trim()) return;
+        if (!/^#[0-9A-Fa-f]{6}$/.test(this.value.trim()))
+          setFieldError(id, 'Format invalide — ex : #E74C3C');
+      });
+    });
+
+    function validateDate(id) {
+      const v = document.getElementById(id)?.value.trim();
+      if (!v) return true;
+      const parts = v.split('/');
+      if (parts.length !== 3 || parts[2].length !== 4) {
+        setFieldError(id, 'Format invalide — JJ/MM/AAAA');
+        return false;
+      }
+      const [d, m, y] = parts.map(Number);
+      const date = new Date(y, m - 1, d);
+      if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) {
+        setFieldError(id, 'Date inexistante');
+        return false;
+      }
+      if (date > new Date()) {
+        setFieldError(id, 'La date de visite ne peut pas être dans le futur');
+        return false;
+      }
+      clearFieldError(id);
+      return true;
+    }
 
     // Toggle dimanche fields
     document.getElementById('sch_dim_open').addEventListener('change', function() {
@@ -1135,16 +1201,18 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
       group.querySelector('.field-error-msg')?.remove();
     }
 
-    function setFieldError(id) {
+    function setFieldError(id, message = 'Champ obligatoire') {
       const el = document.getElementById(id);
       if (!el) return;
       const group = el.closest('.form-group');
       if (!group) return;
       group.classList.add('has-error');
-      if (!group.querySelector('.field-error-msg')) {
+      const existing = group.querySelector('.field-error-msg');
+      if (existing) { existing.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`; }
+      else {
         const msg = document.createElement('span');
         msg.className = 'field-error-msg';
-        msg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Champ obligatoire';
+        msg.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
         el.after(msg);
       }
       el.addEventListener('input', () => clearFieldError(id), { once: true });
@@ -1155,15 +1223,40 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
       Object.keys(REQUIRED_FIELDS).forEach(clearFieldError);
 
       const missing = Object.keys(REQUIRED_FIELDS).filter(id => !val(id));
-      if (!missing.length) return true;
-
       missing.forEach(setFieldError);
 
+      // Integrity checks (in addition to required)
+      const dateOk   = validateDate('commercial_date');
+      const emailVal = val('email');
+      if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+        setFieldError('email', 'Format email invalide (ex : contact@garage.fr)');
+        if (!missing.includes('email')) missing.push('email');
+      }
+      const phoneDigits = val('phone').replace(/\D/g, '');
+      if (val('phone') && phoneDigits.length !== 10) {
+        setFieldError('phone', 'Numéro invalide — 10 chiffres attendus');
+        if (!missing.includes('phone')) missing.push('phone');
+      }
+      const ratingVal = val('google_rating');
+      if (ratingVal) {
+        const r = parseFloat(ratingVal);
+        if (isNaN(r) || r < 1 || r > 5) setFieldError('google_rating', 'Note invalide — entre 1 et 5');
+      }
+      ['color_primary','color_secondary'].forEach(id => {
+        const v = val(id);
+        if (v && !/^#[0-9A-Fa-f]{6}$/.test(v)) setFieldError(id, 'Format invalide — ex : #E74C3C');
+      });
+
+      const hasErrors = missing.length > 0 || !dateOk;
+      if (!hasErrors) return true;
+
       const count = missing.length;
-      showNotif(`${count} champ${count > 1 ? 's' : ''} obligatoire${count > 1 ? 's' : ''} manquant${count > 1 ? 's' : ''}.`, 'error');
+      if (count > 0)
+        showNotif(`${count} champ${count > 1 ? 's' : ''} obligatoire${count > 1 ? 's' : ''} manquant${count > 1 ? 's' : ''}.`, 'error');
 
       // Scroll to first error
-      const firstEl = document.getElementById(missing[0]);
+      const firstId  = missing[0] || 'commercial_date';
+      const firstEl  = document.getElementById(firstId);
       firstEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(() => firstEl?.focus(), 400);
       return false;
