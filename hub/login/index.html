@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accès — GetYourSite</title>
+  <link rel="stylesheet" href="/vendor/fonts/outfit.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #0F1117;
+      color: #F1F5F9;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #1A1D27;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #6366F1;
+      margin-bottom: 28px;
+    }
+    .logo svg { width: 22px; height: 22px; }
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 6px;
+    }
+    p {
+      font-size: .85rem;
+      color: #8B92A5;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .input-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    input[type=password] {
+      width: 100%;
+      padding: .75rem 3rem .75rem 1rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      color: #F1F5F9;
+      font-family: inherit;
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .15s;
+      letter-spacing: .1em;
+    }
+    input[type=password]:focus { border-color: rgba(99,102,241,.6); }
+    input[type=password].error { border-color: #ef4444; }
+    .toggle-eye {
+      position: absolute;
+      right: .85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #8B92A5;
+      cursor: pointer;
+      font-size: .9rem;
+      padding: 4px;
+      transition: color .15s;
+    }
+    .toggle-eye:hover { color: #F1F5F9; }
+    .error-msg {
+      font-size: .78rem;
+      color: #ef4444;
+      margin-bottom: 12px;
+      display: none;
+    }
+    .error-msg.show { display: block; }
+    button[type=submit] {
+      width: 100%;
+      padding: .8rem;
+      background: #6366F1;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .15s;
+      margin-top: 4px;
+    }
+    button[type=submit]:hover { opacity: .85; }
+    button[type=submit]:active { opacity: .7; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+    GetYourSite
+  </div>
+  <h1>Espace interne</h1>
+  <p>Accès réservé à l'équipe.<br>Entrez le mot de passe pour continuer.</p>
+
+  <form onsubmit="login(event)">
+    <div class="input-wrap">
+      <input type="password" id="pwd" placeholder="Mot de passe" autocomplete="current-password" autofocus>
+      <button type="button" class="toggle-eye" onclick="toggleEye()" id="eye-btn">👁</button>
+    </div>
+    <div class="error-msg" id="error-msg">Mot de passe incorrect.</div>
+    <button type="submit">Accéder →</button>
+  </form>
+</div>
+
+<script>
+  const PASSWORD  = 'GYS-2026';
+  const TOKEN_KEY = 'gys_auth';
+  const REDIRECT  = sessionStorage.getItem('gys_redirect') || '/hub/';
+
+  if (sessionStorage.getItem(TOKEN_KEY)) {
+    window.location.replace(REDIRECT);
+  }
+
+  function login(e) {
+    e.preventDefault();
+    const input = document.getElementById('pwd');
+    if (input.value === PASSWORD) {
+      sessionStorage.setItem(TOKEN_KEY, '1');
+      sessionStorage.removeItem('gys_redirect');
+      window.location.replace(REDIRECT);
+    } else {
+      input.classList.add('error');
+      document.getElementById('error-msg').classList.add('show');
+      input.value = '';
+      setTimeout(() => input.classList.remove('error'), 1200);
+    }
+  }
+
+  function toggleEye() {
+    const input = document.getElementById('pwd');
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  document.getElementById('pwd').addEventListener('input', () => {
+    document.getElementById('error-msg').classList.remove('show');
+  });
+</script>
+
+</body>
+</html>
