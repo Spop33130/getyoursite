@@ -212,6 +212,14 @@
 
 <div class="wrapper">
 
+  <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+    <a href="#" onclick="sessionStorage.removeItem('gys_auth');location.replace('/hub/login/');return false;"
+       style="display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:var(--muted);opacity:.55;text-decoration:none;transition:opacity .15s;"
+       onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='.55'">
+      <i class="fas fa-sign-out-alt"></i> Déconnexion
+    </a>
+  </div>
+
   <header class="hub-header">
     <div class="hub-logo"><i class="fas fa-bolt"></i> GetYourSite</div>
     <h1>Bienvenue sur le Hub</h1>
@@ -344,7 +352,7 @@
 
   </div>
 
-  <p class="notice">Usage interne · <a href="../pitch">Kit commercial</a> · <a href="../tuto">Guide config</a> · <a href="#" onclick="sessionStorage.removeItem('gys_auth');location.replace('/hub/login/');return false;" style="color:var(--muted);opacity:.5;">Déconnexion</a></p>
+  <p class="notice">Usage interne · <a href="../pitch">Kit commercial</a> · <a href="../tuto">Guide config</a></p>
 
 </div>
 
