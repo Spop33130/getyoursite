@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-
+    <title>Template Professionnel</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    
     <link rel="stylesheet" href="/vendor/fonts/outfit.css">
     <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="home">
+<body>
 
     <!-- Header -->
     <header class="header" id="header">
         <nav class="navbar">
             <div class="container">
                 <div class="navbar-content">
-                    <a data-nav="" class="navbar-brand">
+                    <a href="#accueil" class="navbar-brand">
                         <span id="site-name">Mon Entreprise</span>
                     </a>
                     <div class="navbar-menu" id="navbar-menu">
-                        <a data-nav="" class="nav-link">Accueil</a>
-                        <a data-nav="services/" class="nav-link">Services</a>
-                        <a data-nav="galerie/" class="nav-link">Galerie</a>
-                        <a data-nav="contact/" class="nav-link nav-link--cta">Contact</a>
+                        <a href="#accueil" class="nav-link">Accueil</a>
+                        <a href="#a-propos" class="nav-link">À propos</a>
+                        <a href="#services" class="nav-link">Services</a>
+                        <a href="#galerie" class="nav-link">Galerie</a>
+                        <a href="#temoignages" class="nav-link">Avis</a>
+                        <a href="#contact" class="nav-link nav-link--cta">Contact</a>
                     </div>
                     <a href="#" id="navbar-phone" class="navbar-phone" style="display:none;">
                         <i class="fas fa-phone"></i>
@@ -50,8 +53,8 @@
                 <h1 class="hero-title" id="hero-title">Titre Principal</h1>
                 <p class="hero-subtitle" id="hero-subtitle">Sous-titre descriptif de l'activité</p>
                 <div class="hero-actions">
-                    <a data-nav="contact/" class="btn btn--hero-primary" id="hero-cta-primary">Nous Contacter</a>
-                    <a data-nav="services/" class="btn btn--hero-outline" id="hero-cta-secondary">Nos Services</a>
+                    <a href="#contact" class="btn btn--hero-primary" id="hero-cta-primary">Nous Contacter</a>
+                    <a href="#services" class="btn btn--hero-outline" id="hero-cta-secondary">Nos Services</a>
                 </div>
                 <div class="hero-tags" id="hero-tags"></div>
             </div>
@@ -84,7 +87,7 @@
         </div>
     </section>
 
-    <!-- Aperçu services -->
+    <!-- Services -->
     <section id="services" class="services-section">
         <div class="container">
             <div class="section-header">
@@ -92,10 +95,7 @@
                 <h2>Ce que nous proposons</h2>
                 <p>Découvrez notre gamme complète de services professionnels</p>
             </div>
-            <div class="services-grid" id="services-grid" data-limit="3"></div>
-            <div class="section-more reveal">
-                <a data-nav="services/">Tous nos services <i class="fas fa-arrow-right"></i></a>
-            </div>
+            <div class="services-grid" id="services-grid"></div>
         </div>
     </section>
 
@@ -103,6 +103,18 @@
     <section id="engagements" class="engagements-section">
         <div class="container">
             <div class="engagements-grid" id="engagements-grid"></div>
+        </div>
+    </section>
+
+    <!-- Galerie -->
+    <section id="galerie" class="gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Galerie</span>
+                <h2>Nos Réalisations</h2>
+                <p>Découvrez notre travail en images</p>
+            </div>
+            <div class="gallery-grid" id="gallery-grid"></div>
         </div>
     </section>
 
@@ -129,6 +141,88 @@
         </div>
     </section>
 
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Questions fréquentes</span>
+                <h2>Tout ce que vous voulez savoir</h2>
+            </div>
+            <div class="faq-list" id="faq-list"></div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Contact</span>
+                <h2 id="contact-title">Votre véhicule a besoin de nous ?</h2>
+                <p id="contact-subtitle">Réparation, entretien ou dépannage — décrivez-nous votre problème, on vous répond rapidement.</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-form-wrapper" id="contact-form-wrapper">
+                    <form id="contact-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Nom complet *</label>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Jean Dupont" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Téléphone</label>
+                                <input type="tel" id="phone" name="phone" class="form-control" placeholder="06 12 34 56 78">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="jean@exemple.fr" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label" id="contact-message-label">Décrivez votre problème *</label>
+                            <textarea id="message" name="message" class="form-control" rows="5" placeholder="Ex : ma voiture ne démarre plus, bruit suspect au freinage, révision à prévoir..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full-width" id="contact-submit-btn">
+                            <i class="fas fa-wrench"></i>
+                            Demander un devis
+                        </button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-details">
+                            <h4>Adresse</h4>
+                            <p id="contact-address">—</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div class="contact-details">
+                            <h4>Téléphone</h4>
+                            <p id="contact-phone">—</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p id="contact-email">—</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-details">
+                            <h4>Horaires</h4>
+                            <p id="contact-hours">—</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Google Maps -->
+            <div id="contact-map" class="contact-map" style="display:none;"></div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -141,11 +235,11 @@
                 <div class="footer-nav">
                     <h4>Navigation</h4>
                     <ul>
-                        <li><a data-nav="">Accueil</a></li>
-                        <li><a data-nav="services/">Services</a></li>
-                        <li><a data-nav="galerie/">Galerie</a></li>
-                        <li><a data-nav="contact/">Contact</a></li>
-                        <li><a data-nav="mentions/">Mentions légales</a></li>
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#a-propos">À propos</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#galerie">Galerie</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact-info">
@@ -153,7 +247,6 @@
                     <p id="footer-address">—</p>
                     <p id="footer-phone"></p>
                     <p id="footer-email"></p>
-                    <p id="footer-hours"></p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -163,7 +256,7 @@
     </footer>
 
     <!-- Bouton flottant (desktop) -->
-    <a href="#" class="float-btn" id="float-btn" aria-label="Nous contacter">
+    <a href="#contact" class="float-btn" id="float-btn" aria-label="Nous contacter">
         <i class="fas fa-comment-dots"></i>
         <span>Devis gratuit</span>
     </a>
@@ -180,7 +273,23 @@
         </a>
     </div>
 
-    <script>window.SITE_BASE = '';</script>
-    <script src="/app.js"></script>
+    <!-- Lightbox -->
+    <div id="lightbox-modal" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Fermer">
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="lightbox-nav lightbox-nav--prev" id="lightbox-prev" aria-label="Précédent">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="lightbox-img-wrapper">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <button class="lightbox-nav lightbox-nav--next" id="lightbox-next" aria-label="Suivant">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <script src="/vendor/emailjs/email.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

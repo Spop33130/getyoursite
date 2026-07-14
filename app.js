@@ -2,16 +2,8 @@
 // BOOT
 // ============================================
 
-// SITE_BASE : chemin relatif vers la racine du site ('' pour l'accueil,
-// '../' pour les sous-pages). Défini inline dans chaque page avant app.js.
-const SITE_BASE = window.SITE_BASE || '';
-// PAGE : identifiant de la page courante (home | services | gallery | contact)
-const PAGE = document.body.dataset.page || 'home';
-
 document.addEventListener('DOMContentLoaded', () => {
-  initSiteLinks();
-
-  fetch(SITE_BASE + 'config.json')
+  fetch('config.json')
     .then(r => r.json())
     .then(config => init(config))
     .catch(err => {
@@ -35,28 +27,13 @@ function init(c) {
   renderFAQ(c.faq || []);
   renderSocial(c.social || {});
   renderMaps(c.contact?.maps_embed_url || '');
-  renderCTABand(c);
   initScrollReveal();
   initNav();
   initContactForm(c);
   initLightbox();
   renderMobileCTABar(c);
   renderOpenStatus(c);
-  const yearEl = document.getElementById('footer-year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-}
-
-// ============================================
-// LIENS INTER-PAGES
-// ============================================
-
-// Résout les hrefs des liens marqués data-nav en fonction de la profondeur
-// de la page ('' → './', sous-page → '../'), pour que le même HTML
-// fonctionne à la racine du site comme dans les démos.
-function initSiteLinks() {
-  document.querySelectorAll('[data-nav]').forEach(a => {
-    a.setAttribute('href', (SITE_BASE || './') + a.dataset.nav);
-  });
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
 }
 
 // ============================================
@@ -136,7 +113,6 @@ function applyContent(c) {
   setHTML('footer-address', addr ? `<a href="${mapsUrl}" target="_blank" rel="noopener" style="color:inherit;">${addr}</a>` : '');
   setHTML('footer-phone', phone ? `<a href="tel:${phoneRaw}">${phone}</a>` : '');
   setHTML('footer-email', email ? `<a href="mailto:${email}">${email}</a>` : '');
-  setText('footer-hours',       c.contact?.hours || '');
   setText('footer-copy-name',   c.siteName);
 
   // title set in applySEO()
@@ -154,7 +130,7 @@ function applyContent(c) {
     submitBtn.innerHTML = `<i class="${f.button_icon || 'fas fa-paper-plane'}"></i> ${f.button_text}`;
   }
 
-  // Bouton flottant → WhatsApp ou page contact
+  // Bouton flottant → WhatsApp ou RDV
   const btn = document.getElementById('float-btn');
   if (!btn) return;
   if (c.contact?.whatsapp) {
@@ -164,7 +140,7 @@ function applyContent(c) {
     btn.querySelector('i').className    = 'fab fa-whatsapp';
     btn.querySelector('span').textContent = 'WhatsApp';
   } else {
-    btn.href = PAGE === 'contact' ? '#contact-form' : (SITE_BASE || './') + 'contact/';
+    btn.href = '#contact';
     btn.removeAttribute('target');
     btn.removeAttribute('rel');
     btn.querySelector('i').className    = 'fas fa-calendar-alt';
@@ -182,29 +158,19 @@ function setHTML(id, html) {
   if (el) el.innerHTML = html;
 }
 
-function imgSrc(rawSrc) {
-  return rawSrc.startsWith('http') ? rawSrc : `${SITE_BASE}images/${rawSrc}`;
-}
-
 function applyHeroImage(rawSrc) {
-  const src  = imgSrc(rawSrc);
+  const src  = rawSrc.startsWith('http') ? rawSrc : `images/${rawSrc}`;
   const hero = document.querySelector('.hero');
-  if (hero) {
-    hero.style.backgroundImage    = `linear-gradient(135deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.38) 100%), url('${src}')`;
-    hero.style.backgroundSize     = 'cover';
-    hero.style.backgroundPosition = 'center';
-    const bg = hero.querySelector('.hero-bg');
-    if (bg) bg.style.display = 'none';
-  }
-  // Bannière des pages internes : même image, voile sombre plus prononcé
-  const pageHero = document.querySelector('.page-hero');
-  if (pageHero) {
-    pageHero.style.backgroundImage = `linear-gradient(135deg, rgba(10,14,20,.82) 0%, rgba(10,14,20,.68) 100%), url('${src}')`;
-  }
+  if (!hero) return;
+  hero.style.backgroundImage    = `linear-gradient(135deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.38) 100%), url('${src}')`;
+  hero.style.backgroundSize     = 'cover';
+  hero.style.backgroundPosition = 'center';
+  const bg = hero.querySelector('.hero-bg');
+  if (bg) bg.style.display = 'none';
 }
 
 function applyAboutImage(rawSrc) {
-  const src     = imgSrc(rawSrc);
+  const src     = rawSrc.startsWith('http') ? rawSrc : `images/${rawSrc}`;
   const wrapper = document.getElementById('about-image-wrapper');
   if (!wrapper) return;
   wrapper.innerHTML = `<img src="${src}" alt="Notre garage" loading="lazy" style="width:100%;height:100%;object-fit:cover;">`;
@@ -232,9 +198,7 @@ function renderStats(stats) {
 function renderServices(services) {
   const el = document.getElementById('services-grid');
   if (!el) return;
-  // data-limit sur la grille (accueil : aperçu des 3 premiers services)
-  const limit = parseInt(el.dataset.limit) || services.length;
-  el.innerHTML = services.slice(0, limit).map(s => `
+  el.innerHTML = services.map(s => `
     <div class="service-card reveal">
       <div class="service-icon"><i class="${s.icon}"></i></div>
       <h3>${s.title}</h3>
@@ -277,47 +241,14 @@ function renderMobileCTABar(c) {
   const phone    = c.contact?.phone    || '';
   const phoneRaw = phone.replace(/[\s.]/g, '');
   const wa       = c.contact?.whatsapp || '';
-  const contactUrl = (SITE_BASE || './') + 'contact/';
 
   const phoneBtn = document.getElementById('mobile-cta-phone');
   const waBtn    = document.getElementById('mobile-cta-wa');
 
-  if (phoneBtn) phoneBtn.href = phone ? `tel:${phoneRaw}` : contactUrl;
+  if (phoneBtn) phoneBtn.href = phone ? `tel:${phoneRaw}` : '#contact';
   if (waBtn)    waBtn.href    = wa
     ? `https://wa.me/${wa}?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous.`
-    : contactUrl;
-}
-
-// ============================================
-// BANDE CTA (pages internes + accueil)
-// ============================================
-
-function renderCTABand(c) {
-  const el = document.getElementById('cta-band');
-  if (!el) return;
-
-  const phone    = c.contact?.phone || '';
-  const phoneRaw = phone.replace(/[\s.]/g, '');
-  const f        = c.form || {};
-  const title    = f.title    || 'Une question ? Un devis ?';
-  const subtitle = f.subtitle || 'Réponse rapide, sans engagement.';
-  const btnText  = f.button_text || 'Nous contacter';
-  const btnIcon  = f.button_icon || 'fas fa-paper-plane';
-
-  el.innerHTML = `
-    <div class="container">
-      <div class="cta-band-inner">
-        <div class="cta-band-text reveal">
-          <h2>${title}</h2>
-          <p>${subtitle}</p>
-        </div>
-        <div class="cta-band-actions reveal">
-          ${phone ? `<a href="tel:${phoneRaw}" class="btn btn--cta-call"><i class="fas fa-phone"></i> ${phone}</a>` : ''}
-          <a href="${(SITE_BASE || './') + 'contact/'}" class="btn btn--cta-main"><i class="${btnIcon}"></i> ${btnText}</a>
-        </div>
-      </div>
-    </div>
-  `;
+    : '#contact';
 }
 
 // ============================================
@@ -420,7 +351,7 @@ function renderGallery(filenames) {
   }
 
   galleryImages = filenames.map(f => ({
-    src: imgSrc(f),
+    src: f.startsWith('http') ? f : `images/${f}`,
     alt: f.split('/').pop().replace(/\.[^.]+$/, '').replace(/-/g, ' ')
   }));
 
@@ -689,7 +620,6 @@ function initNav() {
     })
   );
 
-  // Ancres internes → défilement doux sous le header fixe
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
       const target = document.querySelector(link.getAttribute('href'));
@@ -700,15 +630,27 @@ function initNav() {
     });
   });
 
-  // Onglet actif selon la page courante
-  const NAV_BY_PAGE = { home: '', services: 'services/', gallery: 'galerie/', contact: 'contact/' };
-  document.querySelectorAll('.nav-link[data-nav]').forEach(link =>
-    link.classList.toggle('active', link.dataset.nav === NAV_BY_PAGE[PAGE])
-  );
+  // Active nav section tracking
+  const sections  = document.querySelectorAll('section[id]');
+  const navLinks  = document.querySelectorAll('.nav-link[href^="#"]');
+  const threshold = () => window.innerHeight * 0.35;
+
+  function updateActiveNav() {
+    let activeId = null;
+    sections.forEach(s => {
+      if (s.getBoundingClientRect().top <= threshold()) activeId = s.id;
+    });
+    navLinks.forEach(link =>
+      link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`)
+    );
+  }
 
   window.addEventListener('scroll', () => {
     document.getElementById('header')?.classList.toggle('scrolled', window.scrollY > 80);
+    updateActiveNav();
   }, { passive: true });
+
+  updateActiveNav();
 }
 
 // ============================================
@@ -740,7 +682,7 @@ function initContactForm(c) {
   if (!form) return;
 
   const ejs = c.emailjs;
-  if (ejs?.public_key && window.emailjs) {
+  if (ejs?.public_key) {
     emailjs.init({ publicKey: ejs.public_key });
   }
 
@@ -814,38 +756,17 @@ function applySEO(c) {
   const zip      = seo.zip  || (zipMatch ? zipMatch[1] : '');
   const city     = seo.city || (zipMatch ? zipMatch[2] : cityZip);
 
-  // Title et description par page
-  const serviceNames = (c.services || []).map(s => s.title).join(', ');
-  const PAGE_META = {
-    home: {
-      title: c.siteName + (c.slogan ? ' — ' + c.slogan : ''),
-      desc:  c.description || c.slogan || ''
-    },
-    services: {
-      title: 'Services — ' + c.siteName,
-      desc:  serviceNames
-        ? `Les services de ${c.siteName} : ${serviceNames}.`
-        : `Découvrez les services proposés par ${c.siteName}.`
-    },
-    gallery: {
-      title: 'Galerie — ' + c.siteName,
-      desc:  `Découvrez les réalisations de ${c.siteName} en images.`
-    },
-    contact: {
-      title: 'Contact — ' + c.siteName,
-      desc:  `Contactez ${c.siteName} — téléphone, adresse, horaires et formulaire de contact.`
-    }
-  };
-  const meta = PAGE_META[PAGE] || PAGE_META.home;
+  // Title
+  document.title = c.siteName + (c.slogan ? ' — ' + c.slogan : '');
 
-  document.title = meta.title;
-  setMeta('name', 'description', meta.desc);
+  // Meta description
+  setMeta('name', 'description', c.description || c.slogan || '');
 
   // Open Graph
   setMeta('property', 'og:type',        'website');
   setMeta('property', 'og:locale',      'fr_FR');
-  setMeta('property', 'og:title',       meta.title);
-  setMeta('property', 'og:description', meta.desc);
+  setMeta('property', 'og:title',       c.siteName + (c.slogan ? ' — ' + c.slogan : ''));
+  setMeta('property', 'og:description', c.description || c.slogan || '');
 
   // JSON-LD LocalBusiness
   const phone = (contact.phone || '').replace(/[\s.]/g, '').replace(/^0/, '+33');
@@ -897,7 +818,7 @@ function applySEO(c) {
 
   // Footer mentions légales link
   const mentionsEl = document.getElementById('footer-mentions');
-  if (mentionsEl) mentionsEl.href = (SITE_BASE || './') + 'mentions/';
+  if (mentionsEl) mentionsEl.href = 'mentions/';
 }
 
 function setMeta(attr, key, content) {
