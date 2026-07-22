@@ -131,7 +131,7 @@
 <script>
   const PASSWORD  = 'GYS-2026';
   const TOKEN_KEY = 'gys_auth';
-  const REDIRECT  = sessionStorage.getItem('gys_redirect') || '/hub/';
+  const REDIRECT  = sessionStorage.getItem('gys_redirect') || '/interne/';
 
   if (sessionStorage.getItem(TOKEN_KEY)) {
     window.location.replace(REDIRECT);

@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GetYourSite — Nos créations</title>
-
+  <title>GetYourSite — Espace interne</title>
+  <script>(function(){if(!sessionStorage.getItem('gys_auth')){sessionStorage.setItem('gys_redirect',location.href);location.replace('/hub/login/');}})();</script>
+  
   <link rel="stylesheet" href="/vendor/fonts/outfit.css">
   <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
   <style>
@@ -211,14 +212,59 @@
 
 <div class="wrapper">
 
+  <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+    <a href="#" onclick="sessionStorage.removeItem('gys_auth');location.replace('/hub/login/');return false;"
+       style="display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:var(--muted);opacity:.55;text-decoration:none;transition:opacity .15s;"
+       onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='.55'">
+      <i class="fas fa-sign-out-alt"></i> Déconnexion
+    </a>
+  </div>
+
   <header class="hub-header">
     <div class="hub-logo"><i class="fas fa-bolt"></i> GetYourSite</div>
-    <h1>Nos créations de sites</h1>
-    <p>Des sites vitrines clés en main pour artisans, commerces et indépendants. Découvrez nos modèles et nos réalisations.</p>
+    <h1>Espace interne</h1>
+    <p>Tous tes outils en un seul endroit — fiche client, guide, kit commercial et démos.</p>
   </header>
 
+  <!-- Ressources -->
+  <p class="section-title">Ressources</p>
+  <div class="resources" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+    <a href="../onboarding" class="resource-card" style="border-left: 3px solid #E74C3C;">
+      <div class="resource-icon" style="background:rgba(231,76,60,.15);color:#E74C3C;"><i class="fas fa-clipboard-list"></i></div>
+      <div class="resource-body">
+        <h3>Fiche client</h3>
+        <p>Formulaire à remplir avec le client sur place</p>
+      </div>
+      <i class="fas fa-arrow-right resource-arrow"></i>
+    </a>
+    <a href="../tuto" class="resource-card">
+      <div class="resource-icon resource-icon--tuto"><i class="fas fa-book-open"></i></div>
+      <div class="resource-body">
+        <h3>Guide de configuration</h3>
+        <p>Comment configurer un site client pas à pas</p>
+      </div>
+      <i class="fas fa-arrow-right resource-arrow"></i>
+    </a>
+    <a href="../pitch" class="resource-card">
+      <div class="resource-icon resource-icon--pitch"><i class="fas fa-chart-line"></i></div>
+      <div class="resource-body">
+        <h3>Kit commercial</h3>
+        <p>Tarifs, arguments, script de vente (usage interne)</p>
+      </div>
+      <i class="fas fa-arrow-right resource-arrow"></i>
+    </a>
+    <a href="../fiches" class="resource-card" style="border-left: 3px solid #6366F1;">
+      <div class="resource-icon" style="background:rgba(99,102,241,.15);color:#818CF8;"><i class="fas fa-folder-open"></i></div>
+      <div class="resource-body">
+        <h3>Fiches clients</h3>
+        <p>Historique de toutes les fiches soumises</p>
+      </div>
+      <i class="fas fa-arrow-right resource-arrow"></i>
+    </a>
+  </div>
+
   <!-- Démos -->
-  <p class="section-title">Nos modèles</p>
+  <p class="section-title">Démos disponibles</p>
   <div class="demos">
 
     <a href="../" class="demo-card" style="border-top: 3px solid #E74C3C;">
@@ -306,7 +352,7 @@
 
   </div>
 
-  <p class="notice">GetYourSite · Sites vitrines professionnels clés en main</p>
+  <p class="notice">Usage interne · <a href="../pitch">Kit commercial</a> · <a href="../tuto">Guide config</a></p>
 
 </div>
 
