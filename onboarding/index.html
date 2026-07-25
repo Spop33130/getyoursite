@@ -1227,7 +1227,7 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
 
       // Services
       const services = [];
-      const serviceIcons = ['fas fa-cogs','fas fa-car','fas fa-car-side','fas fa-wrench'];
+      const serviceIcons = ['fas fa-star','fas fa-handshake','fas fa-award','fas fa-check-circle'];
       for (let i = 1; i <= 4; i++) {
         const t = val(`s${i}_title`);
         if (t) services.push({ title: t, description: val(`s${i}_desc`), icon: serviceIcons[i - 1] });
@@ -1278,6 +1278,13 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
         },
 
         services: services,
+
+        commitments: [
+          { icon: 'fas fa-file-invoice', title: 'Devis gratuit',    description: 'Sans engagement, réponse rapide à votre demande' },
+          { icon: 'fas fa-clock',        title: 'Délais respectés',  description: 'Un travail livré dans les délais convenus' },
+          { icon: 'fas fa-award',        title: 'Qualité garantie',  description: 'Le souci du détail et du travail bien fait' },
+          { icon: 'fas fa-comments',     title: 'À votre écoute',    description: 'Un accompagnement personnalisé et transparent' }
+        ],
 
         images: {
           hero:    'hero.jpg',
