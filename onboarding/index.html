@@ -223,6 +223,24 @@
     }
     .btn-pdf:hover { border-color: var(--brand); color: var(--brand); }
 
+    .btn-test {
+      background: transparent;
+      border: 1.5px dashed #d1d5db;
+      border-radius: 9px;
+      padding: .75rem 1.1rem;
+      font-family: var(--font);
+      font-size: .85rem;
+      font-weight: 600;
+      color: #9ca3af;
+      cursor: pointer;
+      display: flex; align-items: center; gap: .4rem;
+      white-space: nowrap;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-test:hover { border-color: #D97706; color: #D97706; }
+
+    .submit-actions { display: flex; align-items: center; gap: .6rem; }
+
     /* NOTIFICATION */
     .notif {
       position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%);
@@ -310,6 +328,37 @@
       font-size: .85rem; color: #92400e; line-height: 1.6;
     }
     .callout-remind i { color: #D97706; margin-top: .15rem; flex-shrink: 0; }
+
+    /* ─────────────  MOBILE  ───────────── */
+    @media (max-width: 560px) {
+      body { padding-bottom: calc(150px + env(safe-area-inset-bottom)); }
+
+      .header    { padding: 1.75rem 1.25rem; }
+      .container { padding: 1.5rem 1.1rem; }
+
+      /* Inputs à 16px : neutralise le zoom automatique d'iOS au focus */
+      input[type=text], input[type=email], input[type=tel], input[type=url],
+      input[type=time], input[type=number], textarea, select {
+        font-size: 16px;
+      }
+
+      /* Barre d'action : CTA principal pleine largeur, actions secondaires côte à côte */
+      .submit-area {
+        flex-direction: column;
+        align-items: stretch;
+        gap: .5rem;
+        padding: .7rem .9rem calc(.7rem + env(safe-area-inset-bottom));
+      }
+      .submit-info { display: none; }
+      .submit-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .5rem;
+        width: 100%;
+      }
+      .btn-test, .btn-pdf { justify-content: center; padding: .8rem .5rem; font-size: .85rem; }
+      .btn-submit { grid-column: 1 / -1; justify-content: center; padding: .9rem 1rem; font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -692,10 +741,10 @@
       <strong>Prêt à envoyer ?</strong><br>
       Vérifiez avec le client avant de valider.
     </div>
-    <button type="button" onclick="fillTestData()" style="background:transparent;border:1.5px dashed #d1d5db;border-radius:9px;padding:.6rem 1rem;font-family:var(--font);font-size:.78rem;font-weight:600;color:#9ca3af;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s;" onmouseover="this.style.borderColor='#D97706';this.style.color='#D97706'" onmouseout="this.style.borderColor='#d1d5db';this.style.color='#9ca3af'">
-      🧪 Données test
-    </button>
-    <div style="display:flex;gap:.6rem;flex-shrink:0;">
+    <div class="submit-actions">
+      <button type="button" class="btn-test" onclick="fillTestData()" title="Remplir le formulaire avec des données de test">
+        🧪 Données test
+      </button>
       <button type="button" class="btn-pdf" onclick="downloadPDF()">
         <i class="fas fa-file-pdf"></i> PDF
       </button>
