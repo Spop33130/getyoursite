@@ -267,7 +267,7 @@
   <div class="search-bar">
     <div class="search-wrap">
       <i class="fas fa-search"></i>
-      <input type="text" id="search-input" class="search-input" placeholder="Rechercher un garage, un commercial…" oninput="filterFiches()">
+      <input type="text" id="search-input" class="search-input" placeholder="Rechercher une entreprise, un commercial…" oninput="filterFiches()">
     </div>
     <span class="count-badge" id="count-visible"></span>
   </div>
@@ -336,7 +336,7 @@
     return `
       <div class="fiche-card" style="--card-color:${color}" onclick="openModal('${f.id}')">
         <div class="fiche-card-top">
-          <div class="fiche-garage">${f.nom_garage || '—'}</div>
+          <div class="fiche-garage">${f.nom_entreprise || '—'}</div>
           <div class="fiche-dot"></div>
         </div>
         <div class="fiche-meta">
@@ -356,7 +356,7 @@
     const q = document.getElementById('search-input').value.toLowerCase().trim();
     const filtered = q
       ? allFiches.filter(f =>
-          (f.nom_garage  || '').toLowerCase().includes(q) ||
+          (f.nom_entreprise  || '').toLowerCase().includes(q) ||
           (f.commercial  || '').toLowerCase().includes(q) ||
           (f.date_visite || '').includes(q)
         )
@@ -383,7 +383,7 @@
     document.getElementById('modal-header').innerHTML = `
       <div class="modal-dot" style="background:${color}"></div>
       <div>
-        <h2>${f.nom_garage || '—'}</h2>
+        <h2>${f.nom_entreprise || '—'}</h2>
         <p>
           ${f.commercial  ? `<i class="fas fa-user-tie" style="margin-right:4px;"></i>${f.commercial}` : ''}
           ${f.date_visite ? ` &nbsp;·&nbsp; <i class="fas fa-calendar" style="margin-right:4px;"></i>Visite : ${f.date_visite}` : ''}
@@ -494,7 +494,7 @@
   function downloadConfigJSON(id) {
     const f = getFiche(id);
     if (!f || !f.data?.config) return;
-    const slug = (f.nom_garage || 'client').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+    const slug = (f.nom_entreprise || 'client').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
     const blob = new Blob([JSON.stringify(f.data.config, null, 2)], { type: 'application/json' });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
@@ -573,7 +573,7 @@
             <span style="font-size:10px;opacity:.5;letter-spacing:.06em;text-transform:uppercase;">Usage interne</span>
           </div>
           <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.55;margin-bottom:6px;">📋 Fiche client</div>
-          <div style="font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;">${f.nom_garage || '—'}</div>
+          <div style="font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;">${f.nom_entreprise || '—'}</div>
           <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;">
             ${f.commercial  ? `<span style="font-size:11px;opacity:.75;">👤 Commercial : <strong>${f.commercial}</strong></span>` : ''}
             ${f.date_visite ? `<span style="font-size:11px;opacity:.75;">📅 Visite du <strong>${f.date_visite}</strong></span>` : ''}
@@ -581,7 +581,7 @@
         </div>
         <div style="height:4px;background:${colorPrimary};margin-bottom:16px;border-radius:0 0 2px 2px;"></div>
         <div style="padding:0 4px;">
-          ${B('#E74C3C','🏪','Identité du garage',
+          ${B('#E74C3C','🏪','Identité de l\'entreprise',
             R('Nom',         d.site_name)   +
             R('Slogan',      d.slogan)      +
             R('Badge',       d.badge)       +
@@ -627,7 +627,7 @@
     const win = window.open('', '_blank');
     if (!win) { alert('Autorisez les popups pour générer le PDF.'); return; }
     win.document.write(`<!DOCTYPE html><html lang="fr"><head>
-      <meta charset="UTF-8"><title>Fiche — ${f.nom_garage || 'client'}</title>
+      <meta charset="UTF-8"><title>Fiche — ${f.nom_entreprise || 'client'}</title>
       <style>
         * { box-sizing:border-box; margin:0; padding:0; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
         body { font-family: Arial, Helvetica, sans-serif; background:#f8f9fa; }
