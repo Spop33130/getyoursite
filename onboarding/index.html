@@ -251,14 +251,20 @@
     .date-wrapper input[type=text] {
       padding-right: 2.4rem;
     }
+    /* Vrai input date en overlay transparent tappable sur la zone de l'icône :
+       le tap ouvre directement le picker natif (fiable sur iOS Safari). */
     .date-wrapper input[type=date] {
       position: absolute;
       right: 0; top: 0;
-      width: 0; height: 0;
-      opacity: 0;
+      width: 2.8rem; height: 100%;
+      margin: 0; padding: 0;
       border: none;
-      padding: 0;
-      pointer-events: none;
+      background: transparent;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+      -webkit-appearance: none;
+      appearance: none;
     }
     .date-icon {
       position: absolute;
@@ -267,11 +273,11 @@
       transform: translateY(-50%);
       color: var(--muted);
       font-size: .85rem;
-      cursor: pointer;
-      pointer-events: auto;
+      pointer-events: none;
+      z-index: 1;
       transition: color .15s;
     }
-    .date-icon:hover { color: var(--brand); }
+    .date-wrapper:focus-within .date-icon { color: var(--brand); }
 
     /* PHOTO OPTIONS */
     .photo-option { display: block; cursor: pointer; }
@@ -747,8 +753,10 @@
     // Limiter le calendrier à aujourd'hui
     datePicker.max = new Date().toISOString().split('T')[0];
 
-    document.querySelector('.date-icon').addEventListener('click', () => {
-      try { datePicker.showPicker(); } catch { datePicker.click(); }
+    // L'input date (overlay transparent) ouvre le picker natif au tap.
+    // showPicker() en renfort pour desktop ; sur iOS le tap l'ouvre déjà.
+    datePicker.addEventListener('click', () => {
+      try { datePicker.showPicker(); } catch { /* picker déjà ouvert par le tap natif */ }
     });
 
     dateText.addEventListener('input', function() {
