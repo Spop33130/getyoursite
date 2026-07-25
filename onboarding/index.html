@@ -1472,8 +1472,8 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
     async function saveToSupabase() {
       const config = buildConfig();
       const payload = {
-        nom_garage:  val('site_name'),
-        date_visite: val('commercial_date'),
+        nom_entreprise: val('site_name'),
+        date_visite:    val('commercial_date'),
         commercial:  val('commercial_name'),
         slug:        `${val('site_name')}${val('commercial_date') ? ' — ' + val('commercial_date') : ''}`,
         data: {
