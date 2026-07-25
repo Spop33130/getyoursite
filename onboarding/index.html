@@ -403,26 +403,26 @@
     <div class="block">
       <div class="block-title">
         <div class="block-icon block-icon--red"><i class="fas fa-store"></i></div>
-        <div><h2>Identité du garage</h2><p>Nom, accroche, description</p></div>
+        <div><h2>Identité de l'entreprise</h2><p>Nom, accroche, description</p></div>
       </div>
       <div class="block-body">
         <div class="form-row">
           <div class="form-group">
-            <label for="site_name">Nom du garage *</label>
-            <input type="text" id="site_name" placeholder="Ex : Garage Dupont Auto" required>
+            <label for="site_name">Nom de l'entreprise *</label>
+            <input type="text" id="site_name" placeholder="Ex : Maison Martin" required>
           </div>
           <div class="form-group">
             <label for="slogan">Slogan <span class="opt">(optionnel)</span></label>
-            <input type="text" id="slogan" placeholder="Ex : Votre expert auto de confiance">
+            <input type="text" id="slogan" placeholder="Ex : Un savoir-faire à votre service">
           </div>
         </div>
         <div class="form-group">
           <label for="badge">Badge accroche *</label>
-          <input type="text" id="badge" placeholder="Ex : Mécanicien certifié · 20 ans d'expérience" required>
+          <input type="text" id="badge" placeholder="Ex : 20 ans d'expérience · Savoir-faire reconnu" required>
         </div>
         <div class="form-group">
-          <label for="description">Description du garage *</label>
-          <textarea id="description" rows="3" placeholder="Quelques phrases sur le garage, l'équipe, les valeurs..." required></textarea>
+          <label for="description">Description de l'entreprise *</label>
+          <textarea id="description" rows="3" placeholder="Quelques phrases sur l'entreprise, l'équipe, les valeurs..." required></textarea>
         </div>
       </div>
     </div>
@@ -436,7 +436,7 @@
       <div class="block-body">
         <div class="form-group">
           <label for="address">Adresse complète *</label>
-          <input type="text" id="address" placeholder="Ex : 12 Rue de la Mécanique, 33000 Bordeaux" required>
+          <input type="text" id="address" placeholder="Ex : 12 Rue des Artisans, 33000 Bordeaux" required>
         </div>
         <div class="form-row">
           <div class="form-group">
@@ -451,8 +451,8 @@
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="email">Email du garage *</label>
-            <input type="email" id="email" placeholder="Ex : contact@garage-dupont.fr" required>
+            <label for="email">Email de l'entreprise *</label>
+            <input type="email" id="email" placeholder="Ex : contact@monentreprise.fr" required>
           </div>
           <div class="form-group">
             <label for="hours_text">Horaires (texte affiché)</label>
@@ -548,12 +548,12 @@
           <div class="form-row">
             <div class="form-group">
               <label>Nom du service *</label>
-              <input type="text" id="s1_title" placeholder="Ex : Mécanique Générale" required>
+              <input type="text" id="s1_title" placeholder="Ex : votre prestation principale" required>
             </div>
           </div>
           <div class="form-group">
             <label>Description courte *</label>
-            <input type="text" id="s1_desc" placeholder="Ex : Diagnostic, réparation moteur, transmission..." required>
+            <input type="text" id="s1_desc" placeholder="Ex : courte description (ce que ça comprend, pour qui)" required>
           </div>
         </div>
 
@@ -562,12 +562,12 @@
           <div class="form-row">
             <div class="form-group">
               <label>Nom du service *</label>
-              <input type="text" id="s2_title" placeholder="Ex : Carrosserie & Peinture" required>
+              <input type="text" id="s2_title" placeholder="Ex : deuxième prestation" required>
             </div>
           </div>
           <div class="form-group">
             <label>Description courte *</label>
-            <input type="text" id="s2_desc" placeholder="Ex : Réparation carrosserie et peinture..." required>
+            <input type="text" id="s2_desc" placeholder="Ex : courte description de la prestation" required>
           </div>
         </div>
 
@@ -576,12 +576,12 @@
           <div class="form-row">
             <div class="form-group">
               <label>Nom du service *</label>
-              <input type="text" id="s3_title" placeholder="Ex : Vente VN / VO">
+              <input type="text" id="s3_title" placeholder="Ex : troisième prestation">
             </div>
           </div>
           <div class="form-group">
             <label>Description courte</label>
-            <input type="text" id="s3_desc" placeholder="Ex : Vente véhicules neufs et occasions...">
+            <input type="text" id="s3_desc" placeholder="Ex : courte description de la prestation">
           </div>
         </div>
 
@@ -590,12 +590,12 @@
           <div class="form-row">
             <div class="form-group">
               <label>Nom du service</label>
-              <input type="text" id="s4_title" placeholder="Ex : Pneumatiques">
+              <input type="text" id="s4_title" placeholder="Ex : prestation complémentaire">
             </div>
           </div>
           <div class="form-group">
             <label>Description courte</label>
-            <input type="text" id="s4_desc" placeholder="Ex : Montage, équilibrage, géométrie...">
+            <input type="text" id="s4_desc" placeholder="Ex : courte description de la prestation">
           </div>
         </div>
 
@@ -642,7 +642,7 @@
     <div class="block">
       <div class="block-title">
         <div class="block-icon block-icon--orange"><i class="fas fa-camera"></i></div>
-        <div><h2>Photos du garage</h2><p>À décider avec le client</p></div>
+        <div><h2>Photos de l'entreprise</h2><p>À décider avec le client</p></div>
       </div>
       <div class="block-body">
         <div style="display:flex;flex-direction:column;gap:.75rem;">
@@ -652,7 +652,7 @@
             <div class="photo-option-body">
               <div class="photo-option-icon" style="background:rgba(5,150,105,.12);color:#059669;"><i class="fas fa-image"></i></div>
               <div>
-                <strong>Vraies photos du garage</strong>
+                <strong>Vraies photos de l'entreprise</strong>
                 <span>Le client fournit ses photos ou on organise un shooting — rendu plus professionnel et personnalisé</span>
               </div>
             </div>
@@ -674,7 +674,7 @@
         <div id="photos_real_reminder" style="display:none;margin-top:.5rem;">
           <div class="callout-remind">
             <i class="fas fa-bell"></i>
-            <div><strong>Rappel :</strong> demander au client de préparer <strong>6 photos</strong> (façade, atelier, équipe, véhicules en cours, outils, vue générale). Les recevoir <strong>avant</strong> de commencer le site.</div>
+            <div><strong>Rappel :</strong> demander au client de préparer <strong>6 photos</strong> (devanture, intérieur, équipe, réalisations ou produits, détails du savoir-faire, vue d'ensemble). Les recevoir <strong>avant</strong> de commencer le site.</div>
           </div>
         </div>
 
@@ -694,7 +694,7 @@
         </div>
         <div class="form-group">
           <label for="domain">Nom de domaine existant ? <span class="opt">(optionnel)</span></label>
-          <input type="text" id="domain" placeholder="Ex : garage-dupont.fr (ou laisser vide si à acheter)">
+          <input type="text" id="domain" placeholder="Ex : monentreprise.fr (ou laisser vide si à acheter)">
         </div>
       </div>
     </div>
@@ -834,7 +834,7 @@
       const v = this.value.trim();
       if (!v) return;
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))
-        setFieldError('email', 'Format email invalide (ex : contact@garage.fr)');
+        setFieldError('email', 'Format email invalide (ex : contact@entreprise.fr)');
     });
 
     // Validation téléphone on blur (10 chiffres)
@@ -907,15 +907,15 @@
       set('commercial_name', 'Alex');
       set('commercial_date', `${dd}/${mm}/${yyyy}`);
 
-      set('site_name',   'Garage Dupont Auto');
-      set('slogan',      'Votre expert auto de confiance');
-      set('badge',       'Mécanicien certifié · 15 ans d\'expérience');
-      set('description', 'Spécialistes en réparation et entretien automobile depuis 15 ans. Notre équipe intervient sur toutes les marques avec expertise et transparence.');
+      set('site_name',   'Maison Martin');
+      set('slogan',      'Un savoir-faire à votre service');
+      set('badge',       'Artisan certifié · 15 ans d\'expérience');
+      set('description', 'Entreprise familiale depuis 15 ans, nous mettons notre savoir-faire au service de nos clients avec exigence, transparence et le sens du travail bien fait.');
 
-      set('address',    '45 Rue de la Mécanique, 33000 Bordeaux');
+      set('address',    '45 Rue des Artisans, 33000 Bordeaux');
       set('phone',      '05 56 12 34 56');
       set('whatsapp',   '06 12 34 56 78');
-      set('email',      'contact@garage-dupont.fr');
+      set('email',      'contact@maison-martin.fr');
       set('hours_text', 'Lun–Ven : 8h–18h · Sam : 8h–12h');
 
       set('sch_semaine_open',  '08:00');
@@ -928,28 +928,28 @@
       set('color_primary_picker',  '#E74C3C');
       set('color_secondary_picker','#2C3E50');
 
-      set('s1_title', 'Mécanique Générale');
-      set('s1_desc',  'Diagnostic, réparation moteur, entretien et révision toutes marques');
-      set('s2_title', 'Carrosserie & Peinture');
-      set('s2_desc',  'Réparation carrosserie et peinture avec garantie qualité');
-      set('s3_title', 'Vente VN / VO');
-      set('s3_desc',  'Vente de véhicules neufs et d\'occasion, reprise de l\'ancien');
+      set('s1_title', 'Prestation sur-mesure');
+      set('s1_desc',  'Un accompagnement personnalisé, adapté à chaque demande et réalisé avec soin');
+      set('s2_title', 'Conseil & accompagnement');
+      set('s2_desc',  'À votre écoute pour vous orienter vers la solution la plus adaptée');
+      set('s3_title', 'Qualité garantie');
+      set('s3_desc',  'Un travail soigné, durable, avec le souci du détail à chaque étape');
 
-      set('facebook',      'https://www.facebook.com/garagedupont');
-      set('instagram',     'https://www.instagram.com/garagedupont');
+      set('facebook',      'https://www.facebook.com/maisonmartin');
+      set('instagram',     'https://www.instagram.com/maisonmartin');
       set('google_url',    'https://maps.google.com/?cid=123456');
       set('google_rating', '4.8');
       set('google_count',  '52');
 
       document.getElementById('photos_stock')?.click();
 
-      set('legal_responsable', 'Jean Dupont');
+      set('legal_responsable', 'Jean Martin');
       set('legal_siret',       '123 456 789 00012');
       const formeEl = document.getElementById('legal_forme');
       if (formeEl) formeEl.value = 'Auto-entrepreneur';
 
-      set('domain', 'garage-dupont.fr');
-      set('notes',  'Logo rouge et blanc. Client enthousiaste, souhaite être en ligne avant fin de semaine.');
+      set('domain', 'maison-martin.fr');
+      set('notes',  'Logo bleu et blanc. Client enthousiaste, souhaite être en ligne avant fin de semaine.');
 
       showNotif('Données de test remplies ✓', 'success');
     }
@@ -982,7 +982,7 @@ FICHE CLIENT — GETYOURSITE
 Envoyée par : ${val('commercial_name')} ${val('commercial_date') ? '(visite du ' + val('commercial_date') + ')' : ''}
 ${sep()}
 IDENTITÉ
-${line('Nom du garage',  val('site_name'))}${line('Slogan',         val('slogan'))}${line('Badge',          val('badge'))}${line('Description',    val('description'))}
+${line('Nom entreprise', val('site_name'))}${line('Slogan',         val('slogan'))}${line('Badge',          val('badge'))}${line('Description',    val('description'))}
 ${sep()}
 COORDONNÉES
 ${line('Adresse',        val('address'))}${line('Téléphone',      val('phone'))}${line('WhatsApp',       val('whatsapp'))}${line('Email',          val('email'))}${line('Horaires texte', val('hours_text'))}
@@ -1102,7 +1102,7 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
           <!-- CONTENU -->
           <div style="padding:0 4px;">
 
-          ${B('#E74C3C','🏪','Identité du garage',
+          ${B('#E74C3C','🏪','Identité de l\'entreprise',
             R('Nom',         val('site_name'))   +
             R('Slogan',      val('slogan'))       +
             R('Badge',       val('badge'))        +
@@ -1135,7 +1135,7 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
             R('Nombre d\'avis', val('google_count'))
           )}
 
-          ${B('#D97706','📷','Photos du garage',
+          ${B('#D97706','📷','Photos de l\'entreprise',
             R('Choix', photosEl ? photosEl.value : 'Non renseigné')
           )}
 
@@ -1263,17 +1263,17 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
         hero: {
           title:         val('site_name'),
           subtitle:      val('description').slice(0, 120),
-          cta_primary:   'Prendre rendez-vous',
+          cta_primary:   'Nous contacter',
           cta_secondary: 'Nos services',
-          tags:          ['Toutes marques', 'Véhicule de prêt disponible', 'Garantie 24 mois']
+          tags:          ['Qualité', 'Savoir-faire', 'Proximité']
         },
 
         about: {
-          title: 'Notre Expertise',
+          title: 'Notre savoir-faire',
           stats: [
-            { number: '20+',   label: 'Années d\'expérience' },
-            { number: '1500+', label: 'Véhicules réparés'    },
-            { number: '98%',   label: 'Clients satisfaits'   }
+            { number: '15+',  label: 'Années d\'expérience' },
+            { number: '500+', label: 'Clients satisfaits'   },
+            { number: '100%', label: 'Satisfaction'         }
           ]
         },
 
@@ -1287,21 +1287,21 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
 
         testimonials: [
           {
-            text:   'Travail impeccable et tarifs honnêtes. L\'équipe a diagnostiqué et réparé ma voiture en temps record. Je recommande vivement !',
+            text:   'Travail impeccable et tarifs honnêtes. Une équipe sérieuse, à l\'écoute et efficace. Je recommande vivement !',
             author: 'Jean-Claude Petit',
             role:   'Client depuis 2019',
             rating: 5,
             source: 'google'
           },
           {
-            text:   'Professionnalisme et transparence. Ils m\'expliquent toujours ce qui doit être fait et pourquoi. Un garage de confiance absolu !',
+            text:   'Professionnalisme et transparence du début à la fin. On m\'explique tout clairement et on se sent en confiance.',
             author: 'Isabelle Moreau',
             role:   'Cliente fidèle',
             rating: 5,
             source: 'google'
           },
           {
-            text:   'Révision complète faite en une matinée, voiture rendue propre. Prix juste et équipe sympa. Je reviens sans hésiter.',
+            text:   'Accueil chaleureux, travail soigné et prix justes. Rien à redire, je reviens sans hésiter.',
             author: 'Thomas Bernard',
             role:   'Client',
             rating: 5,
@@ -1316,11 +1316,10 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
         },
 
         faq: [
-          { question: 'Acceptez-vous toutes les marques ?',              answer: 'Oui, nous intervenons sur toutes les marques et tous les modèles, qu\'il s\'agisse de véhicules européens, asiatiques ou américains.' },
-          { question: 'Faut-il obligatoirement prendre rendez-vous ?',   answer: 'Non, nous acceptons les clients sans rendez-vous pour les petites interventions. Pour les travaux importants, un rendez-vous nous permet de vous garantir un délai optimal.' },
-          { question: 'Combien de temps dure une révision ?',            answer: 'Une révision standard prend en général une demi-journée. Nous vous confirmons un délai précis lors de la prise en charge de votre véhicule.' },
-          { question: 'Proposez-vous un véhicule de prêt ?',             answer: 'Oui, nous mettons à votre disposition un véhicule de prêt lors d\'immobilisations longues, sous réserve de disponibilité. N\'hésitez pas à nous le préciser lors de votre demande.' },
-          { question: 'Est-il possible de fournir les pièces pour toutes réparations ?', answer: 'Non, au titre de la garantie, et par soucis de qualité, nous fournissons nous même les pièces détachées. Nous ne montons donc aucune pièce fournie par le client.' }
+          { question: 'Comment puis-je vous contacter ?',            answer: 'Par téléphone, par email ou directement via le formulaire en bas de page. Nous vous répondons dans les plus brefs délais.' },
+          { question: 'Quels sont vos horaires d\'ouverture ?',       answer: 'Nos horaires sont affichés en haut du site et indiquent en temps réel si nous sommes ouverts. N\'hésitez pas à nous appeler en cas de doute.' },
+          { question: 'Où êtes-vous situés ?',                        answer: 'Vous retrouvez notre adresse complète et l\'itinéraire dans la section contact, en bas de page.' },
+          { question: 'Proposez-vous un devis gratuit ?',            answer: 'Oui, n\'hésitez pas à nous décrire votre besoin via le formulaire ou par téléphone : nous vous répondons rapidement et sans engagement.' }
         ],
 
         schedule: schedule,
@@ -1336,12 +1335,12 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
         },
 
         form: {
-          title:               'Votre véhicule a besoin de nous ?',
-          subtitle:            'Réparation, entretien ou dépannage — décrivez-nous votre problème, on vous répond rapidement.',
-          message_label:       'Décrivez votre problème',
-          message_placeholder: 'Ex : ma voiture ne démarre plus, bruit suspect au freinage, révision à prévoir...',
-          button_text:         'Demander un devis',
-          button_icon:         'fas fa-wrench'
+          title:               'Une question, un projet ?',
+          subtitle:            'Décrivez-nous votre besoin — nous vous répondons dans les plus brefs délais.',
+          message_label:       'Votre message',
+          message_placeholder: 'Bonjour, je vous contacte au sujet de...',
+          button_text:         'Envoyer le message',
+          button_icon:         'fas fa-paper-plane'
         },
 
         emailjs: {
@@ -1357,7 +1356,7 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
         },
 
         seo: {
-          schema_type: 'AutoRepair',
+          schema_type: 'LocalBusiness',
           street:      seoStreet,
           zip:         seoZip,
           city:        seoCity,
@@ -1388,12 +1387,12 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
 
     const REQUIRED_FIELDS = {
       commercial_name: 'Ton prénom',
-      site_name:       'Nom du garage',
+      site_name:       'Nom de l\'entreprise',
       badge:           'Badge accroche',
-      description:     'Description du garage',
+      description:     'Description de l\'entreprise',
       address:         'Adresse complète',
       phone:           'Téléphone',
-      email:           'Email du garage',
+      email:           'Email de l\'entreprise',
       s1_title:        'Service 1 — Nom',
       s1_desc:         'Service 1 — Description',
       s2_title:        'Service 2 — Nom',
@@ -1437,7 +1436,7 @@ ${line('Nom de domaine', val('domain'))}${line('Notes',           val('notes'))}
       const dateOk   = validateDate('commercial_date');
       const emailVal = val('email');
       if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
-        setFieldError('email', 'Format email invalide (ex : contact@garage.fr)');
+        setFieldError('email', 'Format email invalide (ex : contact@entreprise.fr)');
         if (!missing.includes('email')) missing.push('email');
       }
       const phoneDigits = val('phone').replace(/\D/g, '');
