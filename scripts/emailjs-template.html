@@ -1,0 +1,91 @@
+<!-- ===================================================================
+     Template mail EmailJS — à coller dans "Content" (Edit Content / HTML)
+     Réutilisable pour TOUS les clients : les couleurs s'adaptent via
+     {{brand_color}} / {{brand_dark}} envoyées par app.js.
+     Variables : {{site_name}} {{from_name}} {{from_email}} {{phone}}
+                 {{message}} {{brand_color}} {{brand_dark}}
+     =================================================================== -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Nouvelle demande de {{from_name}} via {{site_name}}</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef1f5;padding:32px 12px;font-family:'Segoe UI',Helvetica,Arial,sans-serif;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(20,30,50,.10);">
+
+        <!-- Header -->
+        <tr>
+          <td style="background-color:{{brand_color}};background-image:linear-gradient(135deg,{{brand_color}},{{brand_dark}});padding:34px 36px;">
+            <table role="presentation" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="width:44px;vertical-align:middle;">
+                  <div style="width:44px;height:44px;background:rgba(255,255,255,.18);border-radius:50%;text-align:center;line-height:44px;font-size:20px;">📩</div>
+                </td>
+                <td style="padding-left:14px;vertical-align:middle;">
+                  <p style="margin:0;color:rgba(255,255,255,.82);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;">Nouvelle demande de contact</p>
+                  <h1 style="margin:3px 0 0;color:#ffffff;font-size:22px;font-weight:800;letter-spacing:-.3px;">{{site_name}}</h1>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:32px 36px 8px;">
+            <p style="margin:0 0 26px;color:#5b6472;font-size:15px;line-height:1.65;">
+              Bonjour, vous avez reçu une nouvelle demande via le formulaire de votre site. Voici les coordonnées&nbsp;:
+            </p>
+
+            <!-- Coordonnées -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #edf0f4;border-radius:10px;overflow:hidden;">
+              <tr>
+                <td style="padding:14px 20px;border-bottom:1px solid #f0f2f6;">
+                  <span style="color:#9aa3b2;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;">👤&nbsp; Nom</span><br>
+                  <span style="color:#1f2937;font-size:16px;font-weight:700;">{{from_name}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:14px 20px;border-bottom:1px solid #f0f2f6;">
+                  <span style="color:#9aa3b2;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;">✉️&nbsp; Email</span><br>
+                  <a href="mailto:{{from_email}}" style="color:{{brand_color}};font-size:16px;font-weight:700;text-decoration:none;">{{from_email}}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:14px 20px;">
+                  <span style="color:#9aa3b2;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;">📞&nbsp; Téléphone</span><br>
+                  <a href="tel:{{phone}}" style="color:{{brand_color}};font-size:16px;font-weight:700;text-decoration:none;">{{phone}}</a>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Message -->
+            <p style="margin:26px 0 8px;color:#9aa3b2;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;">💬&nbsp; Message</p>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f9fc;border-left:4px solid {{brand_color}};border-radius:0 8px 8px 0;">
+              <tr><td style="padding:16px 20px;">
+                <p style="margin:0;color:#374151;font-size:15px;line-height:1.7;white-space:pre-line;">{{message}}</p>
+              </td></tr>
+            </table>
+
+            <!-- CTA -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:30px 0 8px;">
+              <tr><td align="center">
+                <a href="mailto:{{from_email}}" style="display:inline-block;background:{{brand_color}};color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;padding:14px 34px;border-radius:8px;">Répondre à {{from_name}}</a>
+              </td></tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="padding:22px 36px 30px;text-align:center;">
+            <p style="margin:0;color:#aab2c0;font-size:12px;line-height:1.6;">
+              Envoyé automatiquement depuis le formulaire de <strong style="color:#7b8494;">{{site_name}}</strong>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+      <p style="margin:16px 0 0;color:#c3cad6;font-size:11px;">Propulsé par GetYourSite ⚡</p>
+    </td>
+  </tr>
+</table>

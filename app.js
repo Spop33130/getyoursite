@@ -717,13 +717,15 @@ function initContactForm(c) {
 
     try {
       await emailjs.send(ejs.service_id, ejs.template_id, {
-        site_name:  c.siteName,
-        to_email:   c.contact?.form_email || c.contact?.email || '',
-        from_name:  name,
-        from_email: email,
-        reply_to:   email,
-        phone:      phone || '—',
-        message:    message
+        site_name:   c.siteName,
+        to_email:    c.contact?.form_email || c.contact?.email || '',
+        from_name:   name,
+        from_email:  email,
+        reply_to:    email,
+        phone:       phone || '—',
+        message:     message,
+        brand_color: c.colors?.primary   || '#2C3E50',
+        brand_dark:  c.colors?.secondary || '#1a1a2e'
       });
 
       notify('Message envoyé ! Nous vous répondrons dans les plus brefs délais.', 'success');
