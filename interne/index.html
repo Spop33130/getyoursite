@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GetYourSite — Espace interne</title>
-  <script>(function(){if(!sessionStorage.getItem('gys_auth')){sessionStorage.setItem('gys_redirect',location.href);location.replace('/hub/login/');}})();</script>
+  <script>(function(){if(!localStorage.getItem('gys_auth')){sessionStorage.setItem('gys_redirect',location.href);location.replace('/hub/login/');}})();</script>
   
   <link rel="stylesheet" href="/vendor/fonts/outfit.css">
   <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
@@ -213,7 +213,7 @@
 <div class="wrapper">
 
   <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
-    <a href="#" onclick="sessionStorage.removeItem('gys_auth');location.replace('/hub/login/');return false;"
+    <a href="#" onclick="localStorage.removeItem('gys_auth');location.replace('/hub/login/');return false;"
        style="display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:var(--muted);opacity:.55;text-decoration:none;transition:opacity .15s;"
        onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='.55'">
       <i class="fas fa-sign-out-alt"></i> Déconnexion

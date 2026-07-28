@@ -133,7 +133,7 @@
   const TOKEN_KEY = 'gys_auth';
   const REDIRECT  = sessionStorage.getItem('gys_redirect') || '/interne/';
 
-  if (sessionStorage.getItem(TOKEN_KEY)) {
+  if (localStorage.getItem(TOKEN_KEY)) {
     window.location.replace(REDIRECT);
   }
 
@@ -141,7 +141,7 @@
     e.preventDefault();
     const input = document.getElementById('pwd');
     if (input.value === PASSWORD) {
-      sessionStorage.setItem(TOKEN_KEY, '1');
+      localStorage.setItem(TOKEN_KEY, '1');
       sessionStorage.removeItem('gys_redirect');
       window.location.replace(REDIRECT);
     } else {
