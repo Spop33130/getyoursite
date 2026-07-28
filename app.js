@@ -718,8 +718,10 @@ function initContactForm(c) {
     try {
       await emailjs.send(ejs.service_id, ejs.template_id, {
         site_name:  c.siteName,
+        to_email:   c.contact?.form_email || c.contact?.email || '',
         from_name:  name,
         from_email: email,
+        reply_to:   email,
         phone:      phone || '—',
         message:    message
       });
