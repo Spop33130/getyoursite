@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function init(c) {
   applyColors(c.colors || {});
+  applyTheme(c.theme);
   applyContent(c);
   applySEO(c);
   renderStats(c.about?.stats || []);
@@ -43,6 +44,14 @@ function init(c) {
 function applyColors({ primary = '#E74C3C', secondary = '#2C3E50' }) {
   document.documentElement.style.setProperty('--brand-primary',   primary);
   document.documentElement.style.setProperty('--brand-secondary', secondary);
+}
+
+// Thème forcé : "dark" | "light" (sinon suit le mode de l'appareil).
+// Ne retire jamais un data-theme déjà posé dans le HTML (anti-flash).
+function applyTheme(theme) {
+  if (theme === 'dark' || theme === 'light') {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
 }
 
 // ============================================

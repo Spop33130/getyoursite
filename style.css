@@ -82,6 +82,24 @@
   }
 }
 
+/* Thème forcé via config ("theme": "dark" | "light") — prioritaire sur le mode de l'appareil */
+:root[data-theme="dark"] {
+  --color-bg:      #0f1117;
+  --color-bg-alt:  #161b22;
+  --color-text:    #f0f6fc;
+  --color-muted:   #8b949e;
+  --color-border:  #30363d;
+  --color-surface: #161b22;
+}
+:root[data-theme="light"] {
+  --color-bg:      #ffffff;
+  --color-bg-alt:  #f8f9fa;
+  --color-text:    #111827;
+  --color-muted:   #6b7280;
+  --color-border:  #e5e7eb;
+  --color-surface: #ffffff;
+}
+
 /* ============================================
    RESET & BASE
    ============================================ */
@@ -273,6 +291,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 @media (prefers-color-scheme: dark) {
   .header { background: rgba(15,17,23,.96); }
 }
+:root[data-theme="dark"]  .header { background: rgba(15,17,23,.96); }
+:root[data-theme="light"] .header { background: rgba(255,255,255,.96); }
 
 .header.scrolled {
   box-shadow: var(--shadow-sm);
