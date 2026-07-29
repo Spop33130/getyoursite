@@ -71,6 +71,13 @@ cp -R "$TEMPLATE_DIR/mentions" "$DEST/mentions"
 # Config client
 cp "$CONFIG" "$DEST/config.json"
 
+# Thème : inscrit data-theme dans index.html (anti-flash), depuis le config (défaut dark)
+THEME="$(python3 -c "import json;print(json.load(open('$DEST/config.json')).get('theme') or 'dark')" 2>/dev/null || echo dark)"
+if [[ "$THEME" == "dark" || "$THEME" == "light" ]]; then
+  sed -i.bak "s#<html lang=\"fr\">#<html lang=\"fr\" data-theme=\"$THEME\">#" "$DEST/index.html" && rm -f "$DEST/index.html.bak"
+  echo "  thème : $THEME"
+fi
+
 # Images : fournies, sinon placeholders
 if [[ -n "$IMAGES" && "$IMAGES" != "-" && -d "$IMAGES" ]]; then
   cp "$IMAGES"/hero.jpg "$IMAGES"/about.jpg "$IMAGES"/gallery-*.jpg "$DEST/images/" 2>/dev/null || true
