@@ -60,6 +60,16 @@ function applyTheme(theme) {
 
 function applyContent(c) {
   setText('site-name',          c.siteName);
+
+  // Logo image dans la navbar (remplace le nom texte) si un logo est fourni
+  if (c.images?.logo) {
+    const brand = document.querySelector('.navbar-brand');
+    if (brand) {
+      const src = c.images.logo.startsWith('http') ? c.images.logo : `images/${c.images.logo}`;
+      brand.innerHTML = `<img src="${src}" alt="${c.siteName || ''}" class="navbar-logo">`;
+    }
+  }
+
   setText('hero-badge',         c.badge || c.slogan);
   setText('hero-title',         c.hero?.title);
   setText('hero-subtitle',      c.hero?.subtitle);
