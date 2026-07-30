@@ -316,8 +316,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   flex-shrink: 0;
 }
 .navbar-brand:hover { color: var(--brand-primary); }
-.navbar-logo { height: 50px; width: auto; display: block; border-radius: 8px; }
-@media (max-width: 640px) { .navbar-logo { height: 42px; } }
+.navbar-logo { height: 72px; width: auto; display: block; border-radius: 8px; }
+@media (max-width: 640px) { .navbar-logo { height: 54px; } }
 
 .navbar-menu {
   display: flex;
