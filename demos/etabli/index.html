@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L’Établi — Ateliers du web</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+  :root {
+    --paper:#E9E3D4; --card:#F3EFE3; --ink:#201C16; --ink-soft:#5B5445;
+    --blue:#23485D; --blue-2:#2E5A72; --brass:#AE7A2E; --wood:#7B4F2C;
+    --line:#CBC3AE; --on-blue:#F3EFE3;
+    --maxw:1140px;
+    --font-display:'Helvetica Neue',Helvetica,Arial,system-ui,sans-serif;
+    --font-body:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --font-mono:ui-monospace,'SF Mono','Roboto Mono',Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#15130E; --card:#201D16; --ink:#EBE5D5; --ink-soft:#A69D88;
+      --blue:#6BA0BC; --blue-2:#84B4CD; --brass:#CF9F4F; --wood:#9A6B3E;
+      --line:#332F28; --on-blue:#12100C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#15130E; --card:#201D16; --ink:#EBE5D5; --ink-soft:#A69D88;
+    --blue:#6BA0BC; --blue-2:#84B4CD; --brass:#CF9F4F; --wood:#9A6B3E;
+    --line:#332F28; --on-blue:#12100C;
+  }
+  :root[data-theme="light"]{
+    --paper:#E9E3D4; --card:#F3EFE3; --ink:#201C16; --ink-soft:#5B5445;
+    --blue:#23485D; --blue-2:#2E5A72; --brass:#AE7A2E; --wood:#7B4F2C;
+    --line:#CBC3AE; --on-blue:#F3EFE3;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body); background:var(--paper); color:var(--ink);
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    background-image:radial-gradient(var(--line) 0.6px, transparent 0.6px);
+    background-size:22px 22px; background-position:-11px -11px;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  a{color:inherit; text-decoration:none;}
+
+  /* labels / mono */
+  .eyebrow{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ink-soft);}
+  .num{font-family:var(--font-mono); color:var(--blue); font-weight:700;}
+
+  h1,h2,h3{font-family:var(--font-display); font-weight:800; letter-spacing:-.02em;
+    line-height:1.03; text-wrap:balance; color:var(--ink);}
+  h2{font-size:clamp(1.7rem,3.6vw,2.7rem);}
+  h3{font-size:1.06rem; letter-spacing:-.01em; line-height:1.2;}
+  p{max-width:60ch;}
+
+  /* ── header ── */
+  header{position:sticky; top:0; z-index:50; background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .bar{display:flex; align-items:center; justify-content:space-between; height:70px; gap:20px;}
+  .brand{display:flex; align-items:center; gap:11px;}
+  .vise{width:30px;height:30px;flex-shrink:0;}
+  .logo{font-family:var(--font-display); font-weight:800; font-size:1.24rem;
+    letter-spacing:.02em; text-transform:uppercase;}
+  .logo b{color:var(--blue);}
+  .nav{display:flex; align-items:center; gap:28px;}
+  .nav a{font-size:.9rem; color:var(--ink-soft); transition:color .15s;}
+  .nav a:hover{color:var(--ink);}
+  .btn{display:inline-flex; align-items:center; gap:.5rem; font-weight:700; font-size:.9rem;
+    padding:.62rem 1.15rem; border-radius:3px; cursor:pointer; border:1.5px solid transparent;
+    transition:transform .12s, background .15s, border-color .15s; white-space:nowrap;}
+  .btn--fill{background:var(--blue); color:var(--on-blue);}
+  .btn--fill:hover{transform:translateY(-2px); background:var(--blue-2);}
+  .btn--line{background:transparent; color:var(--ink); border-color:var(--ink);}
+  .btn--line:hover{transform:translateY(-2px); border-color:var(--blue); color:var(--blue);}
+  @media(max-width:760px){ .nav a:not(.btn){display:none;} .bar{height:62px;} }
+
+  /* ── hero ── */
+  .hero{padding:clamp(3.2rem,8vw,6rem) 0 clamp(2.6rem,6vw,4rem);}
+  .hero .eyebrow{display:block; margin-bottom:1.4rem;}
+  .hero h1{font-size:clamp(2.5rem,6.4vw,4.6rem); max-width:16ch;}
+  .hero h1 .accent{color:var(--blue);}
+  .hero-sub{font-size:1.14rem; color:var(--ink-soft); margin-top:1.5rem; max-width:52ch;}
+  .cta-row{display:flex; flex-wrap:wrap; gap:.8rem; margin-top:2rem;}
+  .measure{display:flex; align-items:center; gap:.55rem; color:var(--blue); margin-top:2.4rem; max-width:340px;}
+  .measure .tick{width:1.5px;height:13px;background:currentColor;flex-shrink:0;}
+  .measure .rule{flex:1;height:1.5px;background:currentColor;}
+  .measure .lbl{font-family:var(--font-mono); font-size:.7rem; letter-spacing:.18em;
+    text-transform:uppercase; white-space:nowrap;}
+  .spec{display:flex; flex-wrap:wrap; gap:.5rem 1.4rem; margin-top:1.6rem;
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft);}
+  .spec span{display:inline-flex; align-items:center; gap:.5rem;}
+  .spec span::before{content:""; width:6px;height:6px;background:var(--brass); transform:rotate(45deg);}
+
+  /* trust strip */
+  .trust{border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--card);}
+  .trust .wrap{display:flex; align-items:center; gap:24px 34px; flex-wrap:wrap; padding-top:16px; padding-bottom:16px;}
+  .trust .k{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft);}
+  .trust .o{font-family:var(--font-display); font-weight:800; font-size:1.05rem;}
+  .trust .o small{font-family:var(--font-body); font-weight:400; color:var(--ink-soft); font-size:.8rem; display:block; letter-spacing:0; text-transform:none;}
+
+  /* ── section frame ── */
+  section{padding:clamp(3.2rem,7vw,5.4rem) 0;}
+  .sec-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:2.4rem; flex-wrap:wrap;}
+  .sec-head .num{font-size:.95rem;}
+  .sec-head .lead{color:var(--ink-soft); font-size:1.05rem; margin-left:auto; max-width:40ch;}
+
+  /* ruler divider */
+  .ruler{height:20px; border-top:1px solid var(--line);
+    background:
+      repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 11px) top/100% 7px no-repeat,
+      repeating-linear-gradient(90deg, var(--line) 0 1.4px, transparent 1.4px 55px) top/100% 13px no-repeat;}
+
+  /* cards grid */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:16px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:5px; padding:1.4rem 1.5rem;
+    display:flex; flex-direction:column; gap:.55rem; position:relative; transition:transform .18s, border-color .18s;}
+  .card:hover{transform:translateY(-3px); border-color:var(--blue);}
+  .card .tag{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--blue); text-transform:uppercase;}
+  .card p{font-size:.92rem; color:var(--ink-soft);}
+  .card .ic{font-size:1.4rem; margin-bottom:.2rem;}
+
+  /* process */
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  @media(max-width:820px){ .steps{grid-template-columns:1fr 1fr;} }
+  @media(max-width:480px){ .steps{grid-template-columns:1fr;} }
+  .step{position:relative; padding-top:1.6rem; border-top:2px solid var(--blue);}
+  .step .n{position:absolute; top:-.95rem; left:0; background:var(--paper); padding-right:.6rem;
+    font-family:var(--font-mono); font-weight:700; color:var(--blue); font-size:.9rem;}
+  .step h3{margin-bottom:.4rem;}
+  .step p{font-size:.9rem; color:var(--ink-soft);}
+
+  /* ouvrages */
+  .works{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:680px){ .works{grid-template-columns:1fr;} }
+  .work{border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--card);
+    transition:transform .18s, border-color .18s;}
+  .work:hover{transform:translateY(-3px); border-color:var(--blue);}
+  .work .top{height:150px; display:flex; align-items:flex-end; padding:16px; position:relative;}
+  .work .top.mey{background:linear-gradient(150deg,#14212b,#25506a);}
+  .work .top.mama{background:linear-gradient(150deg,#2a1a12,#4e3222);}
+  .work .top .chip{font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase;
+    color:#fff; background:rgba(0,0,0,.35); padding:.28rem .6rem; border-radius:3px; backdrop-filter:blur(3px);}
+  .work .bot{padding:1.1rem 1.4rem; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .work .bot h3{margin:0;}
+  .work .bot small{color:var(--ink-soft); font-size:.82rem; display:block; font-family:var(--font-body); font-weight:400; letter-spacing:0;}
+  .work .go{font-family:var(--font-mono); font-size:.72rem; color:var(--blue); white-space:nowrap;}
+
+  /* values */
+  .vals{display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--line);
+    border:1px solid var(--line); border-radius:6px; overflow:hidden;}
+  @media(max-width:560px){ .vals{grid-template-columns:1fr;} }
+  .val{background:var(--card); padding:1.6rem 1.7rem; display:flex; flex-direction:column; gap:.4rem;}
+  .val .h{display:flex; align-items:center; gap:.6rem;}
+  .val .h .m{font-family:var(--font-mono); color:var(--brass); font-size:.85rem;}
+  .val p{font-size:.92rem; color:var(--ink-soft);}
+
+  /* tarif / devis */
+  .devis{background:var(--card); border:1px solid var(--ink); border-radius:6px; overflow:hidden; max-width:680px; margin:0 auto;}
+  .devis .dh{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:1rem 1.5rem;
+    border-bottom:1px solid var(--line); background:var(--blue); color:var(--on-blue);}
+  .devis .dh .t{font-family:var(--font-mono); font-size:.74rem; letter-spacing:.14em; text-transform:uppercase;}
+  .devis .row{display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:1rem 1.5rem; border-bottom:1px dashed var(--line);}
+  .devis .row .d{max-width:44ch;}
+  .devis .row .d b{font-family:var(--font-display); font-size:1.05rem;}
+  .devis .row .d p{font-size:.86rem; color:var(--ink-soft); margin-top:.15rem;}
+  .devis .row .price{font-family:var(--font-display); font-weight:800; font-size:1.7rem; white-space:nowrap;
+    font-variant-numeric:tabular-nums;}
+  .devis .row .price small{font-size:.9rem; font-weight:400; color:var(--ink-soft);}
+  .devis .foot{padding:1rem 1.5rem; font-family:var(--font-mono); font-size:.74rem; letter-spacing:.06em;
+    color:var(--ink-soft); text-transform:uppercase; text-align:center;}
+
+  /* quote */
+  .quote{max-width:760px; margin:0 auto; text-align:center;}
+  .quote .stars{color:var(--brass); letter-spacing:.2em; margin-bottom:1rem;}
+  .quote blockquote{font-family:var(--font-display); font-weight:800; font-size:clamp(1.3rem,3vw,1.9rem);
+    line-height:1.25; letter-spacing:-.01em;}
+  .quote cite{display:block; margin-top:1.2rem; font-style:normal; color:var(--ink-soft); font-size:.92rem;}
+  .quote cite b{color:var(--ink); font-style:normal;}
+
+  /* final cta */
+  .final{background:var(--blue); color:var(--on-blue); border-radius:8px; text-align:center;
+    padding:clamp(2.6rem,6vw,4rem) 24px;}
+  .final h2{color:var(--on-blue);}
+  .final p{color:color-mix(in srgb,var(--on-blue) 78%,transparent); margin:1rem auto 1.8rem; font-size:1.1rem;}
+  .final .btn--fill{background:var(--on-blue); color:var(--blue);}
+  .final .btn--fill:hover{background:var(--paper);}
+
+  footer{border-top:1px solid var(--line); padding:2.4rem 0 3rem;}
+  footer .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  footer .fnote{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.08em; color:var(--ink-soft); text-transform:uppercase;}
+  .concept{display:inline-flex; align-items:center; gap:.5rem; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); border:1px dashed var(--line);
+    padding:.3rem .7rem; border-radius:3px;}
+
+  /* reveal */
+  .rv{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1);}
+  .rv.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .rv{opacity:1; transform:none; transition:none;}
+    .btn,.card,.work{transition:none;}
+    html{scroll-behavior:auto;}
+  }
+  :focus-visible{outline:2.5px solid var(--blue); outline-offset:3px; border-radius:2px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="L'Établi — accueil">
+      <svg class="vise" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect x="3" y="19" width="26" height="3" rx="1" fill="var(--wood)"/>
+        <rect x="5" y="22" width="3" height="7" fill="var(--wood)"/>
+        <rect x="24" y="22" width="3" height="7" fill="var(--wood)"/>
+        <rect x="9" y="9" width="6" height="10" rx="1" fill="var(--blue)"/>
+        <rect x="17" y="11" width="6" height="8" rx="1" fill="var(--blue)"/>
+        <rect x="7" y="13" width="18" height="2.4" rx="1.2" fill="var(--brass)"/>
+        <circle cx="6" cy="14.2" r="2.3" fill="var(--brass)"/>
+      </svg>
+      <span class="logo">L'<b>Établi</b></span>
+    </a>
+    <nav class="nav">
+      <a href="#fabrique">Ce qu'on fabrique</a>
+      <a href="#methode">La méthode</a>
+      <a href="#ouvrages">Nos ouvrages</a>
+      <a href="#tarif">Tarif</a>
+      <a class="btn btn--fill" href="#rdv">Prendre RDV</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <span class="eyebrow rv">Atelier web · Artisans &amp; commerçants · Bordeaux &amp; Sud-Ouest</span>
+      <h1 class="rv">Votre savoir-faire mérite une <span class="accent">belle vitrine.</span></h1>
+      <p class="hero-sub rv">L'Établi fabrique votre site internet comme on monte un meuble : sur-mesure, du solide, clé en main. Vous faites votre métier — nous, on le met en ligne.</p>
+      <div class="measure rv" aria-hidden="true">
+        <span class="tick"></span><span class="rule"></span>
+        <span class="lbl">taillé à vos mesures</span>
+        <span class="rule"></span><span class="tick"></span>
+      </div>
+      <div class="cta-row rv">
+        <a class="btn btn--fill" href="#rdv">Discutons de votre projet</a>
+        <a class="btn btn--line" href="#ouvrages">Voir nos ouvrages</a>
+      </div>
+      <div class="spec rv">
+        <span>Fait main</span><span>Sur-mesure</span><span>Clé en main</span><span>En ligne en 48 h</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST -->
+  <div class="trust rv">
+    <div class="wrap">
+      <span class="k">Déjà sortis de l'atelier</span>
+      <span class="o">Meynard Couverture<small>Couvreur-zingueur · Ambarès</small></span>
+      <span class="o">Mama Louve<small>Accompagnement périnatal · Bordeaux</small></span>
+    </div>
+  </div>
+
+  <!-- N°01 CE QU'ON FABRIQUE -->
+  <section id="fabrique">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="num">N° 01</span>
+        <h2>Ce qu'on fabrique</h2>
+        <span class="lead">On ne vend pas « du web ». On monte des pièces utiles, ajustées à votre métier.</span>
+      </div>
+      <div class="grid">
+        <div class="card rv"><span class="ic">🪚</span><span class="tag">Pièce maîtresse</span><h3>Site vitrine sur-mesure</h3><p>Vos couleurs, vos vraies photos, vos mots. Rapide, impeccable sur mobile, pensé pour convertir.</p></div>
+        <div class="card rv"><span class="ic">📍</span><span class="tag">Réglage</span><h3>Fiche Google au carré</h3><p>On règle et on optimise votre fiche pour qu'on vous trouve — avis, photos, horaires, itinéraire.</p></div>
+        <div class="card rv"><span class="ic">🔩</span><span class="tag">Fondations</span><h3>Domaine &amp; hébergement</h3><p>On pose le nom de domaine et l'hébergement. Vous n'avez rien à gérer, rien à renouveler.</p></div>
+        <div class="card rv"><span class="ic">✉️</span><span class="tag">Finition</span><h3>Formulaire de contact</h3><p>Les demandes tombent directement dans votre boîte mail. Zéro spam, zéro plateforme.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ruler rv" aria-hidden="true"></div>
+
+  <!-- N°02 METHODE -->
+  <section id="methode">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="num">N° 02</span>
+        <h2>La méthode</h2>
+        <span class="lead">Comme à l'atelier : on discute, on fabrique, on pose. Vous suivez, sans jargon.</span>
+      </div>
+      <div class="steps">
+        <div class="step rv"><span class="n">01</span><h3>On discute</h3><p>On vient vous voir, on comprend votre métier. Une fiche simple — pas un cahier des charges de 40 pages.</p></div>
+        <div class="step rv"><span class="n">02</span><h3>On fabrique</h3><p>Votre site prend forme : vos couleurs, vos vraies photos de chantier, vos mots.</p></div>
+        <div class="step rv"><span class="n">03</span><h3>On pose</h3><p>Mise en ligne, on branche votre nom de domaine, on teste sur mobile. Tout est vérifié.</p></div>
+        <div class="step rv"><span class="n">04</span><h3>On assure</h3><p>On l'entretient et on le fait évoluer. Un changement d'horaire, une photo ? Un message suffit.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- N°03 OUVRAGES -->
+  <section id="ouvrages">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="num">N° 03</span>
+        <h2>Nos ouvrages</h2>
+        <span class="lead">Des vrais pros du coin, déjà en ligne. Chaque site est monté sur-mesure.</span>
+      </div>
+      <div class="works">
+        <a class="work rv" href="#rdv">
+          <div class="top mey"><span class="chip">Couvreur-zingueur</span></div>
+          <div class="bot"><h3>Meynard Couverture<small>Toiture, zinguerie &amp; démoussage · Ambarès</small></h3><span class="go">Voir →</span></div>
+        </a>
+        <a class="work rv" href="#rdv">
+          <div class="top mama"><span class="chip">Accompagnement périnatal</span></div>
+          <div class="bot"><h3>Mama Louve<small>Prénatal, naissance &amp; postnatal · Bordeaux</small></h3><span class="go">Voir →</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="ruler rv" aria-hidden="true"></div>
+
+  <!-- N°04 POURQUOI -->
+  <section id="pourquoi">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="num">N° 04</span>
+        <h2>Pourquoi L'Établi</h2>
+      </div>
+      <div class="vals">
+        <div class="val rv"><div class="h"><span class="m">a.</span><h3>On parle votre langue</h3></div><p>Zéro jargon technique. On vous explique tout simplement, et on décide ensemble.</p></div>
+        <div class="val rv"><div class="h"><span class="m">b.</span><h3>Du solide</h3></div><p>Des sites rapides, nickel sur mobile, faits pour durer. Pas de bricolage.</p></div>
+        <div class="val rv"><div class="h"><span class="m">c.</span><h3>Sur-mesure</h3></div><p>Pas de template au rabais. Chaque site est monté pour vous, à la main.</p></div>
+        <div class="val rv"><div class="h"><span class="m">d.</span><h3>D'ici</h3></div><p>On connaît les artisans et commerçants du coin. On se déplace, on se serre la main.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- N°05 TARIF -->
+  <section id="tarif">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="num">N° 05</span>
+        <h2>Le tarif, clair</h2>
+        <span class="lead">Un devis lisible, comme chez l'artisan. Pas de mauvaise surprise.</span>
+      </div>
+      <div class="devis rv">
+        <div class="dh"><span class="t">Devis · L'Établi</span><span class="t">Offre unique</span></div>
+        <div class="row">
+          <div class="d"><b>Le site, clé en main</b><p>Site sur-mesure + nom de domaine + hébergement 1 an + mise en ligne &amp; tests + 6 mois d'entretien offerts.</p></div>
+          <div class="price">590<small> €</small></div>
+        </div>
+        <div class="row">
+          <div class="d"><b>L'entretien, ensuite</b><p>Modifications illimitées, hébergement &amp; domaine couverts. Sans engagement.</p></div>
+          <div class="price">30<small> €/mois</small></div>
+        </div>
+        <div class="foot">Déplacement &amp; devis gratuits · Sud-Ouest</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section>
+    <div class="wrap">
+      <div class="quote rv">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <blockquote>« Ils ont mis mon métier en valeur, et c'était simple du début à la fin. Un site propre, à mon image. »</blockquote>
+        <cite><b>Nathan Meynard</b> — Meynard Couverture, Ambarès-et-Lagrave</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="rdv">
+    <div class="wrap">
+      <div class="final rv">
+        <h2>Prêt à passer en ligne ?</h2>
+        <p>Un café, votre métier, et on s'occupe du reste.</p>
+        <a class="btn btn--fill" href="#rdv">Prendre rendez-vous</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="fnote">L'Établi — Ateliers du web · Bordeaux &amp; Sud-Ouest · © 2026</span>
+    <span class="concept">◹ Concept de marque — démo</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var els = document.querySelectorAll('.rv');
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches){
+      els.forEach(function(e){e.classList.add('in');}); return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e,i){
+      // small stagger for groups in view on load
+      e.style.transitionDelay = Math.min(i%6*40,200)+'ms';
+      io.observe(e);
+    });
+  })();
+</script>
+
+</body>
+</html>
