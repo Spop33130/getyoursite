@@ -1,0 +1,51 @@
+/* ==========================================================================
+   AMBIANCE « SALON » — coiffure, esthétique, bien-être
+   Raffinée et aérée : peu de matière, beaucoup de blanc, lettres espacées,
+   ombres presque absentes. L'élégance vient du vide, pas de la décoration.
+   ========================================================================== */
+
+@import url('/vendor/fonts/manrope.css');
+
+:root {
+  --font: 'Outfit', system-ui, sans-serif;
+  --font-titre: 'Outfit', system-ui, sans-serif;
+
+  --radius-base: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #FAF8F7;
+  --color-border: #ECE7E5;
+}
+:root[data-theme="dark"] {
+  --color-bg: #0C0B0C;
+  --color-bg-alt: #141213;
+  --color-border: rgba(255,255,255,.09);
+}
+
+h1, h2, h3, .hero-title {
+  font-family: var(--font-titre);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+.hero-title { font-size: clamp(2.2rem, 5.6vw, 4.2rem); line-height: 1.08; font-weight: 300; }
+.navbar-brand { font-weight: 400; letter-spacing: .16em; text-transform: uppercase; font-size: .95rem; }
+
+/* les surtitres portent l'élégance : très espacés, très discrets */
+.section-label {
+  font-weight: 400;
+  letter-spacing: .3em;
+  font-size: .68rem;
+  color: var(--color-muted);
+}
+
+.service-card, .testimonial-card {
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+}
+.service-card:hover { border-color: var(--brand-primary); transform: none; box-shadow: none; }
+.service-icon { background: none; color: var(--brand-primary); font-size: 1.4rem; }
+
+.btn { border-radius: 0; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; }
+.hero-badge, .hero-tag { border-radius: 0; letter-spacing: .12em; text-transform: uppercase; font-size: .7rem; }

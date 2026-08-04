@@ -209,5 +209,6 @@
     "forme": "Auto-entrepreneur",
     "hebergeur_name": "Vercel Inc.",
     "hebergeur_address": "340 Pine Street Suite 701, San Francisco, CA 94104, USA"
-  }
+  },
+  "ambiance": "commerce"
 }

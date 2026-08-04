@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function init(c) {
+  applyAmbiance(c.ambiance);
   applyColors(c.colors || {});
   applyTheme(c.theme);
   applyContent(c);
@@ -35,6 +36,17 @@ function init(c) {
   renderMobileCTABar(c);
   renderOpenStatus(c);
   document.getElementById('footer-year').textContent = new Date().getFullYear();
+}
+
+// Ambiance de métier : une feuille de style posée par-dessus le socle, qui
+// redéfinit polices, angles et matières. Un couvreur et un salon de coiffure
+// ne doivent pas avoir la même tête — c'est ce fichier qui fait la différence.
+// Valeurs : artisan | restaurant | salon | commerce. Absent = socle seul.
+function applyAmbiance(nom) {
+  var connues = ['artisan', 'restaurant', 'salon', 'commerce'];
+  var lien = document.getElementById('theme-metier');
+  if (!lien || connues.indexOf(nom) === -1) return;
+  lien.href = '/themes/' + nom + '.css';
 }
 
 // ============================================

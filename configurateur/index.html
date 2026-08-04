@@ -171,7 +171,7 @@ var etape = 'identite';
 function neuf() {
   return {
     siteName: '', slogan: '', badge: '', description: '',
-    theme: 'light',
+    theme: 'light', ambiance: '',
     colors: { primary: '#2E86AB', secondary: '#1a5a7a' },
     hero: { title: '', subtitle: '', cta_primary: 'Demander un devis', cta_secondary: 'Voir nos réalisations', tags: [] },
     about: { title: 'À propos', description: '', stats: [] },
@@ -323,9 +323,17 @@ function vueApparence() {
     '<div class="note">Si le client n’a pas de couleur particulière, gardez celles proposées : elles fonctionnent partout.</div>' +
     couleur('colors.primary', 'Couleur principale', 'Utilisée pour les boutons, les liens et les titres mis en avant.') +
     couleur('colors.secondary', 'Couleur secondaire', 'Utilisée en complément, sur les fonds et les survols.') +
-    champ({ chemin: 'theme', label: 'Ambiance', type: 'choix',
-            options: [['light', 'Claire (fond blanc)'], ['dark', 'Sombre (fond foncé)']],
-            aide: 'La claire convient à presque tous les métiers. La sombre va bien aux salons, restaurants et métiers de nuit.' });
+    champ({ chemin: 'theme', label: 'Fond du site', type: 'choix',
+            options: [['light', 'Clair (fond blanc)'], ['dark', 'Sombre (fond foncé)']],
+            aide: 'Le clair convient à presque tous les métiers. Le sombre va bien aux salons, restaurants et métiers de nuit.' }) +
+    champ({ chemin: 'ambiance', label: 'Style selon le métier', type: 'choix',
+            options: [['', 'Neutre — convient à tout'],
+                      ['artisan', 'Artisan — bâtiment, mécanique, métiers manuels'],
+                      ['restaurant', 'Restaurant — bistrot, traiteur, cave'],
+                      ['salon', 'Salon — coiffure, esthétique, bien-être'],
+                      ['commerce', 'Commerce — épicerie, boutique, métiers de bouche']],
+            aide: 'Change les polices et les formes pour coller au métier : un couvreur n’a pas la même allure qu’un salon de coiffure. ' +
+                  'C’est ce qui évite que tous les sites se ressemblent.' });
 }
 
 function vueAccueil() {
@@ -662,6 +670,7 @@ function exporter() {
   // nettoyage : les champs de travail internes ne partent pas dans le fichier
   (propre.pages || []).forEach(function (p) { delete p._navPrec; });
   if (!(propre.pages || []).length) delete propre.pages;
+  if (!propre.ambiance) delete propre.ambiance;
 
   var blob = new Blob([JSON.stringify(propre, null, 2)], { type: 'application/json;charset=utf-8' });
   var a = document.createElement('a');

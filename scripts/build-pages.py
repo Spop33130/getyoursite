@@ -190,6 +190,10 @@ def render_page(cfg, page, pages, base=""):
     contenu = "\n        ".join(parts)
 
     # -- données structurées : c'est ce qui fait remonter le métier + la ville
+    amb = cfg.get("ambiance")
+    ambiance_lien = ('<link rel="stylesheet" href="/themes/' + amb + '.css">') \
+        if amb in ("artisan", "restaurant", "salon", "commerce") else ""
+
     seo = cfg.get("seo", {}) or {}
     service_ld = {
         "@context": "https://schema.org",
@@ -247,6 +251,7 @@ def render_page(cfg, page, pages, base=""):
 <link rel="stylesheet" href="/vendor/fonts/outfit.css">
 <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
 <link rel="stylesheet" href="/style.css">
+{ambiance_lien}
 <style>:root{{--brand-primary:{e(colors.get('primary','#2E86AB'))};--brand-secondary:{e(colors.get('secondary','#1a5a7a'))};}}</style>
 <script type="application/ld+json">{json.dumps(service_ld, ensure_ascii=False)}</script>
 {faq_ld}
