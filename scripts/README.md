@@ -8,8 +8,9 @@ fiche client (`/onboarding`).
 
 ## Workflow complet
 
-1. **Remplir la fiche** sur `/onboarding` avec le client, puis **Valider** (enregistré
-   en base) et **télécharger le config.json** (bouton « config.json »).
+1. **Remplir le config** dans **`/configurateur/`** (interface sans jargon, voir
+   [GUIDE.md](../GUIDE.md)), puis **Enregistrer le fichier**.
+   `/onboarding` reste disponible pour la prise d'informations commerciale.
    > ⚠ Ne pas ouvrir/ré-enregistrer le `.json` dans Notepad ou Excel : ça casse les
    > accents (mojibake). Le fichier brut est déjà correct. Le script refuse un fichier abîmé.
 
@@ -32,8 +33,27 @@ fiche client (`/onboarding`).
    ```
 
 ## Ce que contient un site généré
-`index.html` `app.js` `style.css` `favicon.svg` `vendor/` `mentions/`
-`robots.txt` `sitemap.xml` `vercel.json` + le `config.json` du client + `images/`.
+`index.html` `app.js` `page.js` `style.css` `favicon.svg` `vendor/` `mentions/`
+`robots.txt` `sitemap.xml` `vercel.json` + le `config.json` du client + `images/`
++ un dossier par page supplémentaire.
+
+## Sites multi-pages (forfait cinq pages)
+
+Si le config contient une clé `pages`, `new-site.sh` génère une page par entrée.
+Ces pages sont **pré-générées en HTML** : leur contenu est écrit dans le fichier,
+pas injecté par JavaScript comme sur la page d'accueil. C'est délibéré — elles
+existent pour être indexées par Google, qui ne doit rien avoir à exécuter pour
+les lire. Chacune porte son `<title>`, sa description, son JSON-LD `Service`
+(avec les villes couvertes) et son `FAQPage`.
+
+Après toute modification du config d'un site existant :
+
+```bash
+python3 ~/Developer/getyoursite/scripts/build-pages.py ~/Developer/<slug>
+```
+
+Le script est idempotent : il réécrit les pages, la navigation de toutes les
+pages et le `sitemap.xml`.
 
 Tout est piloté par `config.json` : pour modifier le site plus tard, on édite ce
 seul fichier (ou on regénère la fiche). Les 8 images à fournir :
