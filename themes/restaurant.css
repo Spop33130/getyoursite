@@ -1,57 +1,70 @@
 /* ==========================================================================
    AMBIANCE « RESTAURANT » — bistrot, traiteur, cave
-   Chaleureuse et gourmande : serif à contraste pour les titres, italique
-   pour les accents, fond crème, arrondis généreux. On doit avoir faim.
+   Chaleureuse et gourmande : serif à contraste, accroche en italique,
+   crème le jour, espresso la nuit. On doit avoir faim.
    ========================================================================== */
-
 @import url('/vendor/fonts/fraunces.css');
 @import url('/vendor/fonts/manrope.css');
 
 :root {
   --font: 'Manrope', system-ui, sans-serif;
   --font-titre: 'Fraunces', Georgia, serif;
-
   --radius-base: 14px;
-  --radius-lg: 22px;
-  --radius-xl: 30px;
+  --radius-lg: 20px;
+  --radius-xl: 26px;
+}
 
-  --color-bg: #FFFDF9;
-  --color-bg-alt: #F6EFE4;
-  --color-border: #E6DBC9;
+/* clair (défaut) */
+:root {
+  --color-bg: #FFFCF7;
+  --color-bg-alt: #F7F0E4;
+  --color-surface: #FFFFFF;
+  --color-text: #241B12;
+  --color-muted: #6B5B4A;
+  --color-border: #E8DCC8;
+}
+
+/* mode sombre de l'appareil — sans ça, le texte clair du socle
+   se retrouve sur un fond clair : illisible */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #15100B;
+    --color-bg-alt: #1F1810;
+    --color-surface: #1F1810;
+    --color-text: #F7EFE3;
+    --color-muted: #B3A08A;
+    --color-border: #332818;
+}
+}
+
+/* thème forcé par le config, prioritaire sur l'appareil */
+:root[data-theme="light"] {
+  --color-bg: #FFFCF7;
+  --color-bg-alt: #F7F0E4;
+  --color-surface: #FFFFFF;
+  --color-text: #241B12;
+  --color-muted: #6B5B4A;
+  --color-border: #E8DCC8;
 }
 :root[data-theme="dark"] {
-  --color-bg: #14100C;
-  --color-bg-alt: #1D1712;
-  --color-border: rgba(255,255,255,.10);
+  --color-bg: #15100B;
+  --color-bg-alt: #1F1810;
+  --color-surface: #1F1810;
+  --color-text: #F7EFE3;
+  --color-muted: #B3A08A;
+  --color-border: #332818;
 }
 
-h1, h2, h3, .hero-title, .navbar-brand {
-  font-family: var(--font-titre);
-  font-weight: 600;
-  letter-spacing: -0.02em;
+.hero-title, h1, h2, h3, .navbar-brand {
+  font-family: var(--font-titre); font-weight: 600; letter-spacing: -.02em;
 }
 .hero-title { font-size: clamp(2.3rem, 6vw, 4.4rem); line-height: 1.03; }
-
-/* la phrase d'accroche en italique : c'est la voix de la maison */
-.hero-subtitle, .section-header p {
-  font-family: var(--font-titre);
-  font-style: italic;
-  font-weight: 400;
+.hero-subtitle, .section-header p, .testimonial-text {
+  font-family: var(--font-titre); font-style: italic; font-weight: 400;
 }
-
 .section-label {
-  font-family: var(--font-titre);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: .06em;
-  text-transform: none;
-  font-size: .95rem;
+  font-family: var(--font-titre); font-style: italic; font-weight: 400;
+  letter-spacing: .04em; text-transform: none; font-size: 1rem;
 }
-
-.service-card, .testimonial-card {
-  border: 1px solid var(--color-border);
-  box-shadow: 0 10px 30px -22px rgba(90,60,20,.45);
-}
-.testimonial-text { font-family: var(--font-titre); font-style: italic; font-weight: 400; }
 .btn { border-radius: 99px; font-weight: 600; }
 .hero-badge, .hero-tag { border-radius: 99px; }

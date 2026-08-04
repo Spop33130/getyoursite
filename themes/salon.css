@@ -1,51 +1,64 @@
 /* ==========================================================================
    AMBIANCE « SALON » — coiffure, esthétique, bien-être
-   Raffinée et aérée : peu de matière, beaucoup de blanc, lettres espacées,
-   ombres presque absentes. L'élégance vient du vide, pas de la décoration.
+   Douce et aérée : graisses fines, beaucoup d'air, angles arrondis.
+   L'élégance vient du vide et de la lumière, pas des arêtes.
    ========================================================================== */
-
 @import url('/vendor/fonts/manrope.css');
 
 :root {
   --font: 'Outfit', system-ui, sans-serif;
   --font-titre: 'Outfit', system-ui, sans-serif;
+  --radius-sm: 8px;
+  --radius-base: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
 
-  --radius-base: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
+/* clair (défaut) */
+:root {
+  --color-bg: #FFFDFD;
+  --color-bg-alt: #FAF5F4;
+  --color-surface: #FFFFFF;
+  --color-text: #1C1719;
+  --color-muted: #6E6367;
+  --color-border: #EFE6E6;
+}
 
-  --color-bg: #FFFFFF;
-  --color-bg-alt: #FAF8F7;
-  --color-border: #ECE7E5;
+/* mode sombre de l'appareil — sans ça, le texte clair du socle
+   se retrouve sur un fond clair : illisible */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #100E0F;
+    --color-bg-alt: #191517;
+    --color-surface: #191517;
+    --color-text: #F6F1F2;
+    --color-muted: #A79BA0;
+    --color-border: #2B2427;
+}
+}
+
+/* thème forcé par le config, prioritaire sur l'appareil */
+:root[data-theme="light"] {
+  --color-bg: #FFFDFD;
+  --color-bg-alt: #FAF5F4;
+  --color-surface: #FFFFFF;
+  --color-text: #1C1719;
+  --color-muted: #6E6367;
+  --color-border: #EFE6E6;
 }
 :root[data-theme="dark"] {
-  --color-bg: #0C0B0C;
-  --color-bg-alt: #141213;
-  --color-border: rgba(255,255,255,.09);
+  --color-bg: #100E0F;
+  --color-bg-alt: #191517;
+  --color-surface: #191517;
+  --color-text: #F6F1F2;
+  --color-muted: #A79BA0;
+  --color-border: #2B2427;
 }
 
-h1, h2, h3, .hero-title {
-  font-family: var(--font-titre);
-  font-weight: 300;
-  letter-spacing: -0.01em;
-}
-.hero-title { font-size: clamp(2.2rem, 5.6vw, 4.2rem); line-height: 1.08; font-weight: 300; }
-.navbar-brand { font-weight: 400; letter-spacing: .16em; text-transform: uppercase; font-size: .95rem; }
-
-/* les surtitres portent l'élégance : très espacés, très discrets */
-.section-label {
-  font-weight: 400;
-  letter-spacing: .3em;
-  font-size: .68rem;
-  color: var(--color-muted);
-}
-
-.service-card, .testimonial-card {
-  border: 1px solid var(--color-border);
-  box-shadow: none;
-}
-.service-card:hover { border-color: var(--brand-primary); transform: none; box-shadow: none; }
-.service-icon { background: none; color: var(--brand-primary); font-size: 1.4rem; }
-
-.btn { border-radius: 0; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; }
-.hero-badge, .hero-tag { border-radius: 0; letter-spacing: .12em; text-transform: uppercase; font-size: .7rem; }
+.hero-title, h1, h2, h3 { font-family: var(--font-titre); font-weight: 300; letter-spacing: -.01em; }
+.hero-title { font-size: clamp(2.2rem, 5.6vw, 4.2rem); line-height: 1.09; }
+.navbar-brand { font-weight: 400; letter-spacing: .18em; text-transform: uppercase; font-size: .92rem; }
+.section-label { font-weight: 500; letter-spacing: .26em; font-size: .68rem; }
+.service-icon { background: none; color: var(--brand-primary); font-size: 1.5rem; }
+.btn { font-weight: 500; letter-spacing: .08em; text-transform: uppercase; font-size: .82rem; }
+.hero-badge, .hero-tag { letter-spacing: .1em; text-transform: uppercase; font-size: .7rem; }

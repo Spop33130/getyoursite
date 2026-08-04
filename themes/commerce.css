@@ -1,54 +1,68 @@
 /* ==========================================================================
-   AMBIANCE « COMMERCE » — épicerie, boutique, artisan de bouche
-   Une devanture : fond crème, étiquettes encadrées, serif ramassée.
-   L'esprit du produit posé sur l'étal, avec son prix écrit dessus.
+   AMBIANCE « COMMERCE » — épicerie, boutique, métiers de bouche
+   Une devanture : crème chaleureux, serif ramassée, surtitres encadrés
+   comme une étiquette posée sur le produit.
    ========================================================================== */
-
 @import url('/vendor/fonts/fraunces.css');
 @import url('/vendor/fonts/manrope.css');
 
 :root {
   --font: 'Manrope', system-ui, sans-serif;
   --font-titre: 'Fraunces', Georgia, serif;
+  --radius-sm: 4px;
+  --radius-base: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
 
-  --radius-sm: 2px;
-  --radius-base: 4px;
-  --radius-lg: 6px;
-  --radius-xl: 8px;
+/* clair (défaut) */
+:root {
+  --color-bg: #FFFDF8;
+  --color-bg-alt: #F4EFE3;
+  --color-surface: #FFFFFF;
+  --color-text: #1F1B12;
+  --color-muted: #655C48;
+  --color-border: #E4DBC7;
+}
 
-  --color-bg: #FDFBF6;
-  --color-bg-alt: #F2EDE1;
-  --color-border: #DFD6C4;
+/* mode sombre de l'appareil — sans ça, le texte clair du socle
+   se retrouve sur un fond clair : illisible */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121009;
+    --color-bg-alt: #1B1811;
+    --color-surface: #1B1811;
+    --color-text: #F6F1E6;
+    --color-muted: #ADA48C;
+    --color-border: #2C2718;
+}
+}
+
+/* thème forcé par le config, prioritaire sur l'appareil */
+:root[data-theme="light"] {
+  --color-bg: #FFFDF8;
+  --color-bg-alt: #F4EFE3;
+  --color-surface: #FFFFFF;
+  --color-text: #1F1B12;
+  --color-muted: #655C48;
+  --color-border: #E4DBC7;
 }
 :root[data-theme="dark"] {
-  --color-bg: #12100C;
-  --color-bg-alt: #1A1712;
-  --color-border: rgba(255,255,255,.10);
+  --color-bg: #121009;
+  --color-bg-alt: #1B1811;
+  --color-surface: #1B1811;
+  --color-text: #F6F1E6;
+  --color-muted: #ADA48C;
+  --color-border: #2C2718;
 }
 
-h1, h2, h3, .hero-title, .navbar-brand {
-  font-family: var(--font-titre);
-  font-weight: 600;
-  letter-spacing: -0.03em;
+.hero-title, h1, h2, h3, .navbar-brand {
+  font-family: var(--font-titre); font-weight: 600; letter-spacing: -.03em;
 }
-.hero-title { font-size: clamp(2.3rem, 6vw, 4.3rem); line-height: 1.0; }
-
-/* le surtitre est une étiquette : encadrée, comme sur un bocal */
+.hero-title { font-size: clamp(2.3rem, 6vw, 4.3rem); line-height: 1.02; }
 .section-label {
-  display: inline-block;
-  border: 1px solid var(--brand-primary);
-  color: var(--brand-primary);
-  padding: 4px 12px;
-  letter-spacing: .14em;
-  font-size: .68rem;
-  font-weight: 700;
+  display: inline-block; border: 1px solid currentColor; color: var(--brand-primary);
+  padding: 5px 13px; border-radius: var(--radius-sm);
+  letter-spacing: .12em; font-size: .68rem; font-weight: 700;
 }
-
-.service-card, .testimonial-card {
-  border: 1px solid var(--color-border);
-  box-shadow: none;
-}
-.service-card:hover { border-color: var(--brand-primary); box-shadow: 0 8px 22px -16px rgba(80,60,20,.4); }
-
-.btn { font-weight: 700; letter-spacing: .02em; }
-.hero-badge, .hero-tag { border-radius: var(--radius-sm); font-weight: 600; }
+.btn { font-weight: 700; }

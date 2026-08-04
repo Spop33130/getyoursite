@@ -1,54 +1,65 @@
 /* ==========================================================================
    AMBIANCE « ARTISAN » — bâtiment, mécanique, métiers manuels
-   Solide, franc, sans fioriture. Angles nets plutôt qu'arrondis mous,
-   filets marqués, titres larges et lourds. On doit sentir l'outil.
-   Se charge APRÈS style.css et ne fait que redéfinir.
+   Franche et solide, mais pas brutale : angles courts, matières mates,
+   titres larges. On doit sentir l'outil, pas le béton.
    ========================================================================== */
-
 @import url('/vendor/fonts/bricolage.css');
 @import url('/vendor/fonts/manrope.css');
 
 :root {
   --font: 'Manrope', system-ui, sans-serif;
   --font-titre: 'Bricolage Grotesque', 'Manrope', sans-serif;
+  --radius-sm: 4px;
+  --radius-base: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+}
 
-  --radius-sm: 2px;
-  --radius-base: 3px;
-  --radius-lg: 4px;
-  --radius-xl: 6px;
+/* clair (défaut) */
+:root {
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F3F4F1;
+  --color-surface: #FFFFFF;
+  --color-text: #16181A;
+  --color-muted: #5C6470;
+  --color-border: #DEDFDA;
+}
 
-  --color-bg-alt: #F4F4F2;
-  --color-border: #DAD9D4;
+/* mode sombre de l'appareil — sans ça, le texte clair du socle
+   se retrouve sur un fond clair : illisible */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #101214;
+    --color-bg-alt: #171A1D;
+    --color-surface: #171A1D;
+    --color-text: #F2F4F5;
+    --color-muted: #98A1AC;
+    --color-border: #2A2F34;
+}
+}
+
+/* thème forcé par le config, prioritaire sur l'appareil */
+:root[data-theme="light"] {
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F3F4F1;
+  --color-surface: #FFFFFF;
+  --color-text: #16181A;
+  --color-muted: #5C6470;
+  --color-border: #DEDFDA;
 }
 :root[data-theme="dark"] {
-  --color-bg-alt: #15171A;
-  --color-border: rgba(255,255,255,.10);
+  --color-bg: #101214;
+  --color-bg-alt: #171A1D;
+  --color-surface: #171A1D;
+  --color-text: #F2F4F5;
+  --color-muted: #98A1AC;
+  --color-border: #2A2F34;
 }
 
-h1, h2, h3, .hero-title, .navbar-brand, .service-card h3 {
-  font-family: var(--font-titre);
-  font-weight: 800;
-  letter-spacing: -0.035em;
+.hero-title, h1, h2, h3, .navbar-brand, .service-card h3 {
+  font-family: var(--font-titre); font-weight: 800; letter-spacing: -.035em;
 }
-.hero-title { font-size: clamp(2.4rem, 6.5vw, 4.6rem); line-height: .96; }
-
-/* surtitres : petites capitales franches, comme un marquage de chantier */
-.section-label {
-  font-family: var(--font-titre);
-  font-weight: 800;
-  letter-spacing: .16em;
-  font-size: .7rem;
-}
-
-/* les cartes ne flottent pas : elles sont posées, avec un filet visible */
-.service-card, .testimonial-card {
-  border: 1px solid var(--color-border);
-  box-shadow: none;
-}
+.hero-title { font-size: clamp(2.4rem, 6.4vw, 4.5rem); line-height: .97; }
+.section-label { font-family: var(--font-titre); font-weight: 800; letter-spacing: .15em; font-size: .72rem; }
 .service-card { border-left: 3px solid var(--brand-primary); }
-.service-card:hover { box-shadow: 0 6px 18px -12px rgba(0,0,0,.35); transform: none; }
-
-.service-icon { border-radius: var(--radius-sm); }
-
-.btn { font-weight: 700; letter-spacing: .01em; }
-.hero-badge, .hero-tag { border-radius: var(--radius-sm); font-weight: 700; }
+.btn { font-weight: 700; }
