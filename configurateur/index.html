@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Configurateur de site — GetYourSite</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/vendor/fonts/outfit.css">
+<style>
+:root{
+  --bleu:#2563EB; --bleu-fonce:#1D4ED8; --bleu-pale:#EFF6FF;
+  --encre:#0F172A; --texte:#334155; --gris:#64748B; --ligne:#E2E8F0;
+  --fond:#F8FAFC; --blanc:#FFFFFF;
+  --ok:#059669; --alerte:#D97706; --rouge:#DC2626;
+  --r:10px;
+  --f:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--f);background:var(--fond);color:var(--texte);-webkit-font-smoothing:antialiased;}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit;}
+
+/* ---------- barre du haut ---------- */
+.top{position:sticky;top:0;z-index:50;background:var(--blanc);border-bottom:1px solid var(--ligne);
+  display:flex;align-items:center;gap:16px;padding:12px 20px;flex-wrap:wrap;}
+.top h1{font-size:17px;font-weight:700;color:var(--encre);letter-spacing:-.02em;flex:none;}
+.top .site{font-size:14px;color:var(--gris);flex:1;min-width:120px;}
+.top .site b{color:var(--encre);}
+.btn{border:1px solid var(--ligne);background:var(--blanc);border-radius:8px;padding:9px 16px;
+  font-size:14px;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap;}
+.btn:hover{border-color:var(--bleu);color:var(--bleu);}
+.btn-p{background:var(--bleu);border-color:var(--bleu);color:#fff;}
+.btn-p:hover{background:var(--bleu-fonce);border-color:var(--bleu-fonce);color:#fff;}
+.btn-p:disabled{background:var(--ligne);border-color:var(--ligne);color:var(--gris);cursor:not-allowed;}
+.btn-s{padding:6px 12px;font-size:13px;}
+.btn-x{border:none;background:none;color:var(--gris);cursor:pointer;font-size:13px;font-weight:600;padding:4px 8px;}
+.btn-x:hover{color:var(--rouge);}
+
+/* ---------- mise en page ---------- */
+.app{display:grid;grid-template-columns:230px 1fr;gap:0;align-items:start;}
+@media(max-width:820px){ .app{grid-template-columns:1fr;} }
+
+.menu{position:sticky;top:57px;background:var(--blanc);border-right:1px solid var(--ligne);
+  padding:16px 12px;display:flex;flex-direction:column;gap:2px;min-height:calc(100vh - 57px);}
+@media(max-width:820px){ .menu{position:static;min-height:0;border-right:none;border-bottom:1px solid var(--ligne);
+  flex-direction:row;overflow-x:auto;} }
+.menu button{display:flex;align-items:center;gap:9px;border:none;background:none;text-align:left;
+  padding:9px 11px;border-radius:8px;font-size:14px;font-weight:600;color:var(--texte);cursor:pointer;white-space:nowrap;}
+.menu button:hover{background:var(--fond);}
+.menu button.on{background:var(--bleu-pale);color:var(--bleu);}
+.menu .pastille{width:8px;height:8px;border-radius:50%;background:var(--ligne);flex:none;}
+.menu .pastille.ok{background:var(--ok);}
+.menu .pastille.vide{background:var(--alerte);}
+
+.zone{padding:26px 30px 90px;max-width:820px;}
+@media(max-width:620px){ .zone{padding:20px 16px 90px;} }
+.zone h2{font-size:23px;font-weight:700;color:var(--encre);letter-spacing:-.02em;margin-bottom:6px;}
+.zone .sous{font-size:15px;line-height:1.55;color:var(--gris);margin-bottom:26px;max-width:62ch;}
+
+/* ---------- champs ---------- */
+.champ{margin-bottom:20px;}
+.champ label{display:block;font-size:14px;font-weight:600;color:var(--encre);margin-bottom:5px;}
+.champ .aide{font-size:13px;line-height:1.5;color:var(--gris);margin-bottom:7px;}
+.champ input[type=text],.champ input[type=tel],.champ input[type=email],.champ input[type=url],
+.champ textarea,.champ select{
+  width:100%;border:1px solid var(--ligne);border-radius:var(--r);padding:10px 12px;
+  font-size:15px;background:var(--blanc);transition:border-color .15s;}
+.champ textarea{min-height:96px;resize:vertical;line-height:1.6;}
+.champ input:focus,.champ textarea:focus,.champ select:focus{outline:none;border-color:var(--bleu);
+  box-shadow:0 0 0 3px var(--bleu-pale);}
+.champ .compte{font-size:12px;color:var(--gris);margin-top:4px;text-align:right;}
+.champ .compte.trop{color:var(--alerte);font-weight:600;}
+.req::after{content:" *";color:var(--rouge);}
+
+.deux{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
+@media(max-width:560px){ .deux{grid-template-columns:1fr;} }
+
+.coul{display:flex;align-items:center;gap:10px;}
+.coul input[type=color]{width:46px;height:42px;border:1px solid var(--ligne);border-radius:8px;
+  padding:2px;background:var(--blanc);cursor:pointer;flex:none;}
+
+/* ---------- listes répétables ---------- */
+.bloc{border:1px solid var(--ligne);border-radius:var(--r);background:var(--blanc);
+  padding:18px;margin-bottom:12px;}
+.bloc-tete{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;}
+.bloc-tete .num{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bleu);}
+.ajout{border:1.5px dashed var(--ligne);background:none;border-radius:var(--r);width:100%;
+  padding:13px;font-size:14px;font-weight:600;color:var(--gris);cursor:pointer;transition:.15s;}
+.ajout:hover{border-color:var(--bleu);color:var(--bleu);background:var(--bleu-pale);}
+
+.lignes{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
+.ligne{display:flex;gap:8px;align-items:center;}
+.ligne input{flex:1;border:1px solid var(--ligne);border-radius:8px;padding:9px 11px;font-size:14px;}
+.ligne input:focus{outline:none;border-color:var(--bleu);}
+
+/* ---------- encadrés ---------- */
+.note{border-left:3px solid var(--bleu);background:var(--bleu-pale);border-radius:0 var(--r) var(--r) 0;
+  padding:13px 16px;font-size:14px;line-height:1.6;color:var(--texte);margin-bottom:22px;}
+.note b{color:var(--encre);}
+.alerte{border-left-color:var(--alerte);background:#FFFBEB;}
+
+/* ---------- barre du bas ---------- */
+.bas{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--blanc);
+  border-top:1px solid var(--ligne);padding:11px 20px;display:flex;align-items:center;
+  gap:16px;flex-wrap:wrap;box-shadow:0 -4px 16px -8px rgba(0,0,0,.12);}
+.bas .etat{flex:1;font-size:13.5px;color:var(--gris);min-width:150px;}
+.bas .etat b{color:var(--encre);}
+.bas .etat .manque{color:var(--alerte);font-weight:600;}
+.bas .etat .pret{color:var(--ok);font-weight:600;}
+
+.jauge{height:5px;background:var(--ligne);border-radius:99px;overflow:hidden;width:110px;flex:none;}
+.jauge i{display:block;height:100%;background:var(--ok);transition:width .3s;}
+
+/* ---------- divers ---------- */
+.vide{text-align:center;color:var(--gris);font-size:14px;padding:22px;border:1.5px dashed var(--ligne);border-radius:var(--r);}
+.pastille-etat{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;
+  padding:3px 9px;border-radius:99px;background:var(--fond);color:var(--gris);}
+.pastille-etat.ok{background:#ECFDF5;color:var(--ok);}
+.hint{font-size:13px;color:var(--gris);line-height:1.55;margin-top:-12px;margin-bottom:16px;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
+  background:var(--fond);border:1px solid var(--ligne);border-radius:5px;padding:1px 6px;}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Configurateur de site</h1>
+  <div class="site" id="nom-site">Aucun site chargé</div>
+  <input type="file" id="fichier" accept=".json,application/json" hidden>
+  <button class="btn" onclick="document.getElementById('fichier').click()">Ouvrir un site existant</button>
+  <button class="btn" id="btn-neuf">Nouveau site</button>
+  <button class="btn btn-p" id="btn-export" disabled>Enregistrer le fichier</button>
+</div>
+
+<div class="app">
+  <nav class="menu" id="menu"></nav>
+  <main class="zone" id="zone">
+    <h2>Bienvenue</h2>
+    <p class="sous">Cet outil sert à préparer le contenu d’un site client. Vous remplissez des champs,
+      il fabrique le fichier que le site utilise. Vous n’avez jamais à écrire de code.</p>
+    <div class="note">
+      <b>Deux façons de commencer :</b><br>
+      — <b>Ouvrir un site existant</b> si vous reprenez un site déjà commencé : choisissez son fichier <code>config.json</code>.<br>
+      — <b>Nouveau site</b> pour partir de zéro.
+    </div>
+    <div class="note alerte">
+      <b>Important :</b> rien n’est enregistré automatiquement. Quand vous avez fini, cliquez sur
+      <b>Enregistrer le fichier</b> en haut à droite, et transmettez le fichier obtenu.
+    </div>
+  </main>
+</div>
+
+<div class="bas">
+  <div class="jauge"><i id="jauge" style="width:0%"></i></div>
+  <div class="etat" id="etat">Ouvrez un site ou créez-en un nouveau pour commencer.</div>
+  <button class="btn btn-p" id="btn-export2" disabled>Enregistrer le fichier</button>
+</div>
+
+<script>
+'use strict';
+
+/* ==========================================================================
+   Le configurateur manipule un objet « cfg » qui est exactement le config.json
+   du site. La personne qui l'utilise ne voit jamais ce JSON : elle remplit des
+   champs, et le fichier est produit à la fin.
+   ========================================================================== */
+
+var cfg = null;
+var etape = 'identite';
+
+function neuf() {
+  return {
+    siteName: '', slogan: '', badge: '', description: '',
+    theme: 'light',
+    colors: { primary: '#2E86AB', secondary: '#1a5a7a' },
+    hero: { title: '', subtitle: '', cta_primary: 'Demander un devis', cta_secondary: 'Voir nos réalisations', tags: [] },
+    about: { title: 'À propos', description: '', stats: [] },
+    services: [],
+    pages: [],
+    images: { hero: 'hero.jpg', about: 'about.jpg', gallery: [] },
+    testimonials: [],
+    google_reviews: { url: '', rating: '', count: '' },
+    faq: [],
+    schedule: [],
+    contact: { address: '', phone: '', whatsapp: '', email: '', hours: '', maps_embed_url: '' },
+    social: {},
+    seo: { domain: '', schema_type: 'LocalBusiness', street: '', zip: '', city: '' },
+    legal: { forme: '', siret: '', responsable: '' }
+  };
+}
+
+/* ---------- accès aux valeurs par chemin ("contact.phone") ---------- */
+function lire(chemin) {
+  return chemin.split('.').reduce(function (o, k) { return (o || {})[k]; }, cfg);
+}
+function ecrire(chemin, val) {
+  var ks = chemin.split('.'), o = cfg;
+  for (var i = 0; i < ks.length - 1; i++) { if (!o[ks[i]]) o[ks[i]] = {}; o = o[ks[i]]; }
+  o[ks[ks.length - 1]] = val;
+  rafraichirEtat();
+}
+
+function slugifier(t) {
+  return (t || '').toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+function esc(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* ==========================================================================
+   Fabriques de champs
+   ========================================================================== */
+
+function champ(o) {
+  var id = 'c_' + o.chemin.replace(/\./g, '_');
+  var v = lire(o.chemin);
+  var max = o.max ? ' data-max="' + o.max + '"' : '';
+  var ctrl;
+  if (o.type === 'zone') {
+    ctrl = '<textarea id="' + id + '" data-chemin="' + o.chemin + '"' + max +
+           (o.ph ? ' placeholder="' + esc(o.ph) + '"' : '') + '>' + esc(v) + '</textarea>';
+  } else if (o.type === 'choix') {
+    ctrl = '<select id="' + id + '" data-chemin="' + o.chemin + '">' +
+      o.options.map(function (op) {
+        return '<option value="' + esc(op[0]) + '"' + (v === op[0] ? ' selected' : '') + '>' + esc(op[1]) + '</option>';
+      }).join('') + '</select>';
+  } else {
+    ctrl = '<input type="' + (o.type || 'text') + '" id="' + id + '" data-chemin="' + o.chemin + '"' + max +
+           ' value="' + esc(v) + '"' + (o.ph ? ' placeholder="' + esc(o.ph) + '"' : '') + '>';
+  }
+  return '<div class="champ">' +
+    '<label for="' + id + '" class="' + (o.requis ? 'req' : '') + '">' + esc(o.label) + '</label>' +
+    (o.aide ? '<div class="aide">' + o.aide + '</div>' : '') +
+    ctrl +
+    (o.max ? '<div class="compte" data-pour="' + id + '"></div>' : '') +
+    '</div>';
+}
+
+function couleur(chemin, label, aide) {
+  var v = lire(chemin) || '#2E86AB';
+  return '<div class="champ"><label>' + esc(label) + '</label>' +
+    (aide ? '<div class="aide">' + aide + '</div>' : '') +
+    '<div class="coul"><input type="color" data-chemin="' + chemin + '" value="' + esc(v) + '">' +
+    '<input type="text" data-chemin="' + chemin + '" value="' + esc(v) + '" style="max-width:130px"></div></div>';
+}
+
+/* liste de textes simples (tags, puces, zones…) */
+function listeTextes(chemin, label, aide, ph) {
+  var arr = lire(chemin) || [];
+  var lignes = arr.map(function (v, i) {
+    return '<div class="ligne"><input type="text" value="' + esc(v) + '" ' +
+      'oninput="majTexte(\'' + chemin + '\',' + i + ',this.value)" placeholder="' + esc(ph || '') + '">' +
+      '<button class="btn-x" onclick="retirerTexte(\'' + chemin + '\',' + i + ')">Retirer</button></div>';
+  }).join('');
+  return '<div class="champ"><label>' + esc(label) + '</label>' +
+    (aide ? '<div class="aide">' + aide + '</div>' : '') +
+    '<div class="lignes">' + lignes + '</div>' +
+    '<button class="ajout" onclick="ajouterTexte(\'' + chemin + '\')">+ Ajouter</button></div>';
+}
+function majTexte(ch, i, v) { var a = lire(ch); a[i] = v; rafraichirEtat(); }
+function retirerTexte(ch, i) { var a = lire(ch); a.splice(i, 1); rendre(); }
+function ajouterTexte(ch) { var a = lire(ch); if (!a) { ecrire(ch, []); a = lire(ch); } a.push(''); rendre(); }
+
+/* ==========================================================================
+   Les étapes
+   ========================================================================== */
+
+var ETAPES = [
+  { id: 'identite',  titre: 'Le commerce',    complet: function () { return !!(cfg.siteName && cfg.description); } },
+  { id: 'apparence', titre: 'Les couleurs',   complet: function () { return !!(cfg.colors && cfg.colors.primary); } },
+  { id: 'accueil',   titre: 'Page d’accueil', complet: function () { return !!(cfg.hero && cfg.hero.title); } },
+  { id: 'services',  titre: 'Les prestations',complet: function () { return (cfg.services || []).length > 0; } },
+  { id: 'pages',     titre: 'Pages du site',  complet: function () { return true; } },
+  { id: 'photos',    titre: 'Les photos',     complet: function () { return ((cfg.images || {}).gallery || []).length > 0; } },
+  { id: 'avis',      titre: 'Les avis',       complet: function () { return (cfg.testimonials || []).length > 0; } },
+  { id: 'questions', titre: 'Les questions',  complet: function () { return (cfg.faq || []).length > 0; } },
+  { id: 'contact',   titre: 'Contact',        complet: function () { return !!(cfg.contact && cfg.contact.phone && cfg.contact.email); } },
+  { id: 'legal',     titre: 'Mentions légales',complet: function () { return !!(cfg.legal && cfg.legal.siret); } }
+];
+
+function vue(id) {
+  if (id === 'identite') return vueIdentite();
+  if (id === 'apparence') return vueApparence();
+  if (id === 'accueil') return vueAccueil();
+  if (id === 'services') return vueServices();
+  if (id === 'pages') return vuePages();
+  if (id === 'photos') return vuePhotos();
+  if (id === 'avis') return vueAvis();
+  if (id === 'questions') return vueQuestions();
+  if (id === 'contact') return vueContact();
+  if (id === 'legal') return vueLegal();
+  return '';
+}
+
+function entete(t, s) { return '<h2>' + t + '</h2><p class="sous">' + s + '</p>'; }
+
+function vueIdentite() {
+  return entete('Le commerce', 'Les informations de base. Elles apparaissent en haut du site et dans l’onglet du navigateur.') +
+    champ({ chemin: 'siteName', label: 'Nom du commerce', requis: true, ph: 'Couverture Lefèvre',
+            aide: 'Tel qu’il doit apparaître sur le site, avec les majuscules et les accents.' }) +
+    champ({ chemin: 'slogan', label: 'Slogan', ph: 'Couvreur-zingueur de père en fils',
+            aide: 'Une phrase courte qui dit le métier. Elle s’affiche sous le nom.' }) +
+    champ({ chemin: 'badge', label: 'Petite étiquette', ph: 'Artisan certifié',
+            aide: 'Trois ou quatre mots affichés au-dessus du grand titre. Un gage de confiance : certification, ancienneté, label.' }) +
+    champ({ chemin: 'description', label: 'Description du commerce', type: 'zone', requis: true, max: 160,
+            ph: 'Couvreur à Bordeaux depuis 1998 : réfection de toiture, zinguerie et démoussage.',
+            aide: 'C’est le texte que Google affiche sous le nom du site dans ses résultats. Une à deux phrases, avec le métier et la ville.' }) +
+    champ({ chemin: 'seo.city', label: 'Ville principale', ph: 'Bordeaux',
+            aide: 'La ville où le client travaille le plus. Elle sert à le faire remonter dans les recherches locales.' }) +
+    '<div class="deux">' +
+      champ({ chemin: 'seo.street', label: 'Rue', ph: '8 rue des Artisans' }) +
+      champ({ chemin: 'seo.zip', label: 'Code postal', ph: '33150' }) +
+    '</div>' +
+    champ({ chemin: 'seo.domain', label: 'Adresse du site', ph: 'https://couverture-lefevre.fr',
+            aide: 'L’adresse définitive, avec <code>https://</code> et sans barre oblique à la fin. Si elle n’est pas encore connue, laissez vide.' });
+}
+
+function vueApparence() {
+  return entete('Les couleurs', 'Deux couleurs suffisent. Reprenez celles du logo, du camion ou de l’enseigne du client.') +
+    '<div class="note">Si le client n’a pas de couleur particulière, gardez celles proposées : elles fonctionnent partout.</div>' +
+    couleur('colors.primary', 'Couleur principale', 'Utilisée pour les boutons, les liens et les titres mis en avant.') +
+    couleur('colors.secondary', 'Couleur secondaire', 'Utilisée en complément, sur les fonds et les survols.') +
+    champ({ chemin: 'theme', label: 'Ambiance', type: 'choix',
+            options: [['light', 'Claire (fond blanc)'], ['dark', 'Sombre (fond foncé)']],
+            aide: 'La claire convient à presque tous les métiers. La sombre va bien aux salons, restaurants et métiers de nuit.' });
+}
+
+function vueAccueil() {
+  return entete('Page d’accueil', 'Ce que le visiteur voit en arrivant, avant de faire défiler.') +
+    champ({ chemin: 'hero.title', label: 'Grand titre', requis: true, max: 70,
+            ph: 'Votre toiture entre de bonnes mains',
+            aide: 'La première phrase du site. Elle doit dire ce que le client fait, pas « Bienvenue ».' }) +
+    champ({ chemin: 'hero.subtitle', label: 'Phrase d’accroche', type: 'zone', max: 200,
+            ph: 'Couvreur à Bordeaux depuis 1998. Devis gratuit sous 48 h.',
+            aide: 'Une ou deux phrases sous le grand titre : le métier, la zone, et ce qui rassure.' }) +
+    '<div class="deux">' +
+      champ({ chemin: 'hero.cta_primary', label: 'Bouton principal', ph: 'Demander un devis' }) +
+      champ({ chemin: 'hero.cta_secondary', label: 'Bouton secondaire', ph: 'Voir nos réalisations' }) +
+    '</div>' +
+    listeTextes('hero.tags', 'Points forts', 'Trois ou quatre mots-clés affichés sous les boutons : « Devis gratuit », « Garantie décennale »…', 'Devis gratuit') +
+    '<hr style="border:none;border-top:1px solid var(--ligne);margin:26px 0">' +
+    champ({ chemin: 'about.title', label: 'Titre du bloc « À propos »', ph: 'Un artisan, pas une agence' }) +
+    champ({ chemin: 'about.description', label: 'Texte « À propos »', type: 'zone',
+            aide: 'Qui est le client, depuis quand, ce qui le distingue. Quatre à six lignes suffisent.' });
+}
+
+function vueServices() {
+  var s = cfg.services || [];
+  var blocs = s.map(function (x, i) {
+    return '<div class="bloc"><div class="bloc-tete"><span class="num">Prestation ' + (i + 1) + '</span>' +
+      '<button class="btn-x" onclick="retirer(\'services\',' + i + ')">Supprimer</button></div>' +
+      '<div class="champ"><label>Nom</label><input type="text" value="' + esc(x.title) + '" ' +
+        'oninput="majObjet(\'services\',' + i + ',\'title\',this.value)" placeholder="Couverture & toiture"></div>' +
+      '<div class="champ"><label>Description</label><div class="aide">Une phrase qui explique concrètement ce qui est fait.</div>' +
+        '<textarea oninput="majObjet(\'services\',' + i + ',\'description\',this.value)">' + esc(x.description) + '</textarea></div>' +
+      '<div class="champ"><label>Icône</label><div class="aide">Laissez tel quel si vous ne savez pas — une icône par défaut sera utilisée.</div>' +
+        '<input type="text" value="' + esc(x.icon) + '" oninput="majObjet(\'services\',' + i + ',\'icon\',this.value)" placeholder="fas fa-house-chimney"></div>' +
+      '</div>';
+  }).join('');
+  return entete('Les prestations', 'Ce que le client propose. Trois à six, présentées en cartes sur la page d’accueil.') +
+    (s.length ? blocs : '<div class="vide">Aucune prestation pour l’instant.</div>') +
+    '<button class="ajout" onclick="ajouter(\'services\',{title:\'\',description:\'\',icon:\'fas fa-check\'})">+ Ajouter une prestation</button>';
+}
+
+function vuePages() {
+  var p = cfg.pages || [];
+  var blocs = p.map(function (x, i) { return blocPage(x, i); }).join('');
+  return entete('Pages du site', 'Le forfait une page n’en a aucune : tout tient sur l’accueil. ' +
+      'Le forfait cinq pages en a une par prestation — c’est ce qui fait remonter le client sur Google.') +
+    '<div class="note"><b>À quoi ça sert :</b> quelqu’un qui cherche « couvreur Bordeaux » tombe sur la page ' +
+      '« Couverture », pas sur l’accueil. Une page = une prestation = une recherche.</div>' +
+    (p.length ? blocs : '<div class="vide">Aucune page supplémentaire — c’est un site une page.</div>') +
+    '<button class="ajout" onclick="ajouterPage()">+ Ajouter une page</button>';
+}
+
+function blocPage(x, i) {
+  var b = 'pages.' + i;
+  var blocsTexte = (x.blocks || []).map(function (bl, j) {
+    return '<div class="bloc" style="background:var(--fond)"><div class="bloc-tete">' +
+      '<span class="num">Paragraphe ' + (j + 1) + '</span>' +
+      '<button class="btn-x" onclick="retirerSous(' + i + ',\'blocks\',' + j + ')">Supprimer</button></div>' +
+      '<div class="champ"><label>Sous-titre</label><input type="text" value="' + esc(bl.titre) + '" ' +
+        'oninput="majSous(' + i + ',\'blocks\',' + j + ',\'titre\',this.value)" placeholder="Réfection complète de toiture"></div>' +
+      '<div class="champ"><label>Texte</label>' +
+        '<div class="aide">Laissez une ligne vide entre deux paragraphes pour les séparer.</div>' +
+        '<textarea oninput="majSous(' + i + ',\'blocks\',' + j + ',\'texte\',this.value)">' + esc(bl.texte) + '</textarea></div>' +
+      '</div>';
+  }).join('');
+
+  var faqs = (x.faq || []).map(function (q, j) {
+    return '<div class="bloc" style="background:var(--fond)"><div class="bloc-tete">' +
+      '<span class="num">Question ' + (j + 1) + '</span>' +
+      '<button class="btn-x" onclick="retirerSous(' + i + ',\'faq\',' + j + ')">Supprimer</button></div>' +
+      '<div class="champ"><label>Question</label><input type="text" value="' + esc(q.question) + '" ' +
+        'oninput="majSous(' + i + ',\'faq\',' + j + ',\'question\',this.value)"></div>' +
+      '<div class="champ"><label>Réponse</label>' +
+        '<textarea oninput="majSous(' + i + ',\'faq\',' + j + ',\'reponse\',this.value)">' + esc(q.reponse) + '</textarea></div>' +
+      '</div>';
+  }).join('');
+
+  return '<div class="bloc"><div class="bloc-tete">' +
+    '<span class="num">Page ' + (i + 1) + (x.nav ? ' — ' + esc(x.nav) : '') + '</span>' +
+    '<button class="btn-x" onclick="retirer(\'pages\',' + i + ')">Supprimer la page</button></div>' +
+
+    '<div class="champ"><label class="req">Nom dans le menu</label>' +
+      '<div class="aide">Un ou deux mots. C’est ce qui s’affiche en haut du site.</div>' +
+      '<input type="text" value="' + esc(x.nav) + '" oninput="majPageNav(' + i + ',this.value)" placeholder="Couverture"></div>' +
+
+    '<div class="champ"><label>Adresse de la page</label>' +
+      '<div class="aide">Remplie automatiquement. Ne la changez que si vous savez pourquoi.</div>' +
+      '<input type="text" value="' + esc(x.slug) + '" oninput="majObjet(\'pages\',' + i + ',\'slug\',this.value)"></div>' +
+
+    '<div class="champ"><label class="req">Titre de la page</label>' +
+      '<div class="aide">La phrase que Google affiche en bleu. Mettez le métier <b>et</b> la ville : « Couvreur à Bordeaux — réfection de toiture ».</div>' +
+      '<input type="text" value="' + esc(x.h1) + '" oninput="majObjet(\'pages\',' + i + ',\'h1\',this.value)"></div>' +
+
+    '<div class="champ"><label>Texte affiché par Google</label>' +
+      '<div class="aide">Deux lignes sous le titre dans les résultats de recherche. 150 caractères environ.</div>' +
+      '<textarea oninput="majObjet(\'pages\',' + i + ',\'description\',this.value)">' + esc(x.description) + '</textarea></div>' +
+
+    '<div class="champ"><label>Introduction</label>' +
+      '<div class="aide">Les deux premières phrases de la page, juste sous le titre.</div>' +
+      '<textarea oninput="majObjet(\'pages\',' + i + ',\'intro\',this.value)">' + esc(x.intro) + '</textarea></div>' +
+
+    '<label style="display:block;font-size:14px;font-weight:600;color:var(--encre);margin:18px 0 8px">Le contenu</label>' +
+    blocsTexte +
+    '<button class="ajout" onclick="ajouterSous(' + i + ',\'blocks\',{titre:\'\',texte:\'\'})">+ Ajouter un paragraphe</button>' +
+
+    '<div style="margin-top:18px">' + listeTextes(b + '.puces', 'Points clés',
+        'Affichés avec une coche. « Devis gratuit sous 48 h », « Garantie décennale »…', 'Devis gratuit sous 48 h') + '</div>' +
+
+    listeTextes(b + '.zones', 'Villes couvertes',
+      'Les communes où le client intervient pour cette prestation. C’est ce qui le fait sortir sur « métier + ville ».', 'Bordeaux') +
+
+    listeTextes(b + '.gallery', 'Photos de la page',
+      'Noms des fichiers, tels qu’ils sont dans le dossier images : <code>gallery-1.jpg</code>.', 'gallery-1.jpg') +
+
+    '<label style="display:block;font-size:14px;font-weight:600;color:var(--encre);margin:18px 0 8px">Questions fréquentes</label>' +
+    faqs +
+    '<button class="ajout" onclick="ajouterSous(' + i + ',\'faq\',{question:\'\',reponse:\'\'})">+ Ajouter une question</button>' +
+    '</div>';
+}
+
+function vuePhotos() {
+  return entete('Les photos', 'Le client doit fournir ses photos. Indiquez ici le nom des fichiers, pas les photos elles-mêmes.') +
+    '<div class="note"><b>Comment ça marche :</b> les photos sont déposées dans le dossier <code>images</code> du site. ' +
+      'Ici, on écrit seulement leur nom de fichier. Gardez les noms proposés, c’est le plus simple : ' +
+      '<code>hero.jpg</code> pour la grande photo du haut, <code>about.jpg</code> pour le portrait, ' +
+      'puis <code>gallery-1.jpg</code> à <code>gallery-6.jpg</code> pour les réalisations.</div>' +
+    champ({ chemin: 'images.hero', label: 'Grande photo du haut', ph: 'hero.jpg' }) +
+    champ({ chemin: 'images.about', label: 'Photo du bloc « À propos »', ph: 'about.jpg' }) +
+    listeTextes('images.gallery', 'Photos de réalisations',
+      'Six photos font un bel effet. En dessous de trois, la galerie paraît vide.', 'gallery-1.jpg');
+}
+
+function vueAvis() {
+  var t = cfg.testimonials || [];
+  var blocs = t.map(function (x, i) {
+    return '<div class="bloc"><div class="bloc-tete"><span class="num">Avis ' + (i + 1) + '</span>' +
+      '<button class="btn-x" onclick="retirer(\'testimonials\',' + i + ')">Supprimer</button></div>' +
+      '<div class="champ"><label>Ce que dit le client</label>' +
+        '<textarea oninput="majObjet(\'testimonials\',' + i + ',\'text\',this.value)">' + esc(x.text) + '</textarea></div>' +
+      '<div class="deux">' +
+        '<div class="champ"><label>Son nom</label><input type="text" value="' + esc(x.name) + '" ' +
+          'oninput="majObjet(\'testimonials\',' + i + ',\'name\',this.value)"></div>' +
+        '<div class="champ"><label>Sa ville ou son métier</label><input type="text" value="' + esc(x.role) + '" ' +
+          'oninput="majObjet(\'testimonials\',' + i + ',\'role\',this.value)"></div>' +
+      '</div></div>';
+  }).join('');
+  return entete('Les avis', 'Les témoignages de clients. Ce sont eux qui rassurent le plus un visiteur qui hésite.') +
+    (t.length ? blocs : '<div class="vide">Aucun avis pour l’instant.</div>') +
+    '<button class="ajout" onclick="ajouter(\'testimonials\',{text:\'\',name:\'\',role:\'\',rating:5})">+ Ajouter un avis</button>' +
+    '<hr style="border:none;border-top:1px solid var(--ligne);margin:26px 0">' +
+    '<h2 style="font-size:18px">Avis Google</h2>' +
+    '<p class="sous">Si le client a une fiche Google avec des avis, remplissez ces trois champs : la note s’affichera sur le site.</p>' +
+    champ({ chemin: 'google_reviews.url', label: 'Lien de la fiche Google', ph: 'https://g.page/…' }) +
+    '<div class="deux">' +
+      champ({ chemin: 'google_reviews.rating', label: 'Note', ph: '4,9' }) +
+      champ({ chemin: 'google_reviews.count', label: 'Nombre d’avis', ph: '37' }) +
+    '</div>';
+}
+
+function vueQuestions() {
+  var f = cfg.faq || [];
+  var blocs = f.map(function (x, i) {
+    return '<div class="bloc"><div class="bloc-tete"><span class="num">Question ' + (i + 1) + '</span>' +
+      '<button class="btn-x" onclick="retirer(\'faq\',' + i + ')">Supprimer</button></div>' +
+      '<div class="champ"><label>Question</label><input type="text" value="' + esc(x.question) + '" ' +
+        'oninput="majObjet(\'faq\',' + i + ',\'question\',this.value)" placeholder="Le devis est-il payant ?"></div>' +
+      '<div class="champ"><label>Réponse</label>' +
+        '<textarea oninput="majObjet(\'faq\',' + i + ',\'reponse\',this.value)">' + esc(x.reponse || x.answer) + '</textarea></div>' +
+      '</div>';
+  }).join('');
+  return entete('Les questions', 'Les questions que les clients posent au téléphone. Y répondre sur le site évite des appels et rassure.') +
+    (f.length ? blocs : '<div class="vide">Aucune question pour l’instant.</div>') +
+    '<button class="ajout" onclick="ajouter(\'faq\',{question:\'\',reponse:\'\'})">+ Ajouter une question</button>';
+}
+
+function vueContact() {
+  return entete('Contact', 'Comment on joint le client. Le téléphone est de loin le plus utilisé sur mobile.') +
+    champ({ chemin: 'contact.phone', label: 'Téléphone', type: 'tel', requis: true, ph: '07 86 25 34 10',
+            aide: 'Avec les espaces, comme on l’écrit normalement. Le site le rend cliquable tout seul.' }) +
+    champ({ chemin: 'contact.email', label: 'E-mail', type: 'email', requis: true, ph: 'contact@exemple.fr' }) +
+    champ({ chemin: 'contact.whatsapp', label: 'WhatsApp', ph: '33786253410',
+            aide: 'Le numéro sans espace ni « + », commençant par 33. Laissez vide si le client n’utilise pas WhatsApp.' }) +
+    champ({ chemin: 'contact.address', label: 'Adresse', ph: '8 rue des Artisans, 33150 Cenon' }) +
+    champ({ chemin: 'contact.hours', label: 'Horaires en une ligne', ph: 'Lun–Ven : 8h–18h',
+            aide: 'Affichés à côté du téléphone.' }) +
+    champ({ chemin: 'contact.maps_embed_url', label: 'Carte Google Maps', type: 'zone',
+            aide: 'Sur Google Maps : <b>Partager</b> → <b>Intégrer une carte</b> → copier le lien qui commence par <code>https://www.google.com/maps/embed</code>. Laissez vide si le client ne reçoit pas.' }) +
+    '<hr style="border:none;border-top:1px solid var(--ligne);margin:26px 0">' +
+    '<h2 style="font-size:18px">Réseaux sociaux</h2>' +
+    '<p class="sous">Laissez vide ce que le client n’a pas — un lien mort fait plus de mal que pas de lien.</p>' +
+    champ({ chemin: 'social.facebook', label: 'Facebook', type: 'url' }) +
+    champ({ chemin: 'social.instagram', label: 'Instagram', type: 'url' });
+}
+
+function vueLegal() {
+  return entete('Mentions légales', 'Obligatoires sur tout site professionnel. Ces informations figurent sur le Kbis ou l’avis de situation Insee.') +
+    champ({ chemin: 'legal.responsable', label: 'Nom du responsable', requis: true, ph: 'Jean Lefèvre',
+            aide: 'La personne juridiquement responsable du site.' }) +
+    champ({ chemin: 'legal.forme', label: 'Forme juridique', ph: 'SARL au capital de 10 000 €' }) +
+    champ({ chemin: 'legal.siret', label: 'Numéro SIRET', requis: true, ph: '123 456 789 00012' });
+}
+
+/* ==========================================================================
+   Manipulation des listes
+   ========================================================================== */
+
+function ajouter(cle, modele) { if (!cfg[cle]) cfg[cle] = []; cfg[cle].push(modele); rendre(); }
+function retirer(cle, i) {
+  if (!confirm('Supprimer définitivement cet élément ?')) return;
+  cfg[cle].splice(i, 1); rendre();
+}
+function majObjet(cle, i, champ_, v) { cfg[cle][i][champ_] = v; rafraichirEtat(); }
+
+function ajouterPage() {
+  if (!cfg.pages) cfg.pages = [];
+  cfg.pages.push({ slug: '', nav: '', h1: '', description: '', intro: '',
+                   blocks: [{ titre: '', texte: '' }], puces: [], zones: [], gallery: [], faq: [] });
+  rendre();
+}
+function majPageNav(i, v) {
+  cfg.pages[i].nav = v;
+  // l'adresse suit le nom tant que personne ne l'a modifiée à la main
+  var auto = slugifier(cfg.pages[i]._navPrec || '');
+  if (!cfg.pages[i].slug || cfg.pages[i].slug === auto) cfg.pages[i].slug = slugifier(v);
+  cfg.pages[i]._navPrec = v;
+  var champSlug = document.querySelectorAll('#zone .bloc')[i];
+  rafraichirEtat();
+  if (champSlug) {
+    var inputs = champSlug.querySelectorAll('input[type=text]');
+    if (inputs[1]) inputs[1].value = cfg.pages[i].slug;
+  }
+}
+function ajouterSous(i, cle, modele) {
+  if (!cfg.pages[i][cle]) cfg.pages[i][cle] = [];
+  cfg.pages[i][cle].push(modele); rendre();
+}
+function retirerSous(i, cle, j) {
+  if (!confirm('Supprimer définitivement cet élément ?')) return;
+  cfg.pages[i][cle].splice(j, 1); rendre();
+}
+function majSous(i, cle, j, champ_, v) { cfg.pages[i][cle][j][champ_] = v; rafraichirEtat(); }
+
+/* ==========================================================================
+   Rendu
+   ========================================================================== */
+
+function rendre() {
+  if (!cfg) return;
+  document.getElementById('menu').innerHTML = ETAPES.map(function (e_) {
+    var etat = e_.complet() ? 'ok' : 'vide';
+    return '<button class="' + (e_.id === etape ? 'on' : '') + '" onclick="aller(\'' + e_.id + '\')">' +
+      '<span class="pastille ' + etat + '"></span>' + esc(e_.titre) + '</button>';
+  }).join('');
+  document.getElementById('zone').innerHTML = vue(etape);
+  brancher();
+  rafraichirEtat();
+}
+function aller(id) { etape = id; rendre(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+function brancher() {
+  document.querySelectorAll('#zone [data-chemin]').forEach(function (el) {
+    el.addEventListener('input', function () {
+      ecrire(el.dataset.chemin, el.value);
+      // couleur : garder le sélecteur et le texte synchronisés
+      document.querySelectorAll('#zone [data-chemin="' + el.dataset.chemin + '"]').forEach(function (o) {
+        if (o !== el) o.value = el.value;
+      });
+      if (el.dataset.max) compter(el);
+    });
+    if (el.dataset.max) compter(el);
+  });
+}
+function compter(el) {
+  var c = document.querySelector('.compte[data-pour="' + el.id + '"]');
+  if (!c) return;
+  var n = (el.value || '').length, max = +el.dataset.max;
+  c.textContent = n + ' / ' + max + ' caractères';
+  c.className = 'compte' + (n > max ? ' trop' : '');
+}
+
+function rafraichirEtat() {
+  if (!cfg) return;
+  var faits = ETAPES.filter(function (e_) { return e_.complet(); }).length;
+  var pct = Math.round(faits / ETAPES.length * 100);
+  document.getElementById('jauge').style.width = pct + '%';
+  document.getElementById('nom-site').innerHTML = cfg.siteName
+    ? 'Site : <b>' + esc(cfg.siteName) + '</b>' : 'Site sans nom';
+
+  var manque = ETAPES.filter(function (e_) { return !e_.complet(); }).map(function (e_) { return e_.titre; });
+  document.getElementById('etat').innerHTML = manque.length
+    ? '<b>' + pct + '% rempli.</b> Il reste : <span class="manque">' + manque.join(', ') + '</span>'
+    : '<span class="pret">Tout est rempli.</span> Vous pouvez enregistrer le fichier.';
+
+  // les pastilles du menu suivent l'avancement sans tout re-rendre
+  document.querySelectorAll('#menu button').forEach(function (b, i) {
+    var p = b.querySelector('.pastille');
+    if (p) p.className = 'pastille ' + (ETAPES[i].complet() ? 'ok' : 'vide');
+  });
+
+  var pret = !!(cfg.siteName);
+  document.getElementById('btn-export').disabled = !pret;
+  document.getElementById('btn-export2').disabled = !pret;
+}
+
+/* ==========================================================================
+   Ouvrir / enregistrer
+   ========================================================================== */
+
+document.getElementById('fichier').addEventListener('change', function (ev) {
+  var f = ev.target.files[0];
+  if (!f) return;
+  var r = new FileReader();
+  r.onload = function () {
+    try {
+      var lu = JSON.parse(r.result);
+      cfg = Object.assign(neuf(), lu);
+      etape = 'identite';
+      rendre();
+    } catch (err) {
+      alert('Ce fichier n’est pas un config.json valide.\n\nDétail : ' + err.message +
+            '\n\nVérifiez que vous avez bien choisi le fichier config.json du site, et qu’il n’a pas été ouvert puis réenregistré dans Word ou Excel.');
+    }
+  };
+  r.readAsText(f, 'utf-8');
+  ev.target.value = '';
+});
+
+document.getElementById('btn-neuf').addEventListener('click', function () {
+  if (cfg && !confirm('Repartir de zéro ? Ce qui n’a pas été enregistré sera perdu.')) return;
+  cfg = neuf(); etape = 'identite'; rendre();
+});
+
+function exporter() {
+  if (!cfg) return;
+  var propre = JSON.parse(JSON.stringify(cfg));
+  // nettoyage : les champs de travail internes ne partent pas dans le fichier
+  (propre.pages || []).forEach(function (p) { delete p._navPrec; });
+  if (!(propre.pages || []).length) delete propre.pages;
+
+  var blob = new Blob([JSON.stringify(propre, null, 2)], { type: 'application/json;charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'config' + (cfg.siteName ? '-' + slugifier(cfg.siteName) : '') + '.json';
+  a.click();
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+}
+document.getElementById('btn-export').addEventListener('click', exporter);
+document.getElementById('btn-export2').addEventListener('click', exporter);
+
+// on prévient avant de perdre le travail en cours
+window.addEventListener('beforeunload', function (e) {
+  if (cfg && cfg.siteName) { e.preventDefault(); e.returnValue = ''; }
+});
+</script>
+</body>
+</html>
