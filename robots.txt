@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /configurateur/
 
-Sitemap: https://website.getyourgigs.fr/sitemap.xml
+Sitemap: https://demos.lemarchanddesites.fr/sitemap.xml

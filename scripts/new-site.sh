@@ -103,7 +103,7 @@ fi
 # Domaine dans sitemap.xml / robots.txt
 NEWDOM="${DOMAIN:+https://$DOMAIN}"; NEWDOM="${NEWDOM:-https://A-DEFINIR.fr}"
 for f in sitemap.xml robots.txt; do
-  sed -i.bak "s#https://website\.getyourgigs\.fr#$NEWDOM#g" "$DEST/$f" && rm -f "$DEST/$f.bak"
+  sed -i.bak "s#https://demos\.lemarchanddesites\.fr#$NEWDOM#g" "$DEST/$f" && rm -f "$DEST/$f.bak"
 done
 [[ -z "$DOMAIN" ]] && echo "  ⚠ domaine non fourni → sitemap.xml/robots.txt pointent sur A-DEFINIR.fr (à éditer)"
 

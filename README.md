@@ -6,6 +6,9 @@ clients à partir d'un seul fichier de contenu, sans écrire de code par client.
 C'est lui qui rend l'offre tenable : un site une page est livré en 3 jours parce
 qu'il n'est pas codé à la main, mais rempli.
 
+**En ligne :** [demos.lemarchanddesites.fr](https://demos.lemarchanddesites.fr) —
+outil interne, pas une marque montrée aux clients.
+
 ```
 config.json  ──▶  moteur  ──▶  site autonome (repo + Vercel + domaine)
 ```
