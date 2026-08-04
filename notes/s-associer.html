@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<style>*{box-sizing:border-box;margin:0;padding:0}</style>
+<title>S'associer — ce que ça coûte, dans l'ordre</title>
+
+<style>
+  :root {
+    --encre:   #12281E;
+    --papier:  #F7F4ED;
+    --surface: #FFFFFF;
+    --jaune:   #F0A500;
+    --tampon:  #C8452E;
+    --gris:    #67766C;
+    --filet:   #C9CFC6;
+
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+    --pas: clamp(2.25rem, 5vw, 3.5rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --encre:   #ECE7DA;
+      --papier:  #0E1A14;
+      --surface: #16241C;
+      --jaune:   #F5B733;
+      --tampon:  #E8836C;
+      --gris:    #98A79C;
+      --filet:   #2C3D33;
+    }
+  }
+  :root[data-theme="dark"] {
+    --encre:   #ECE7DA;
+    --papier:  #0E1A14;
+    --surface: #16241C;
+    --jaune:   #F5B733;
+    --tampon:  #E8836C;
+    --gris:    #98A79C;
+    --filet:   #2C3D33;
+  }
+  :root[data-theme="light"] {
+    --encre:   #12281E;
+    --papier:  #F7F4ED;
+    --surface: #FFFFFF;
+    --jaune:   #F0A500;
+    --tampon:  #C8452E;
+    --gris:    #67766C;
+    --filet:   #C9CFC6;
+  }
+
+  body {
+    background: var(--papier);
+    color: var(--encre);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .feuille {
+    max-width: 43rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 4.5rem) clamp(1.15rem, 5vw, 2rem) 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--pas);
+  }
+
+  /* ---- en-tête ---- */
+
+  .tete { display: flex; flex-direction: column; gap: .9rem; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--gris);
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6.5vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -.022em;
+    font-weight: 700;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .chapeau {
+    font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+    line-height: 1.5;
+    color: var(--gris);
+    max-width: 34rem;
+    text-wrap: pretty;
+  }
+
+  /* ---- sections ---- */
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.05rem;
+    border-top: 1.5px dashed var(--filet);
+    padding-top: calc(var(--pas) * .62);
+  }
+
+  .num {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .13em;
+    color: var(--jaune);
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: clamp(1.35rem, 3.4vw, 1.7rem);
+    line-height: 1.2;
+    letter-spacing: -.014em;
+    font-weight: 700;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    margin: .5rem 0 0;
+    letter-spacing: -.005em;
+  }
+
+  p { margin: 0; max-width: 38rem; text-wrap: pretty; }
+
+  strong { font-weight: 700; }
+
+  a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:focus-visible { outline: 2px solid var(--jaune); outline-offset: 3px; }
+
+  ul { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: .5rem; max-width: 38rem; }
+  li::marker { color: var(--jaune); }
+
+  /* ---- étiquette de prix ---- */
+
+  .etiquette {
+    display: inline-block;
+    background: var(--jaune);
+    color: #12281E;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .95em;
+    padding: .08em .42em;
+    white-space: nowrap;
+  }
+
+  /* ---- tableaux ---- */
+
+  .defile { overflow-x: auto; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 26rem;
+    font-size: 15.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  caption {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--gris);
+    padding-bottom: .7rem;
+  }
+
+  th, td { text-align: left; padding: .62rem .7rem; border-bottom: 1px solid var(--filet); }
+  thead th { font-family: var(--mono); font-size: 11.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--gris); font-weight: 500; }
+  tbody th { font-weight: 400; }
+  td.n, th.n { text-align: right; font-family: var(--mono); }
+  tr.total th, tr.total td { border-bottom: none; border-top: 1.5px solid var(--encre); font-weight: 700; padding-top: .8rem; }
+  td.oui, td.non { font-family: var(--mono); font-size: 13px; }
+  td.non { color: var(--tampon); }
+
+  /* ---- encadrés ---- */
+
+  .bloc {
+    background: var(--surface);
+    border-left: 3px solid var(--jaune);
+    padding: 1.15rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+  .bloc.alerte { border-left-color: var(--tampon); }
+  .bloc p { max-width: none; }
+  .bloc .titre {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: var(--gris);
+  }
+
+  .verdict {
+    background: var(--encre);
+    color: var(--papier);
+    padding: 1.5rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+  }
+  .verdict p { max-width: none; }
+  .verdict .titre { font-family: var(--mono); font-size: 11.5px; letter-spacing: .11em; text-transform: uppercase; color: var(--jaune); }
+  .verdict strong { color: var(--jaune); }
+
+  /* ---- pied ---- */
+
+  footer {
+    border-top: 1.5px dashed var(--filet);
+    padding-top: 1.4rem;
+    font-size: 14px;
+    color: var(--gris);
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+  footer p { max-width: none; }
+
+  /* ---- impression / PDF ---- */
+
+  @media print {
+    :root { --papier: #FFFFFF; --surface: #F7F4ED; }
+    body { font-size: 11pt; }
+    .feuille { max-width: none; padding: 0; gap: 1.6rem; }
+    section { padding-top: 1.1rem; }
+    .bloc, .verdict, table, figure { break-inside: avoid; }
+    h1, h2, h3 { break-after: avoid; }
+    h2 + p, h3 + p { break-before: avoid; }
+    a { text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="feuille">
+
+  <header class="tete">
+    <div class="eyebrow">Le Marchand de Sites · note interne</div>
+    <h1>S'associer&nbsp;: ce que ça coûte, dans l'ordre</h1>
+    <p class="chapeau">
+      Comment on peut travailler à deux dès maintenant sans monter de société,
+      ce que ça rapporte concrètement sur un site vendu&nbsp;890&nbsp;€, et à
+      partir de quel moment il devient rentable de créer une SAS.
+    </p>
+  </header>
+
+  <section>
+    <div class="num">Le point de départ</div>
+    <h2>On ne peut pas être deux dans une micro-entreprise</h2>
+    <p>
+      Une micro-entreprise est une <strong>entreprise individuelle</strong>&nbsp;:
+      juridiquement, l'entreprise et la personne sont la même chose. Il n'existe
+      pas de version à deux, et on n'y «&nbsp;ajoute&nbsp;» personne.
+    </p>
+    <p>
+      Ça ne veut pas dire qu'il faut créer une société pour commencer. On a deux
+      étapes possibles, et la première ne coûte rien.
+    </p>
+  </section>
+
+  <section>
+    <div class="num">Étape 1 — maintenant</div>
+    <h2>Chacun sa micro, et on se facture</h2>
+    <p>
+      Chacun garde sa propre micro-entreprise. Théo signe avec le client et
+      encaisse&nbsp;; il sous-traite une partie du travail et reçoit une facture
+      pour cette part. Aucune structure commune, aucun engagement, zéro frais
+      de création.
+    </p>
+
+    <div class="bloc">
+      <div class="titre">À savoir avant de créer sa micro</div>
+      <p>
+        L'<strong>ACRE</strong> réduit les cotisations de moitié pendant
+        <strong>douze mois à compter de la création</strong> — pas à compter du
+        premier euro facturé. Créer sa micro «&nbsp;pour être prêt&nbsp;» six mois
+        avant la première mission revient à en gaspiller la moitié.
+      </p>
+      <p>
+        Donc&nbsp;: <strong>on crée la micro quand la première mission est
+        signée.</strong> C'est gratuit et ça prend vingt minutes sur
+        <a href="https://www.autoentrepreneur.urssaf.fr">autoentrepreneur.urssaf.fr</a>.
+        L'ACRE est notamment ouverte aux créateurs de moins de 26&nbsp;ans, et se
+        coche pendant l'immatriculation — jamais après.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="num">Le cas concret</div>
+    <h2>Un site cinq pages vendu 890 €</h2>
+    <p>
+      Sur ce chantier, la part sous-traitée est de <span class="etiquette">350 €</span>
+      (intégration et traitement des photos). Personne ne facture la TVA&nbsp;:
+      on est sous le seuil de franchise. Cotisations micro ramenées à
+      environ&nbsp;12,3&nbsp;% grâce à l'ACRE.
+    </p>
+
+    <div class="defile">
+      <table>
+        <caption>Répartition réelle des 890 € encaissés</caption>
+        <thead>
+          <tr><th scope="col">&nbsp;</th><th scope="col" class="n">Théo</th><th scope="col" class="n">L'associé</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Encaissé</th><td class="n">890 €</td><td class="n">350 €</td></tr>
+          <tr><th scope="row">Chiffre d'affaires déclaré</th><td class="n">890 €</td><td class="n">350 €</td></tr>
+          <tr><th scope="row">Cotisations ≈ 12,3 %</th><td class="n">− 109 €</td><td class="n">− 43 €</td></tr>
+          <tr><th scope="row">Reversé à l'associé</th><td class="n">− 350 €</td><td class="n">—</td></tr>
+          <tr class="total"><th scope="row">Reste</th><td class="n">431 €</td><td class="n">307 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      Sur 890&nbsp;€ encaissés, 152&nbsp;€ partent en cotisations, soit 17&nbsp;%.
+      Le reste se partage.
+    </p>
+
+    <div class="bloc alerte">
+      <div class="titre">Le coût caché de ce montage</div>
+      <p>
+        Les 350&nbsp;€ sous-traités sont cotisés <strong>deux fois</strong>&nbsp;:
+        une fois chez Théo parce qu'ils sont dans son chiffre d'affaires, une
+        fois chez l'associé parce que c'est le sien. Soit 86&nbsp;€ de
+        cotisations sur 350&nbsp;€.
+      </p>
+      <p>
+        Tant que l'ACRE court, c'est supportable&nbsp;: 24,6&nbsp;% sur la part
+        sous-traitée. <strong>Une fois l'ACRE terminée, on monte à
+        49&nbsp;%</strong> — et le montage cesse d'avoir du sens.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="num">Étape 2 — plus tard</div>
+    <h2>La SAS, et à partir de quand</h2>
+    <p>
+      Dans une société, ce qui est versé à l'associé est une <strong>charge
+      déductible</strong>&nbsp;: la double cotisation disparaît. C'est le seul
+      vrai argument, et il suffit.
+    </p>
+
+    <h3>Ce que ça coûte à créer</h3>
+    <div class="defile">
+      <table>
+        <thead>
+          <tr><th scope="col">Poste</th><th scope="col" class="n">Montant</th><th scope="col">Obligatoire</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Annonce légale (tarif réglementé)</th><td class="n">193 €</td><td class="oui">oui</td></tr>
+          <tr><th scope="row">Greffe + bénéficiaires effectifs</th><td class="n">~60 €</td><td class="oui">oui</td></tr>
+          <tr><th scope="row">Dépôt du capital en banque</th><td class="n">0 €</td><td class="oui">oui</td></tr>
+          <tr><th scope="row">Rédaction des statuts</th><td class="n">0 – 2 000 €</td><td class="non">non</td></tr>
+          <tr class="total"><th scope="row">Incompressible</th><td class="n">~250 €</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Les statuts sont le seul poste où l'on peut dépenser beaucoup ou rien.
+      C'est aussi le document qui décide de ce qui se passe le jour où l'un des
+      deux veut partir, vendre ses parts, ou ne fait plus rien tout en gardant
+      la moitié. <strong>Si on met de l'argent quelque part, c'est là.</strong>
+    </p>
+    <p>
+      Sur le capital&nbsp;: 1&nbsp;€ est légal, et c'est une mauvaise idée.
+      Quelques milliers d'euros financent les premiers frais et évitent que
+      chaque dépense passe en compte courant d'associé.
+    </p>
+
+    <h3>Ce que ça coûte chaque année</h3>
+    <div class="defile">
+      <table>
+        <thead>
+          <tr><th scope="col">Poste</th><th scope="col" class="n">Montant</th><th scope="col">Obligatoire</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Dépôt des comptes au greffe</th><td class="n">~45 €</td><td class="oui">oui</td></tr>
+          <tr><th scope="row">Compte bancaire professionnel</th><td class="n">150 – 350 €</td><td class="oui">oui</td></tr>
+          <tr><th scope="row">CFE <em>(exonérée la 1ʳᵉ année)</em></th><td class="n">200 – 600 €</td><td class="oui">oui</td></tr>
+          <tr><th scope="row">Comptabilité</th><td class="n">0 – 2 500 €</td><td class="non">non</td></tr>
+          <tr><th scope="row">Assurance RC Pro</th><td class="n">150 – 300 €</td><td class="non">non</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Hors comptabilité, une SAS coûte environ <span class="etiquette">500 €/an</span>
+      à faire tourner. Et pas de commissaire aux comptes&nbsp;: il ne devient
+      obligatoire qu'à partir de 8&nbsp;M€ de chiffre d'affaires ou 50&nbsp;salariés.
+    </p>
+
+    <h3>L'expert-comptable n'est pas obligatoire</h3>
+    <p>
+      Aucun texte ne l'impose. Ce qui est imposé, c'est le résultat&nbsp;: bilan,
+      compte de résultat, annexe, liasse fiscale, dépôt des comptes. Mais une SAS
+      passe en <strong>comptabilité d'engagement</strong> — une facture compte dès
+      son émission, même payée trois mois plus tard — et ça n'a plus rien à voir
+      avec le tableur de la micro.
+    </p>
+    <p>
+      Un comptable en ligne (Dougs, Indy, Pennylane) tourne autour de
+      <strong>100&nbsp;€/mois</strong>. C'est le bon rapport qualité-prix à cette
+      taille. Un cabinet classique coûte 1&nbsp;500 à 2&nbsp;500&nbsp;€/an et ne se
+      justifie pas ici.
+    </p>
+  </section>
+
+  <section>
+    <div class="num">Le déclencheur</div>
+    <h2>Quand on bascule</h2>
+    <div class="verdict">
+      <div class="titre">La règle qu'on se donne</div>
+      <p>
+        Une SAS à deux coûte réalistement <strong>1 700 à 2 000 €</strong> la
+        première année. Une fois l'ACRE terminée, la double cotisation coûte
+        172&nbsp;€ par site sous-traité.
+      </p>
+      <p>
+        <strong>Environ douze sites sous-traités dans l'année</strong> — un peu
+        plus de 10 000 € de chiffre d'affaires — et la SAS est rentabilisée.
+      </p>
+      <p>
+        On bascule quand la sous-traitance devient régulière. Pas quand l'idée
+        devient excitante.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="num">Les règles à tenir</div>
+    <h2>Trois choses à ne pas rater</h2>
+
+    <h3>Ne pas glisser vers du salariat déguisé</h3>
+    <p>
+      C'est le vrai risque juridique du montage. Si l'associé ne facture que
+      Théo, avec des horaires, des consignes détaillées et du matériel fourni,
+      l'URSSAF peut requalifier la relation en contrat de travail, avec rappel
+      de cotisations. Pour l'éviter&nbsp;: d'autres clients que Théo, une
+      facturation au forfait par mission et non au temps passé, une organisation
+      libre, son propre matériel.
+    </p>
+
+    <h3>Encaisser avant de payer</h3>
+    <p>
+      Le client règle la moitié à la commande, la moitié à la livraison. L'associé
+      est payé après le premier acompte — jamais avant, sinon on avance de
+      l'argent sur un client qui peut encore reculer.
+    </p>
+
+    <h3>Des factures en règle des deux côtés</h3>
+    <p>
+      Numéro séquentiel, date, identité complète et SIRET des deux parties,
+      description de la prestation, montant, et la mention obligatoire
+      <strong>«&nbsp;TVA non applicable, article 293 B du CGI&nbsp;»</strong>.
+      Sans elle, la facture est irrégulière.
+    </p>
+  </section>
+
+  <section>
+    <div class="num">Un point d'honnêteté</div>
+    <h2>La marque reste au singulier pour l'instant</h2>
+    <p>
+      Le site est écrit à la première personne et raconte une histoire
+      personnelle&nbsp;: un marchand, un étal, quelqu'un qui annonce son prix.
+      La sous-traitance n'a pas à être annoncée au client, et aucune agence ne
+      le fait.
+    </p>
+    <p>
+      Mais ça ne tient que tant que l'associé reste en retrait. Dès qu'il parle
+      au client, se déplace ou répond aux mails, le «&nbsp;je&nbsp;» devient
+      vérifiable — et sur une marque bâtie sur la franchise, ça se paie cher.
+      <strong>Ce jour-là on réécrit le site au «&nbsp;nous&nbsp;»</strong>, et
+      c'est un vrai chantier d'écriture, pas un changement de couleurs.
+    </p>
+  </section>
+
+  <footer>
+    <p>
+      Les taux de cotisation, seuils et tarifs réglementés cités ici sont révisés
+      chaque année&nbsp;: à revérifier sur l'URSSAF et service-public.fr au moment
+      de s'immatriculer. Cette note n'est pas un conseil d'expert-comptable — le
+      raisonnement tient, les chiffres bougent.
+    </p>
+    <p>Note interne · Le Marchand de Sites · Bordeaux &amp; Gironde</p>
+  </footer>
+
+</div>
+</body>
+</html>
