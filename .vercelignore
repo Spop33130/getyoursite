@@ -1,16 +1,5 @@
-# Pages internes : elles restent dans le repo, elles ne partent PAS en ligne.
-#
-# Sur de l'hébergement statique, tout fichier déployé est public : un mot de passe
-# vérifié en JavaScript est lisible dans le code source, donc il ne protège rien.
+# Ce qui reste dans le dépôt mais ne part pas en ligne.
+# Sur un hébergement statique, tout fichier déployé est public : un mot de passe
+# vérifié en JavaScript est lisible dans le code source et ne protège rien.
 # La seule protection réelle est de ne pas publier le fichier.
-#
-# Pour les consulter en local :
-#   cd ~/Developer/getyoursite && python3 -m http.server 8080
-#   puis http://localhost:8080/interne/
-
-interne/
-pitch/
-tuto/
-fiches/
-hub/login/
 scripts/

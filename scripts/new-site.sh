@@ -78,6 +78,19 @@ if [[ "$THEME" == "dark" || "$THEME" == "light" ]]; then
   echo "  thème : $THEME"
 fi
 
+# Ambiance de métier : le site la référence en /themes/<nom>.css, il doit donc
+# l'embarquer. Sans ça, le site part en ligne sans son identité visuelle.
+AMBIANCE="$(python3 -c "import json;print(json.load(open('$DEST/config.json')).get('ambiance') or '')" 2>/dev/null || echo '')"
+if [[ -n "$AMBIANCE" ]]; then
+  if [[ -f "$TEMPLATE_DIR/themes/$AMBIANCE.css" ]]; then
+    mkdir -p "$DEST/themes"
+    cp "$TEMPLATE_DIR/themes/$AMBIANCE.css" "$DEST/themes/"
+    echo "  ambiance : $AMBIANCE"
+  else
+    echo "  ⚠ ambiance « $AMBIANCE » inconnue — le site gardera le socle neutre"
+  fi
+fi
+
 # Images : fournies, sinon placeholders
 if [[ -n "$IMAGES" && "$IMAGES" != "-" && -d "$IMAGES" ]]; then
   cp "$IMAGES"/hero.jpg "$IMAGES"/about.jpg "$IMAGES"/gallery-*.jpg "$DEST/images/" 2>/dev/null || true

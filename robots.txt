@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /onboarding/
 Disallow: /configurateur/
-Disallow: /hub/
 
 Sitemap: https://website.getyourgigs.fr/sitemap.xml
