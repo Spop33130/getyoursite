@@ -123,8 +123,23 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
   padding:3px 9px;border-radius:99px;background:var(--fond);color:var(--gris);}
 .pastille-etat.ok{background:#ECFDF5;color:var(--ok);}
 .hint{font-size:13px;color:var(--gris);line-height:1.55;margin-top:-12px;margin-bottom:16px;}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
+code{font-family:var(--fm);font-size:13px;
   background:var(--fond);border:1px solid var(--ligne);border-radius:5px;padding:1px 6px;}
+
+/* ---------- coller depuis un mail ---------- */
+.voile{display:none;position:fixed;inset:0;z-index:100;background:rgba(15,23,42,.5);
+  align-items:center;justify-content:center;padding:20px;}
+.voile.on{display:flex;}
+.boite-coller{background:var(--blanc);border-radius:var(--r);padding:24px;max-width:520px;width:100%;}
+.boite-coller h3{font-size:17px;font-weight:700;color:var(--encre);margin-bottom:6px;}
+.boite-coller p{font-size:13.5px;line-height:1.5;color:var(--gris);margin-bottom:14px;}
+.boite-coller textarea{width:100%;min-height:160px;border:1px solid var(--ligne);border-radius:8px;
+  padding:10px 12px;font-family:var(--fm);font-size:12.5px;line-height:1.5;resize:vertical;}
+.boite-coller textarea:focus{outline:none;border-color:var(--bleu);}
+.voile-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;}
+.etat{font-size:13px;margin-top:10px;}
+.etat.err{color:var(--rouge);}
+.etat.ok{color:var(--ok);}
 </style>
 </head>
 <body>
@@ -134,8 +149,22 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
   <div class="site" id="nom-site">Aucun site chargé</div>
   <input type="file" id="fichier" accept=".json,application/json" hidden>
   <button class="btn" onclick="document.getElementById('fichier').click()">Ouvrir un site existant</button>
+  <button class="btn" id="btn-coller">Coller depuis un mail</button>
   <button class="btn" id="btn-neuf">Nouveau site</button>
   <button class="btn btn-p" id="btn-export" disabled>Enregistrer le fichier</button>
+</div>
+
+<div class="voile" id="voile-coller">
+  <div class="boite-coller">
+    <h3>Coller les informations reçues par mail</h3>
+    <p>Le bloc qui commence par <code>{</code> et finit par <code>}</code>, tout en bas du mail « Fiche client ».</p>
+    <textarea id="texte-coller" placeholder="{&#10;  &quot;siteName&quot;: ...&#10;}"></textarea>
+    <div class="voile-actions">
+      <button class="btn" id="annuler-coller">Annuler</button>
+      <button class="btn btn-p" id="valider-coller">Utiliser ces informations</button>
+    </div>
+    <div class="etat" id="etat-coller"></div>
+  </div>
 </div>
 
 <div class="app">
@@ -668,6 +697,61 @@ document.getElementById('fichier').addEventListener('change', function (ev) {
 document.getElementById('btn-neuf').addEventListener('click', function () {
   if (cfg && !confirm('Repartir de zéro ? Ce qui n’a pas été enregistré sera perdu.')) return;
   cfg = neuf(); etape = 'identite'; rendre();
+});
+
+/* Fusionne un objet dans un autre en descendant dans les objets imbriqués
+   (contact, seo…) au lieu de les écraser entièrement — pour que coller la
+   fiche d'un client par-dessus un site déjà commencé ne perde rien. */
+function fusionner(dest, src) {
+  Object.keys(src).forEach(function (k) {
+    var v = src[k];
+    var estObjet = v && typeof v === 'object' && !Array.isArray(v);
+    var destEstObjet = dest[k] && typeof dest[k] === 'object' && !Array.isArray(dest[k]);
+    if (estObjet && destEstObjet) fusionner(dest[k], v);
+    else dest[k] = v;
+  });
+  return dest;
+}
+
+var voileColler = document.getElementById('voile-coller');
+var texteColler = document.getElementById('texte-coller');
+var etatColler = document.getElementById('etat-coller');
+
+document.getElementById('btn-coller').addEventListener('click', function () {
+  etatColler.textContent = ''; etatColler.className = 'etat';
+  voileColler.classList.add('on');
+  texteColler.value = '';
+  texteColler.focus();
+});
+document.getElementById('annuler-coller').addEventListener('click', function () {
+  voileColler.classList.remove('on');
+});
+voileColler.addEventListener('click', function (e) {
+  if (e.target === voileColler) voileColler.classList.remove('on');
+});
+
+document.getElementById('valider-coller').addEventListener('click', function () {
+  var texte = texteColler.value;
+  var debut = texte.indexOf('{');
+  var fin = texte.lastIndexOf('}');
+  if (debut === -1 || fin === -1 || fin <= debut) {
+    etatColler.textContent = 'Aucun bloc { … } trouvé dans ce que vous avez collé.';
+    etatColler.className = 'etat err';
+    return;
+  }
+  var lu;
+  try {
+    lu = JSON.parse(texte.slice(debut, fin + 1));
+  } catch (err) {
+    etatColler.textContent = 'Ce bloc n’est pas lisible (' + err.message + '). Recopiez-le en entier, depuis le { jusqu’au } final.';
+    etatColler.className = 'etat err';
+    return;
+  }
+  if (!cfg) cfg = neuf();
+  fusionner(cfg, lu);
+  etape = 'identite';
+  rendre();
+  voileColler.classList.remove('on');
 });
 
 function exporter() {

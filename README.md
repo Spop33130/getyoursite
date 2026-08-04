@@ -15,6 +15,134 @@ config.json  ──▶  moteur  ──▶  site autonome (repo + Vercel + domain
 
 ---
 
+## Le parcours complet, dans l'ordre
+
+Du rendez-vous au site en ligne. Chaque étape renvoie à un fichier ou une
+commande qui existe vraiment — rien d'aspirationnel.
+
+### 1 — Le rendez-vous
+
+Le client réserve sur [`/rendez-vous/`](https://lemarchanddesites.fr/rendez-vous/)
+(Cal.com, 15 min, appel téléphonique). La réservation apparaît dans l'agenda —
+aucune action de suivi nécessaire.
+
+Ce qui est annoncé au téléphone (formule, prix, date) doit rester vrai jusqu'à
+la facture — c'est la promesse du site : *« Le prix est écrit et il ne bouge
+pas. »*
+
+### 2 — Le client remplit ses informations
+
+Après l'appel, envoyer ce lien au client :
+[`lemarchanddesites.fr/vos-informations/`](https://lemarchanddesites.fr/vos-informations/)
+
+Il y saisit lui-même (cinq minutes, depuis son téléphone) : nom du commerce,
+description, ville, ses prestations, ses coordonnées. À la validation, un
+e-mail arrive directement sur `contact@lemarchanddesites.fr` avec un résumé
+lisible et un bloc de données prêt à coller dans le configurateur.
+
+La page rappelle aussi d'envoyer les photos séparément par WhatsApp (lien
+pré-rempli fourni sur la page) — il n'y a pas d'envoi de fichiers intégré au
+formulaire.
+
+> Reste à la charge de Théo : les avis clients, les questions fréquentes, les
+> mentions légales (SIRET) et le choix de l'ambiance — le client ne les
+> renseigne pas lui-même.
+
+### 3 — Le paiement (moitié à la commande)
+
+Facture + virement, en dehors du site. Moitié à la commande, moitié le jour
+de la mise en ligne.
+
+### 4 — Remplir le configurateur
+
+Ouvrir [`/configurateur/`](https://demos.lemarchanddesites.fr/configurateur/).
+
+- **« Coller depuis un mail »** — coller le bloc reçu à l'étape 2 : les champs
+  déjà remplis (couleurs, ambiance…) sont conservés, seuls ceux du client sont
+  complétés.
+- Ou **« Ouvrir un site existant »** pour reprendre un `config.json` déjà
+  enregistré.
+
+Compléter ce que le client n'a pas rempli : couleurs, **ambiance de métier**
+(`artisan` / `restaurant` / `salon` / `commerce` — change polices et formes
+pour que le site ne ressemble pas aux autres sites du même moteur), pages
+secondaires pour le forfait cinq pages, noms des fichiers photo, avis,
+questions, mentions légales.
+
+Cliquer sur **Enregistrer le fichier** : un `config-nom-du-client.json` part
+dans `~/Downloads`. Rien n'est sauvegardé avant ce clic.
+
+### 5 — Le domaine (si le client n'en a pas)
+
+Achat à l'année chez o2switch (registrar déjà utilisé pour les autres
+domaines) — inclus dans le prix la première année.
+
+### 6 — Générer le site
+
+Dans l'app **Terminal** :
+
+```bash
+cd ~/Developer/getyoursite
+scripts/new-site.sh couverture-lefevre ~/Downloads/config-couverture-lefevre.json ~/Desktop/photos-client couverture-lefevre.fr
+```
+
+Les quatre mots après `new-site.sh` sont à adapter à chaque fois :
+1. **le nom du dossier/projet**, choisi par vous (souvent le nom du client)
+2. **le chemin du `.json`** téléchargé à l'étape 4
+3. **le dossier des photos** sur l'ordinateur (`-` si pas encore reçues)
+4. **le nom de domaine**, si déjà connu
+
+Ça crée `~/Developer/couverture-lefevre/` : site complet, pages secondaires
+générées s'il y en a, dépôt git initialisé.
+
+Vérifier avant de publier :
+
+```bash
+cd ~/Developer/couverture-lefevre && python3 -m http.server 8080
+```
+
+puis ouvrir `localhost:8080` — sur téléphone et sur ordinateur.
+
+### 7 — Mettre en ligne
+
+Toujours dans le même dossier :
+
+```bash
+gh repo create couverture-lefevre --private --source=. --push
+vercel --prod
+```
+
+La première commande crée le dépôt GitHub et y envoie le code. La seconde
+déploie sur Vercel (pose 2-3 questions la première fois — valider les
+propositions par défaut) et donne une adresse `.vercel.app` qui fonctionne
+tout de suite.
+
+Sur **vercel.com** → le projet → *Settings → Domains* → ajouter le vrai
+domaine du client : Vercel indique l'enregistrement DNS à poser. Le poser
+dans le cPanel o2switch (*Zone Editor*).
+
+> ⚠️ **Piège déjà rencontré plusieurs fois** : cPanel affiche l'enregistrement
+> immédiatement, mais sa propagation vers les serveurs publics d'o2switch
+> peut prendre de quelques minutes à plusieurs heures. Vérifier l'état réel
+> avec `dig +short <domaine> A @ns1.o2switch.net` (ou `CNAME` selon le cas) —
+> pas avec `dig` en local, qui reste sur une réponse mise en cache.
+
+### 8 — Vérifier et livrer
+
+```bash
+curl -sI https://<domaine>/
+```
+
+doit répondre `200`. Vérifier aussi une page secondaire s'il y en a, et le
+formulaire de contact depuis un vrai téléphone.
+
+Puis : envoyer le lien au client, facturer la seconde moitié, rappeler
+l'entretien optionnel (30 €/mois, modifications illimitées, domaine et
+hébergement compris — sinon le client gère lui-même le renouvellement
+d'environ 60 €/an à partir de la deuxième année).
+
+---
+
 ## Ce que ça produit
 
 **Un site une page** — hero, à propos, prestations, galerie avec agrandissement,
@@ -63,68 +191,24 @@ des sites français qui affichent une page « Confidentialité ».
 
 ---
 
-## Fabriquer un site
+## Ce que le client ne remplit pas lui-même
 
-### 1 — Réunir le contenu
+`/vos-informations/` ne couvre que le texte de base. Reste à la charge de
+Théo, dans le configurateur :
 
 | Élément | Détail |
 |---|---|
-| Nom exact | Avec majuscules et accents |
-| Métier en une phrase | « Couvreur-zingueur depuis 1998 » |
-| Téléphone, e-mail, adresse | Ceux qui seront affichés |
-| SIRET | Sur le Kbis ou l'avis Insee |
-| 3 à 6 prestations | Une phrase concrète chacune |
+| SIRET | Sur le Kbis ou l'avis Insee du client |
 | 2 ou 3 avis clients | Texte, prénom, ville |
-| 8 photos | `hero.jpg`, `about.jpg`, `gallery-1.jpg` … `gallery-6.jpg` |
+| 8 photos | `hero.jpg`, `about.jpg`, `gallery-1.jpg` … `gallery-6.jpg` — reçues par WhatsApp |
+| Couleurs et ambiance | Choisies en fonction du métier |
 
 Des photos de téléphone suffisent si elles sont nettes et prises de jour. Trois
 bonnes photos valent mieux que huit mauvaises : la galerie s'adapte.
 
-### 2 — Remplir le configurateur
-
-Ouvrir **`/configurateur/`**. Dix étapes, chaque champ expliqué par ce qu'il
-produit sur le site. Une pastille verte signale une étape complète, orange ce
-qu'il reste à faire.
-
-- **Nouveau site** pour partir de zéro.
-- **Ouvrir un site existant** pour reprendre un `config.json` déjà rempli.
-
-Rien n'est enregistré automatiquement : cliquer sur **Enregistrer le fichier**
-avant de fermer.
-
 > Ne jamais rouvrir un `.json` dans Word, Excel ou le Bloc-notes pour le
 > corriger : ces logiciels cassent les accents et le fichier devient
 > inutilisable. Pour le modifier, le rouvrir dans le configurateur.
-
-### 3 — Générer
-
-```bash
-scripts/new-site.sh <slug> <config.json> [dossier-photos] [domaine]
-```
-
-```bash
-scripts/new-site.sh couverture-lefevre ~/Downloads/config-couverture-lefevre.json ~/Desktop/photos couverture-lefevre.fr
-```
-
-Crée `~/Developer/couverture-lefevre/` : moteur, photos, config, pages
-secondaires s'il y en a, et dépôt git initialisé. Sans dossier de photos, des
-images provisoires sont posées.
-
-Vérifier avant de publier :
-
-```bash
-cd ~/Developer/couverture-lefevre && python3 -m http.server 8080
-```
-
-### 4 — Mettre en ligne
-
-```bash
-cd ~/Developer/couverture-lefevre
-gh repo create couverture-lefevre --private --source=. --push
-vercel --prod
-```
-
-Relier le domaine dans le tableau de bord Vercel.
 
 ---
 
