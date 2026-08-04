@@ -4,17 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Configurateur de site — GetYourSite</title>
+<title>Configurateur — Le Marchand de Sites</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="/vendor/fonts/outfit.css">
+<link rel="stylesheet" href="/vendor/fonts/instrument-sans.css">
+<link rel="stylesheet" href="/vendor/fonts/jetbrains-mono.css">
 <style>
 :root{
-  --bleu:#2563EB; --bleu-fonce:#1D4ED8; --bleu-pale:#EFF6FF;
-  --encre:#0F172A; --texte:#334155; --gris:#64748B; --ligne:#E2E8F0;
-  --fond:#F8FAFC; --blanc:#FFFFFF;
-  --ok:#059669; --alerte:#D97706; --rouge:#DC2626;
+  --bleu:#12281E; --bleu-fonce:#1D3D2D; --bleu-pale:#EAEFEB;
+  --encre:#12281E; --texte:#334155; --gris:#5E6C64; --ligne:#E0DCD2;
+  --fond:#F7F4ED; --blanc:#FFFFFF;
+  --ok:#059669; --alerte:#D97706; --rouge:#C8452E;
+  --jaune:#F0A500;
   --r:10px;
-  --f:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --fm:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--f);background:var(--fond);color:var(--texte);-webkit-font-smoothing:antialiased;}
@@ -23,7 +26,10 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 /* ---------- barre du haut ---------- */
 .top{position:sticky;top:0;z-index:50;background:var(--blanc);border-bottom:1px solid var(--ligne);
   display:flex;align-items:center;gap:16px;padding:12px 20px;flex-wrap:wrap;}
-.top h1{font-size:17px;font-weight:700;color:var(--encre);letter-spacing:-.02em;flex:none;}
+.marque{display:flex;align-items:center;gap:10px;flex:none;}
+.marque .mark{position:relative;width:22px;height:22px;background:var(--jaune);border-radius:6px;flex:none;}
+.marque .mark::after{content:"";position:absolute;top:5px;left:5px;width:5px;height:5px;border-radius:50%;background:var(--bleu);}
+.top h1{font-size:16px;font-weight:700;color:var(--encre);letter-spacing:-.02em;flex:none;}
 .top .site{font-size:14px;color:var(--gris);flex:1;min-width:120px;}
 .top .site b{color:var(--encre);}
 .btn{border:1px solid var(--ligne);background:var(--blanc);border-radius:8px;padding:9px 16px;
@@ -83,7 +89,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 .bloc{border:1px solid var(--ligne);border-radius:var(--r);background:var(--blanc);
   padding:18px;margin-bottom:12px;}
 .bloc-tete{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;}
-.bloc-tete .num{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bleu);}
+.bloc-tete .num{font-family:var(--fm);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--bleu);}
 .ajout{border:1.5px dashed var(--ligne);background:none;border-radius:var(--r);width:100%;
   padding:13px;font-size:14px;font-weight:600;color:var(--gris);cursor:pointer;transition:.15s;}
 .ajout:hover{border-color:var(--bleu);color:var(--bleu);background:var(--bleu-pale);}
@@ -124,7 +130,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
 <body>
 
 <div class="top">
-  <h1>Configurateur de site</h1>
+  <div class="marque"><span class="mark" aria-hidden="true"></span><h1>Configurateur</h1></div>
   <div class="site" id="nom-site">Aucun site chargé</div>
   <input type="file" id="fichier" accept=".json,application/json" hidden>
   <button class="btn" onclick="document.getElementById('fichier').click()">Ouvrir un site existant</button>
