@@ -119,7 +119,7 @@ def render_page(cfg, page, pages, base=""):
     site = cfg.get("siteName", "")
     contact = cfg.get("contact", {}) or {}
     colors = cfg.get("colors", {}) or {}
-    theme = cfg.get("theme") or "light"
+    theme = cfg.get("theme")  # "dark" | "light" | absent — absent doit suivre l'appareil, jamais un défaut figé
     domain = (cfg.get("seo", {}) or {}).get("domain", "").rstrip("/")
     slug = page["slug"]
     url = f"{domain}/{slug}/" if domain else f"{base}/{slug}/"
@@ -235,8 +235,15 @@ def render_page(cfg, page, pages, base=""):
     tel = e(contact.get("phone", ""))
     tel_href = re.sub(r"[^0-9+]", "", contact.get("phone", "") or "")
 
+    # Sans thème forcé dans le config, l'accueil ne pose aucun data-theme et
+    # suit le mode de l'appareil (@media prefers-color-scheme dans le CSS).
+    # Une page secondaire qui écrirait "light" en dur romprait cette règle :
+    # elle resterait claire même sur un appareil en mode sombre — exactement
+    # l'incohérence repérée entre l'accueil et les pages de prestation.
+    theme_attr = f' data-theme="{e(theme)}"' if theme in ("dark", "light") else ""
+
     return f"""<!DOCTYPE html>
-<html lang="fr" data-theme="{e(theme)}">
+<html lang="fr"{theme_attr}>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
