@@ -1,0 +1,383 @@
+{
+  "siteName": "Couverture Lefèvre",
+  "slogan": "Couvreur-zingueur de père en fils",
+  "badge": "Couvreur-zingueur · 30 ans d'expérience · Garantie décennale",
+  "description": "Couvreur-zingueur depuis plus de 30 ans, j'interviens sur tous vos travaux de toiture : pose et rénovation de couverture, zinguerie, gouttières, étanchéité et démoussage. Un travail soigné, durable et réalisé dans les règles de l'art, garanti décennale.",
+  "colors": {
+    "primary": "#2563A6",
+    "secondary": "#1E293B"
+  },
+  "hero": {
+    "title": "Votre toiture entre de bonnes mains",
+    "subtitle": "Neuf, rénovation, dépannage — couverture, zinguerie et étanchéité réalisés avec soin et garantis.",
+    "cta_primary": "Demander un devis",
+    "cta_secondary": "Nos prestations",
+    "tags": [
+      "Garantie décennale",
+      "Devis gratuit",
+      "Intervention rapide"
+    ]
+  },
+  "about": {
+    "title": "Notre Savoir-faire",
+    "stats": [
+      {
+        "number": "30+",
+        "label": "Années d'expérience"
+      },
+      {
+        "number": "1200+",
+        "label": "Chantiers réalisés"
+      },
+      {
+        "number": "10 ans",
+        "label": "Garantie décennale"
+      }
+    ]
+  },
+  "services": [
+    {
+      "title": "Couverture & Toiture",
+      "description": "Pose et rénovation de toitures en tuiles, ardoises, zinc ou bac acier — neuf comme réfection, dans les règles de l'art",
+      "icon": "fas fa-house-chimney"
+    },
+    {
+      "title": "Zinguerie & Évacuation des eaux",
+      "description": "Gouttières, chéneaux, noues, descentes et habillages en zinc, cuivre ou aluminium pour une toiture parfaitement étanche",
+      "icon": "fas fa-cloud-rain"
+    },
+    {
+      "title": "Entretien & Étanchéité",
+      "description": "Démoussage, traitement hydrofuge, recherche de fuite et réparation — nous prolongeons la vie de votre toit",
+      "icon": "fas fa-broom"
+    }
+  ],
+  "commitments": [
+    {
+      "icon": "fas fa-shield-halved",
+      "title": "Garantie décennale",
+      "description": "Tous nos travaux sont couverts par notre assurance décennale"
+    },
+    {
+      "icon": "fas fa-helmet-safety",
+      "title": "Règles de l'art",
+      "description": "Respect des normes DTU et sécurité sur chaque chantier"
+    },
+    {
+      "icon": "fas fa-file-invoice",
+      "title": "Devis gratuit sous 48h",
+      "description": "Déplacement, diagnostic et chiffrage détaillé sans engagement"
+    },
+    {
+      "icon": "fas fa-bolt",
+      "title": "Intervention rapide",
+      "description": "Dépannage et mise hors d'eau en urgence en cas de fuite"
+    }
+  ],
+  "images": {
+    "hero": "hero.jpg",
+    "about": "about.jpg",
+    "gallery": [
+      "gallery-1.jpg",
+      "gallery-2.jpg",
+      "gallery-3.jpg",
+      "gallery-4.jpg",
+      "gallery-5.jpg",
+      "gallery-6.jpg"
+    ]
+  },
+  "testimonials": [
+    {
+      "text": "Réfection complète de ma toiture en tuiles réalisée en une semaine. Chantier propre, équipe sérieuse et devis respecté à l'euro près. Je recommande vivement.",
+      "author": "Patrick Meunier",
+      "role": "Client",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Intervention rapide après une fuite pendant les tempêtes. Ils sont venus dès le lendemain, toit réparé et gouttières refaites. Un vrai professionnel de confiance.",
+      "author": "Sylvie Rousseau",
+      "role": "Cliente",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "text": "Démoussage et traitement hydrofuge impeccables, ma toiture a retrouvé une seconde jeunesse. Conseils honnêtes, travail soigné et prix justes.",
+      "author": "Michel Fabre",
+      "role": "Client",
+      "rating": 5,
+      "source": "google"
+    }
+  ],
+  "google_reviews": {
+    "rating": 4.9,
+    "count": 63,
+    "url": ""
+  },
+  "faq": [
+    {
+      "question": "Intervenez-vous en urgence en cas de fuite ?",
+      "answer": "Oui. Nous assurons les dépannages et mises hors d'eau en urgence, généralement sous 24 à 48h. En cas de tempête ou de fuite active, appelez-nous directement par téléphone."
+    },
+    {
+      "question": "Vos travaux sont-ils garantis ?",
+      "answer": "Absolument. Toutes nos interventions sont couvertes par notre assurance de responsabilité décennale. Vous recevez une attestation avec votre facture."
+    },
+    {
+      "question": "Le devis est-il gratuit ?",
+      "answer": "Oui. Nous nous déplaçons gratuitement pour monter sur la toiture, établir un diagnostic précis et vous remettre un devis détaillé sous 48h, sans aucun engagement."
+    },
+    {
+      "question": "Quels matériaux de couverture posez-vous ?",
+      "answer": "Nous travaillons tous les types de couverture : tuiles terre cuite ou béton, ardoises naturelles, zinc et bac acier. Nous vous conseillons le matériau le plus adapté à votre toit et à votre budget."
+    }
+  ],
+  "schedule": [
+    {
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "open": "08:00",
+      "close": "18:00"
+    }
+  ],
+  "contact": {
+    "address": "8 Rue des Artisans, 33150 Cenon",
+    "phone": "07 86 25 34 10",
+    "whatsapp": "33786253410",
+    "email": "contact@couverture-lefevre.fr",
+    "hours": "Lun–Ven : 8h–18h",
+    "form_email": "",
+    "maps_embed_url": ""
+  },
+  "form": {
+    "title": "Un projet de toiture ?",
+    "subtitle": "Décrivez-nous vos travaux — nous vous répondons sous 48h avec un devis gratuit et sans engagement.",
+    "message_label": "Décrivez votre projet",
+    "message_placeholder": "Ex : réfection toiture 90 m² en tuiles, remplacement des gouttières, fuite à réparer, démoussage...",
+    "button_text": "Demander un devis gratuit",
+    "button_icon": "fas fa-house-chimney"
+  },
+  "emailjs": {
+    "service_id": "",
+    "template_id": "",
+    "public_key": ""
+  },
+  "social": {
+    "facebook": "https://www.facebook.com",
+    "instagram": "https://www.instagram.com",
+    "linkedin": ""
+  },
+  "seo": {
+    "schema_type": "RoofingContractor",
+    "street": "8 Rue des Artisans",
+    "zip": "33150",
+    "city": "Cenon",
+    "geo_lat": 44.8578,
+    "geo_lng": -0.5325,
+    "domain": "https://website.getyourgigs.fr/demos/artisan-multipages"
+  },
+  "legal": {
+    "responsable": "Prénom Nom",
+    "siret": "XXX XXX XXX 00000",
+    "forme": "Auto-entrepreneur",
+    "hebergeur_name": "Vercel Inc.",
+    "hebergeur_address": "340 Pine Street Suite 701, San Francisco, CA 94104, USA"
+  },
+  "pages": [
+    {
+      "slug": "couvreur-bordeaux",
+      "nav": "Couverture",
+      "title": "Couvreur à Bordeaux — réfection et pose de toiture | Couverture Lefèvre",
+      "description": "Couvreur à Bordeaux et en Gironde : réfection complète, pose de tuiles, ardoise et zinc. Devis gratuit sous 48 h, chantier propre, garantie décennale.",
+      "h1": "Couvreur à Bordeaux : pose et réfection de toiture",
+      "intro": "Une toiture qui prend l'eau ne s'arrange jamais toute seule. Nous intervenons sur Bordeaux et sa périphérie pour réparer, rénover ou refaire entièrement votre couverture, en tuile, ardoise ou zinc.",
+      "blocks": [
+        {
+          "titre": "Réfection complète de toiture",
+          "texte": "Quand la charpente est saine mais que la couverture est en fin de vie, la réfection complète reste la solution la plus économique sur la durée.\n\nNous déposons l'ancienne couverture, contrôlons la charpente et le support, posons un écran sous-toiture puis la couverture neuve. Le chantier est bâché, les gravats évacués, et vous savez dès le devis combien de jours nous serons chez vous."
+        },
+        {
+          "titre": "Réparation ponctuelle et recherche de fuite",
+          "texte": "Une tuile cassée, une infiltration après une tempête : nous nous déplaçons pour localiser l'origine réelle de la fuite, qui se trouve rarement à l'endroit de la tache au plafond. Devis avant intervention, toujours."
+        },
+        {
+          "titre": "Tuile, ardoise ou zinc",
+          "texte": "Le choix du matériau dépend de la pente de votre toit, du règlement d'urbanisme de votre commune et de votre budget. Nous vous expliquons ce qui est possible chez vous avant de vous proposer quoi que ce soit."
+        }
+      ],
+      "puces": [
+        "Devis détaillé et gratuit sous 48 h",
+        "Garantie décennale sur tous nos travaux",
+        "Chantier bâché et nettoyé chaque soir",
+        "Prix ferme : ce qui est signé est ce qui est facturé"
+      ],
+      "gallery": [
+        "gallery-1.jpg",
+        "gallery-2.jpg",
+        "gallery-3.jpg"
+      ],
+      "zones": [
+        "Bordeaux",
+        "Cenon",
+        "Lormont",
+        "Floirac",
+        "Bègles",
+        "Talence",
+        "Pessac"
+      ],
+      "faq": [
+        {
+          "question": "Combien coûte une réfection de toiture ?",
+          "reponse": "Le prix dépend de la surface, du matériau et de l'accès au chantier. Nous ne donnons jamais de prix au téléphone sans être venus voir : nous nous déplaçons gratuitement et vous repartez avec un devis détaillé."
+        },
+        {
+          "question": "Combien de temps dure le chantier ?",
+          "reponse": "Une maison individuelle classique demande entre trois jours et deux semaines selon la surface et la météo. La durée est annoncée sur le devis, pas découverte en cours de route."
+        },
+        {
+          "question": "Intervenez-vous en urgence après une tempête ?",
+          "reponse": "Oui. En cas de toiture ouverte, nous posons une bâche de mise hors d'eau rapidement, puis nous planifions la réparation définitive."
+        }
+      ],
+      "cta": "Une toiture à refaire ou une fuite à traiter ? Appelez-nous, nous passons voir et vous repartez avec un prix."
+    },
+    {
+      "slug": "zinguerie-gouttiere",
+      "nav": "Zinguerie",
+      "title": "Zinguerie et gouttières à Bordeaux — pose et remplacement | Couverture Lefèvre",
+      "description": "Pose et remplacement de gouttières, chéneaux et descentes en zinc, cuivre ou aluminium à Bordeaux. Évacuation des eaux de pluie, devis gratuit.",
+      "h1": "Zinguerie et gouttières à Bordeaux",
+      "intro": "La zinguerie, c'est tout ce qui conduit l'eau hors de votre toit. Mal faite, elle abîme les façades et les fondations bien avant la toiture elle-même.",
+      "blocks": [
+        {
+          "titre": "Gouttières, chéneaux et descentes",
+          "texte": "Nous posons et remplaçons les gouttières pendantes, les chéneaux encaissés et les descentes d'eau pluviale en zinc, cuivre ou aluminium.\n\nLe dimensionnement compte autant que la pose : une gouttière sous-dimensionnée déborde à chaque gros orage, quel que soit le soin apporté au reste."
+        },
+        {
+          "titre": "Habillages et finitions",
+          "texte": "Rives, faîtages, solins, habillage de cheminée et sorties de toit : ce sont les points où l'eau s'infiltre le plus souvent. Nous les traitons au zinc façonné sur mesure."
+        }
+      ],
+      "puces": [
+        "Zinc, cuivre ou aluminium selon votre façade",
+        "Façonnage sur mesure, pas de profilé standard forcé",
+        "Nettoyage et contrôle des évacuations existantes"
+      ],
+      "gallery": [
+        "gallery-4.jpg",
+        "gallery-5.jpg"
+      ],
+      "zones": [
+        "Bordeaux",
+        "Cenon",
+        "Lormont",
+        "Floirac",
+        "Bègles"
+      ],
+      "faq": [
+        {
+          "question": "Faut-il remplacer toute la gouttière ou seulement une partie ?",
+          "reponse": "Si le reste est sain, un tronçon suffit souvent. Nous vous le disons franchement : remplacer l'ensemble quand ce n'est pas nécessaire, ce n'est pas notre façon de travailler."
+        },
+        {
+          "question": "À quelle fréquence nettoyer ses gouttières ?",
+          "reponse": "Une fois par an en général, deux fois si vous avez des arbres à proximité. C'est un entretien simple qui évite des dégâts coûteux."
+        }
+      ]
+    },
+    {
+      "slug": "demoussage-entretien-toiture",
+      "nav": "Démoussage",
+      "title": "Démoussage et entretien de toiture à Bordeaux | Couverture Lefèvre",
+      "description": "Démoussage, traitement hydrofuge et entretien de toiture à Bordeaux et en Gironde. Prolongez la vie de votre couverture pour un coût maîtrisé.",
+      "h1": "Démoussage et entretien de toiture",
+      "intro": "Entretenir une toiture coûte chaque année une fraction de ce que coûte sa réfection. C'est le geste le plus rentable que vous puissiez faire pour votre maison.",
+      "blocks": [
+        {
+          "titre": "Pourquoi la mousse abîme un toit",
+          "texte": "La mousse retient l'humidité contre la tuile et s'infiltre sous les recouvrements. En hiver, l'eau gèle, se dilate et fissure le matériau. Une toiture envahie vieillit deux fois plus vite.\n\nNous démoussons mécaniquement, puis traitons avec un produit adapté à votre couverture."
+        },
+        {
+          "titre": "Traitement hydrofuge",
+          "texte": "Après le démoussage, l'hydrofuge limite la reprise des mousses et améliore l'écoulement de l'eau. Il se renouvelle tous les cinq à dix ans selon l'exposition de votre toit."
+        },
+        {
+          "titre": "Visite d'entretien annuelle",
+          "texte": "Un contrôle par an permet de repérer une tuile déplacée ou un solin fatigué avant que l'eau ne rentre. C'est là que se joue la vraie économie."
+        }
+      ],
+      "puces": [
+        "Démoussage mécanique, sans haute pression destructrice",
+        "Traitement hydrofuge adapté au matériau",
+        "Contrôle des points sensibles pendant l'intervention",
+        "Compte rendu photo après chaque passage"
+      ],
+      "gallery": [
+        "gallery-6.jpg",
+        "gallery-1.jpg"
+      ],
+      "zones": [
+        "Bordeaux",
+        "Cenon",
+        "Lormont",
+        "Talence",
+        "Pessac",
+        "Mérignac"
+      ],
+      "faq": [
+        {
+          "question": "Le nettoyeur haute pression, c'est efficace ?",
+          "reponse": "Efficace pour l'œil, destructeur pour la tuile : la haute pression décape la couche de surface et accélère le vieillissement. Nous travaillons mécaniquement puis chimiquement."
+        },
+        {
+          "question": "À quelle fréquence démousser ?",
+          "reponse": "Tous les cinq ans environ en Gironde, plus souvent si votre toit est à l'ombre ou entouré d'arbres."
+        }
+      ]
+    },
+    {
+      "slug": "isolation-fenetre-de-toit",
+      "nav": "Velux & isolation",
+      "title": "Pose de fenêtre de toit et isolation à Bordeaux | Couverture Lefèvre",
+      "description": "Pose de fenêtres de toit et isolation des combles à Bordeaux. Gagnez en lumière et en confort thermique, avec une étanchéité traitée par un couvreur.",
+      "h1": "Fenêtres de toit et isolation des combles",
+      "intro": "Ouvrir un toit et l'isoler sont deux chantiers où l'étanchéité se joue au détail. C'est le métier du couvreur, pas celui du menuisier.",
+      "blocks": [
+        {
+          "titre": "Pose de fenêtre de toit",
+          "texte": "Nous posons les fenêtres de toit avec le raccord d'étanchéité adapté à votre couverture : ce raccord n'est pas un accessoire, c'est lui qui empêche l'eau de rentrer dix ans plus tard.\n\nNous nous occupons de la découpe du chevronnage, du renfort si nécessaire, et de la finition intérieure."
+        },
+        {
+          "titre": "Isolation par l'extérieur (sarking)",
+          "texte": "Quand la toiture est déposée de toute façon, isoler par l'extérieur permet de gagner en confort sans perdre un centimètre de hauteur sous plafond. C'est le bon moment pour le faire."
+        }
+      ],
+      "puces": [
+        "Raccord d'étanchéité adapté à votre couverture",
+        "Isolation posée par un couvreur, pas sous-traitée",
+        "Finitions intérieures comprises"
+      ],
+      "gallery": [
+        "gallery-2.jpg",
+        "gallery-3.jpg"
+      ],
+      "zones": [
+        "Bordeaux",
+        "Cenon",
+        "Bègles",
+        "Talence"
+      ],
+      "faq": [
+        {
+          "question": "Peut-on poser un velux sur n'importe quel toit ?",
+          "reponse": "Presque toujours, mais la pente et le règlement d'urbanisme de votre commune peuvent contraindre le modèle ou l'emplacement. Nous vérifions avant de vous proposer quoi que ce soit."
+        }
+      ]
+    }
+  ]
+}

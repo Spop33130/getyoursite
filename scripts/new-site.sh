@@ -94,6 +94,18 @@ for f in sitemap.xml robots.txt; do
 done
 [[ -z "$DOMAIN" ]] && echo "  ⚠ domaine non fourni → sitemap.xml/robots.txt pointent sur A-DEFINIR.fr (à éditer)"
 
+# --- Pages secondaires (forfait multi-pages) --------------------------------
+# Pré-générées en HTML : ces pages servent à être trouvées sur Google, elles ne
+# doivent pas dépendre de JavaScript pour afficher leur contenu.
+cp "$TEMPLATE_DIR/page.js" "$DEST/page.js"
+NB_PAGES="$(python3 -c "import json;print(len(json.load(open('$DEST/config.json')).get('pages') or []))" 2>/dev/null || echo 0)"
+if [[ "$NB_PAGES" -gt 0 ]]; then
+  echo "→ Génération de $NB_PAGES page(s) secondaire(s)"
+  python3 "$TEMPLATE_DIR/scripts/build-pages.py" "$DEST"
+else
+  echo "  (site une page — aucune page secondaire dans le config)"
+fi
+
 # --- Git --------------------------------------------------------------------
 ( cd "$DEST"
   git init -q
@@ -112,6 +124,9 @@ cat <<EOF
 
 Aperçu local :
   cd "$DEST" && python3 -m http.server 8080   # puis http://localhost:8080
+
+Après une modification du config.json (textes, pages, couleurs) :
+  python3 "$TEMPLATE_DIR/scripts/build-pages.py" "$DEST"
 
 Mettre en ligne (repo + Vercel) :
   cd "$DEST"
